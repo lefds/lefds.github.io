@@ -32,6 +32,7 @@ new (function() {
 	//$.getScript("https://raw.githubusercontent.com/eclipse/paho.mqtt.javascript/master/src/mqttws31.js");
 	
 	$.getScript("ws://test.mosquitto.org:8080/mqtt");
+	
 	//vendor/mqttws31.js"
 	
 	//Inspiration: https://gist.github.com/jpwsutton/6427e38dd3d1db6ba11e48eb0712cba7 => example.js
