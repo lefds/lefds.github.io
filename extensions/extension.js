@@ -1,6 +1,3 @@
-/*
-source: http://savaka2.github.io/scratch-extensions-directory/extensions/calcublock.js
-*/
 (function(ext) {
 	ext._shutdown = function() {};
 	ext._getStatus = function() {
