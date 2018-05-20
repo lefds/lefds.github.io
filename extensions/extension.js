@@ -33,7 +33,9 @@ new (function() {
 	// Create a client instance
 	//novo
 	
-	client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "/wss");
+	// client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "/wss");
+	
+	var client = new Paho.MQTT.Client("test.mosquitto.org", 8080, 891287654);
 	
 	client.startTrace();
 	// set callback handlers
