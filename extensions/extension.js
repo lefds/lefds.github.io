@@ -60,7 +60,7 @@ new (function() {
 	
 	var wsport = 8080; // port for above
 	
-	var client = new PahoMQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
+	var client = new Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
 
 	
 	
