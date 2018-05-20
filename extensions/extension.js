@@ -61,8 +61,6 @@ new (function() {
     client = new Messaging.Client("broker.mqttdashboard.com", 8000, "clientId-TykT3L27ki");
 
 	
-	
-	
 	console.log("After loading MQTT");
 	
 
