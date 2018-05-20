@@ -32,10 +32,6 @@ new (function() {
 	//Inspiration: https://gist.github.com/jpwsutton/6427e38dd3d1db6ba11e48eb0712cba7 => example.js
 	// Create a client instance
 	//novo
-<<<<<<< HEAD
-=======
-
->>>>>>> 694853bcf57828f7b92ff121d707f9bb1dd92ed3
 	client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "/wss");
 	client.startTrace();
 	// set callback handlers
