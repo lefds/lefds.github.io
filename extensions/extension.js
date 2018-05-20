@@ -41,7 +41,7 @@ new (function() {
 	  async : false
 	});
 	
-	$.getScript("vendor/mqttws31.js");
+	$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
 	
 	
 	console.log("After loading MQTT");
