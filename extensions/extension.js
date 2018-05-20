@@ -27,7 +27,8 @@ new (function() {
 	
 	//Attempting to use the jQuery library to load the MQTT client code ...
 	//Unbelivable that this critical step is not reported anywhere!!!	
-	$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
+	//$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
+	$.getScript("https://raw.githubusercontent.com/eclipse/paho.mqtt.javascript/master/src/mqttws31.js");
 	
 	//Inspiration: https://gist.github.com/jpwsutton/6427e38dd3d1db6ba11e48eb0712cba7 => example.js
 	// Create a client instance
