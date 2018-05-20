@@ -22,8 +22,12 @@ new (function() {
 	var ext = this;
 	
 	// LS modification BEGIN
-	// var client = new Messaging.Client("mqtt.flespi.io", 80, 123254);
-	var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "/wss");
+	// var client = new Messaging.Client("mqtt.flespi.io", 80, 123254);	
+	// var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "/wss");
+	
+	//Attempting to use the jQuery library to load the MQTT client code ...
+	$.getScript("paho-mqtt-min.js");
+	
 	//LS modeification END
 	
 	var descriptor = {
