@@ -22,9 +22,27 @@ Accepts a url as a parameter which can include url parameters e.g. https://megjl
 
 new (function() {
 	var ext = this;
+	var descriptor = {
+    	blocks: [
+      		[' ', 'Load extension block %s', 'loadBlock', 'url', 'url'],
+    	],
+    	url: 'http://www.warwick.ac.uk/tilesfortales'
+  	};
+  
+  	ext._shutdown = function() {};
+  	
+  	ext._getStatus = function() {
+  		return {status: 2, msg: 'Device connected'}
+  	};
+  	
+  	ext.loadBlock = function(url) {
+  		ScratchExtensions.loadExternalJS(url);
+  	};
+  	
+  	ScratchExtensions.register("extensionloader", descriptor, ext);
 	
 	
-	
+		
 	// LS modification BEGIN
 	// var client = new Messaging.Client("mqtt.flespi.io", 80, 123254);	
 	
@@ -191,24 +209,6 @@ new (function() {
 */
 	//LS modeification END
 	
-	var descriptor = {
-    	blocks: [
-      		[' ', 'Load extension block %s', 'loadBlock', 'url', 'url'],
-    	],
-    	url: 'http://www.warwick.ac.uk/tilesfortales'
-  	};
-  
-  	ext._shutdown = function() {};
-  	
-  	ext._getStatus = function() {
-  		return {status: 2, msg: 'Device connected'}
-  	};
-  	
-  	ext.loadBlock = function(url) {
-  		ScratchExtensions.loadExternalJS(url);
-  	};
-  	
-  	ScratchExtensions.register("extensionloader", descriptor, ext);
 	
 });
  
