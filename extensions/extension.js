@@ -67,6 +67,8 @@ new (function() {
 	var client = new Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10));	
 	
 	
+	console.log("Before attempting to load MQTT ... -----");	
+	
     /*	
 	var wsbroker = "test.mosquitto.org";  //mqtt websocket enabled brokers
     var wsport = 8080 // port for above
