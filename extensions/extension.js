@@ -6,11 +6,47 @@
  * 3) Paste: https://lefds.github.io/extensions/extension.js
  * 4) Click "I understand and continue"
  * 5) A new black block "calculate [5+5]" must appear.
+ *
+ * A primeira tentaiva não funcionou: deu erro visivel na dev window "Uncaught SyntaxError: Unexpected token <"
+ * <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+ *
  */
 
+ 
+/*
+Load a block from github.io.
+Accepts a url as a parameter which can include url parameters e.g. https://megjlow.github.io/extension2.js?name=SUN&ip=10.0.0.1
+*/
+
+new (function() {
+	var ext = this;
+	
+	var descriptor = {
+    	blocks: [
+      		[' ', 'Load extension block %s', 'loadBlock', 'url', 'url'],
+    	],
+    	url: 'http://www.warwick.ac.uk/tilesfortales'
+  	};
+  
+  	ext._shutdown = function() {};
+  	
+  	ext._getStatus = function() {
+  		return {status: 2, msg: 'Device connected'}
+  	};
+  	
+  	ext.loadBlock = function(url) {
+  		ScratchExtensions.loadExternalJS(url);
+  	};
+  	
+  	ScratchExtensions.register("extensionloader", descriptor, ext);
+	
+});
+ 
+
+/*
+ 
 (function(ext) {
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
  	
 	ext._shutdown = function() {};
 	ext._getStatus = function() {
@@ -26,3 +62,5 @@
 	};
 	ScratchExtensions.register("CalcuBlock", descriptor, ext);
 })({});
+
+*/
