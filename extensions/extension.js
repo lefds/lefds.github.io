@@ -33,21 +33,37 @@ new (function() {
 	//$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
 	//$.getScript("https://raw.githubusercontent.com/eclipse/paho.mqtt.javascript/master/src/mqttws31.js");
 	//$.getScript("ws://test.mosquitto.org:8080/mqtt");	
-	//#Eta é a nova diferença
+	//#Esta é a nova diferença
+	
+	console.log("Before attempting to load MQTT");
+	
+	$.ajaxSetup({
+	  async : false
+	});
+	
 	$.getScript("vendor/mqttws31.js");
 	
-	console.log("Load MQTT");
-		
+	
+	console.log("After loading MQTT");
+	
+
+	$.ajaxSetup({
+	  async : true
+	});
+
+	
 	//Inspiration: https://gist.github.com/jpwsutton/6427e38dd3d1db6ba11e48eb0712cba7 => example.js
 	// Create a client instance
 	//novo ou nao
 	
 	// client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "/wss");
 	
-	console.log("Create a MQTT Client");
+	console.log("Attempt to create a MQTT Client");
 	
 	var client = new Paho.MQTT.Client("test.mosquitto.org", 8080, "myclientid_" + parseInt(Math.random() * 100, 10));
 	
+	console.log("Create a MQTT Client");
+		
 	client.startTrace();
 	// set callback handlers
 	client.onConnectionLost = onConnectionLost;
