@@ -59,6 +59,14 @@ new (function() {
 	*/
 
 	//$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js");
+	
+	console.log("Before attempting to load MQTT ...");	
+   
+	$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js");
+	//Using the HiveMQ public Broker, with a random client Id
+	var client = new Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10));	
+	
+	
     /*	
 	var wsbroker = "test.mosquitto.org";  //mqtt websocket enabled brokers
     var wsport = 8080 // port for above
@@ -66,12 +74,9 @@ new (function() {
 			
     client = new Messaging.Client("broker.mqttdashboard.com", 8000, "clientId-TykTsdsdi");
 	*/
+
 	
-	console.log("Before attempting to load MQTT ...");	
-   
-	$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js");
-	
-	
+/*	
 	var wsbroker = "test.mosquitto.org";  //mqtt websocket enabled broker
 	
 	var wsport = 8080 // port for above
@@ -79,6 +84,8 @@ new (function() {
 	var client = new Paho.MQTT.Client(wsbroker, wsport,
 		"myclientid_" + parseInt(Math.random() * 100, 10));	
 	
+*/
+
 	console.log("After loading MQTT");
 	
 
