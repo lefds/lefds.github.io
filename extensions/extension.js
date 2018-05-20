@@ -65,7 +65,9 @@ new (function() {
     var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
 			
     client = new Messaging.Client("broker.mqttdashboard.com", 8000, "clientId-TykTsdsdi");
-   */
+	*/
+	
+	console.log("Before attempting to load MQTT ...");	
    
 	$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js");
 	
