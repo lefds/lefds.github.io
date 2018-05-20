@@ -21,7 +21,9 @@ Accepts a url as a parameter which can include url parameters e.g. https://megjl
 */
 
 new (function() {
+	
 	var ext = this;
+	
 	var descriptor = {
     	blocks: [
       		[' ', 'Load extension block %s', 'loadBlock', 'url', 'url'],
