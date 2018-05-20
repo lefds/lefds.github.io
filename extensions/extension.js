@@ -40,12 +40,21 @@ new (function() {
 	});
 
 	
-	$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
-
+	//$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
+    /* Este dá o erro:
+		extension.js:66 Uncaught ReferenceError: Paho is not defined
+			at new <anonymous> (extension.js:66)
+			at extension.js:22	
+        Mas a extensão é carrgada com um nome esquisito no final "https://lefds.github.io/extensions/paho-mqtt.js?_=1526832485204"
+	*/
+	
 	//$.getScript("https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js");
 	/* Este dá o erro que se deve à forma como o server envia o js
 		Refused to execute script from 'https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js?_=1526831583707' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.
 	*/
+
+	$.getScript("ws://test.mosquitto.org:8080/mqtt");
+
 	
 	console.log("After loading MQTT");
 	
