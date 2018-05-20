@@ -61,7 +61,8 @@ Accepts a url as a parameter which can include url parameters e.g. https://megjl
 	$.getScript("http://lefds.github.io/extensions/mqttws31.js");
 	console.log("Before attempting to load MQTT  ....");
 	//Using the HiveMQ public Broker, with a random client Id
-	var client = new Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10));
+	//var client = new Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10));
+	var client = new Messaging.Client("127.0.0.1", 1883, "myclientid_" + parseInt(Math.random() * 100, 10));
 
 	
 	 //Gets  called if the websocket/mqtt connection gets disconnected for any reason
