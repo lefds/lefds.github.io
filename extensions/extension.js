@@ -68,7 +68,10 @@ new (function() {
    */
    
 	$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js");
+	
+	
 	var wsbroker = "test.mosquitto.org";  //mqtt websocket enabled broker
+	
 	var wsport = 8080 // port for above
 
 	var client = new Paho.MQTT.Client(wsbroker, wsport,
