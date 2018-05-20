@@ -26,6 +26,7 @@ new (function() {
 	// var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "/wss");
 	
 	//Attempting to use the jQuery library to load the MQTT client code ...
+	
 	$.getScript("https://lefds.github.io/extensions/paho-mqtt-min.js");
 	
 	//LS modeification END
