@@ -29,7 +29,6 @@ new (function() {
 	
 	$.getScript("http://lefds.github.io/extensions/paho-mqtt-min.js");
 
-http://scratchx.org/libs/jquery-1.11.2.min.js
 	
 	//LS modeification END
 	
