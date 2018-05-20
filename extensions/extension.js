@@ -14,6 +14,9 @@
  
  
  
+ 
+ 
+ 
 /*
 Load a block from github.io.
 
@@ -63,11 +66,14 @@ new (function() {
 	console.log("Before attempting to load MQTT ...");	
    
 	$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js");
+	
+	
 	//Using the HiveMQ public Broker, with a random client Id
+	
 	var client = new Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10));	
 	
 	
-	console.log("Before attempting to load MQTT ... -----");	
+	console.log("After connecting to load MQTT ... -----");	
 	
     /*	
 	var wsbroker = "test.mosquitto.org";  //mqtt websocket enabled brokers
@@ -104,16 +110,16 @@ new (function() {
 	
 	console.log("Attempt to create a MQTT Client");
 	
-	var client = new Paho.MQTT.Client("test.mosquitto.org", 8080, "myclientid_" + parseInt(Math.random() * 100, 10));
+	//var client = new Paho.MQTT.Client("test.mosquitto.org", 8080, "myclientid_" + parseInt(Math.random() * 100, 10));
 	
-	console.log("Create a MQTT Client");
-		
-	client.startTrace();
+	//console.log("Create a MQTT Client");		
+	//client.startTrace();
 	// set callback handlers
-	client.onConnectionLost = onConnectionLost;
-	client.onMessageArrived = onMessageArrived;
+	//client.onConnectionLost = onConnectionLost;
+	//client.onMessageArrived = onMessageArrived;
 
 	// connect the client
+/*
 	client.connect({onSuccess:onConnect,
 					useSSL: true});
 	console.log("attempting to connect...");
@@ -152,8 +158,9 @@ new (function() {
 	// called when a message arrives
 	function onMessageArrived(message) {
 	  console.log("onMessageArrived:"+message.payloadString);
-	}	
+	}
 	
+*/
 	//LS modeification END
 	
 	var descriptor = {
