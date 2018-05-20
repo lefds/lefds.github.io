@@ -40,7 +40,7 @@ new (function() {
 	});
 
 	
-	$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
+	//$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
 	//$.getScript("ws://test.mosquitto.org:8080/mqtt");	
     /* Este é o erro para a maioria das fontes:
 		extension.js:66 Uncaught ReferenceError: Paho is not defined
@@ -56,6 +56,9 @@ new (function() {
 	/* Este dá o erro que se deve à forma como o server envia o js
 		Refused to execute script from 'https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js?_=1526831583707' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.
 	*/
+
+	$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js");
+    var client = new Messaging.Client("broker.mqttdashboard.com", 8000, "clientId-TykT3L27ki");
 
 	
 	
