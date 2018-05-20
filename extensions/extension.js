@@ -66,7 +66,7 @@ new (function() {
     client = new Messaging.Client("broker.mqttdashboard.com", 8000, "clientId-TykTsdsdi");
    */
    
-	$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js);
+	$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js");
 	var wsbroker = "test.mosquitto.org";  //mqtt websocket enabled broker
 	var wsport = 8080 // port for above
 
