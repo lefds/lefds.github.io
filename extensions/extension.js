@@ -58,10 +58,9 @@ new (function() {
 	*/
 
 	$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js");
-    client = new Messaging.Client("broker.mqttdashboard.com", 8000, "clientId-TykT3L27ki");
+	
+    client = new Messaging.Client("broker.mqttdashboard.com", 8000, "clientId-TykTsdsdi");
 
-	
-	
 	
 	console.log("After loading MQTT");
 	
