@@ -57,10 +57,21 @@ new (function() {
 		Refused to execute script from 'https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js?_=1526831583707' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.
 	*/
 
-	$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js");
-	
+	//$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js");
+    /*	
+	var wsbroker = "test.mosquitto.org";  //mqtt websocket enabled brokers
+    var wsport = 8080 // port for above
+    var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
+			
     client = new Messaging.Client("broker.mqttdashboard.com", 8000, "clientId-TykTsdsdi");
+   */
+   
+	$.getScript("http://www.hivemq.com/demos/websocket-client/js/mqttws31.js);
+	var wsbroker = "test.mosquitto.org";  //mqtt websocket enabled broker
+	var wsport = 8080 // port for above
 
+	var client = new Paho.MQTT.Client(wsbroker, wsport,
+		"myclientid_" + parseInt(Math.random() * 100, 10));	
 	
 	console.log("After loading MQTT");
 	
