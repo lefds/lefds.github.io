@@ -88,6 +88,7 @@ Accepts a url as a parameter which can include url parameters e.g. https://megjl
 			 alert("Connection failed: " + message.errorMessage);
 		 }
 	 };
+	 
 
 	 //Creates a new Messaging.Message Object and sends it to the HiveMQ MQTT Broker
 	 var publish = function (payload, topic, qos) {
