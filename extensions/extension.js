@@ -27,7 +27,9 @@ new (function() {
 	
 	//Attempting to use the jQuery library to load the MQTT client code ...
 	
-	$.getScript("https://lefds.github.io/extensions/paho-mqtt-min.js");
+	$.getScript("http://lefds.github.io/extensions/paho-mqtt-min.js");
+
+http://scratchx.org/libs/jquery-1.11.2.min.js
 	
 	//LS modeification END
 	
