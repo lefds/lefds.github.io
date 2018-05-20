@@ -22,7 +22,8 @@ new (function() {
 	var ext = this;
 	
 	//LS modification BEGIN
-	var client = new Messaging.Client(mqtt.flespi.io, 80, clientid);
+	//var client = new Messaging.Client("mqtt.flespi.io", 80, 123254);
+	var client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "/wss");
 	//LS modeification END
 	
 	var descriptor = {
