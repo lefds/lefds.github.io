@@ -21,6 +21,10 @@ Accepts a url as a parameter which can include url parameters e.g. https://megjl
 new (function() {
 	var ext = this;
 	
+	//LS modification BEGIN
+	var client = new Messaging.Client(mqtt.flespi.io, 80, clientid);
+	//LS modeification END
+	
 	var descriptor = {
     	blocks: [
       		[' ', 'Load extension block %s', 'loadBlock', 'url', 'url'],
