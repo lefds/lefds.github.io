@@ -14,6 +14,7 @@
 
  
  
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
  
  
 /*
@@ -40,9 +41,11 @@ new (function() {
 	$.ajaxSetup({
 	  async : false
 	});
+
 	
-	$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
-	
+	//$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
+
+	$.getScript("https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js");
 	
 	
 	console.log("After loading MQTT");
