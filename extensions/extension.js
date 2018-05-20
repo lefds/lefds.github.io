@@ -55,9 +55,12 @@ new (function() {
 
 	console.log("Before attempting to load MQTT");	
 	$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
+	
 	var wsbroker = "test.mosquitto.org";  //mqtt websocket enabled brokers
-    var wsport = 8080; // port for above
-    var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
+	
+	var wsport = 8080; // port for above
+	
+	var client = new Paho.MQTT.Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
 
 	
 	
