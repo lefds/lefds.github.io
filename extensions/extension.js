@@ -8,10 +8,10 @@
  * 5) A new black block "calculate [5+5]" must appear.
  */
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript">
-</script>
- 
 (function(ext) {
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
+ 	
 	ext._shutdown = function() {};
 	ext._getStatus = function() {
 		return {status: 2, msg: 'Ready'};
