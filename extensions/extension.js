@@ -13,6 +13,9 @@
  */
 
  
+ 
+ 
+ 
 /*
 Load a block from github.io.
 Accepts a url as a parameter which can include url parameters e.g. https://megjlow.github.io/extension2.js?name=SUN&ip=10.0.0.1
@@ -33,12 +36,15 @@ new (function() {
 	//#Eta é a nova diferença
 	$.getScript("vendor/mqttws31.js");
 	
-	
+	console.log("Load MQTT");
+		
 	//Inspiration: https://gist.github.com/jpwsutton/6427e38dd3d1db6ba11e48eb0712cba7 => example.js
 	// Create a client instance
 	//novo ou nao
 	
 	// client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "/wss");
+	
+	console.log("Create a MQTT Client");
 	
 	var client = new Paho.MQTT.Client("test.mosquitto.org", 8080, "myclientid_" + parseInt(Math.random() * 100, 10));
 	
@@ -50,7 +56,7 @@ new (function() {
 	// connect the client
 	client.connect({onSuccess:onConnect,
 					useSSL: true});
-	console.log("attempting to connect...")
+	console.log("attempting to connect...");
 	
 	// called when the client connects
 	function onConnect() {
@@ -67,12 +73,13 @@ new (function() {
 	  //});
 	  //newMessage = new Paho.MQTT.Message("Sent using synonyms!");
 	  //newMessage.topic = "/World";
-	  client.publish(message)
-	  client.publish("/World", "Hello from a better publish call!", 1, false)
+	  client.publish(message);
+	  
+	  client.publish("/World", "Hello from a better publish call!", 1, false);
 
 	  topicMessage = new Paho.MQTT.Message("This is a message where the topic is set by setTopic");
 	  topicMessage.topic = "/World";
-	  client.publish(topicMessage)
+	  client.publish(topicMessage);
 	}
 
 	// called when the client loses its connection
