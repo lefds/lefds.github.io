@@ -14,9 +14,6 @@
  
  
  
- 
- 
- 
 /*
 Load a block from github.io.
 
@@ -38,11 +35,6 @@ new (function() {
 	//#Esta é a nova diferença
 	
 	console.log("Before attempting to load MQTT");
-	
-	$.ajaxSetup({
-	  async : false
-	});
-
 	
 	//$.getScript("http://lefds.github.io/extensions/paho-mqtt.js");
 	//$.getScript("ws://test.mosquitto.org:8080/mqtt");	
@@ -71,8 +63,6 @@ new (function() {
 	//Using the HiveMQ public Broker, with a random client Id
 	
 	var client = new Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10));	
-	
-	
 	console.log("After connecting to load MQTT ... -----");	
 	
     /*	
