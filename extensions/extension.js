@@ -62,9 +62,11 @@ new (function() {
 	//var client = new Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
 	
 	$.getScript("http://lefds.github.io/extensions/mqttws31.js");
+	console.log("Before attempting to load MQTT  ....");
 	//Using the HiveMQ public Broker, with a random client Id
 	var client = new Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10));
 
+	
 	 //Gets  called if the websocket/mqtt connection gets disconnected for any reason
 	 client.onConnectionLost = function (responseObject) {
 		 //Depending on your scenario you could implement a reconnect logic here
