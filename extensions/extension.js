@@ -1,6 +1,4 @@
 (function(ext) {
-	var AA;
-	var BB;
 /*
  O meu objetivo é colocar informação deste módulo Reporter a ser enviada para um MQTT.
  Inspiração: 
