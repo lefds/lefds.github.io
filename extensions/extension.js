@@ -35,7 +35,7 @@ new (function() {
 	
 	// client = new Paho.MQTT.Client("iot.eclipse.org", Number(443), "/wss");
 	
-	var client = new Paho.MQTT.Client("test.mosquitto.org", 8080, 891287654);
+	var client = new Paho.MQTT.Client("test.mosquitto.org", 8080, "myclientid_" + parseInt(Math.random() * 100, 10));
 	
 	client.startTrace();
 	// set callback handlers
