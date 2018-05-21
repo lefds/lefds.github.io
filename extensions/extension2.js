@@ -7,16 +7,43 @@
 
         type:'GET',
 
-        url:'https://cdn.firebase.com/js/client/2.2.4/firebase.js',
+        url:'https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js',
 
         data:null,
         
-        success: function(){fb = new Firebase('https://scratchx.firebaseio.com');console.log('ok');}, //Create a firebase reference
+        success: function(){mqtt = new Paho.MQTT.Client('127.0.0.1', Number(1883), 'LSANTOS');console.log('ok');}, //Create a mqtt reference
 
         dataType:'script'
 
     });
+	
+	console.log"Inicializando");
     window['temp'] = 0; // init
+	//Vou assumir que é aqui que tem lugar o código de inicialização
+	
+	client.onConnectionLost = onConnectionLost;
+	client.onMessageArrived = onMessageArrived;
+	client.connect({onSuccess:onConnect});
+
+	function onConnect() {
+	  // Once a connection has been made, make a subscription and send a message.
+	  console.log("onConnect");
+	  client.subscribe("/World");
+	  message = new Paho.MQTT.Message("Hello");
+	  message.destinationName = "/World";
+	  client.send(message);
+	};
+	
+	function onConnectionLost(responseObject) {
+	  if (responseObject.errorCode !== 0)
+		console.log("onConnectionLost:"+responseObject.errorMessage);
+	};
+	
+	function onMessageArrived(message) {
+	  console.log("onMessageArrived:"+message.payloadString);
+	  client.disconnect();
+	};
+	
     
     // Cleanup function when the extension is unloaded
     ext._shutdown = function() {};
@@ -30,24 +57,14 @@
     ext.broadcast = function(name) {
         if (name.length > 0){ // blank broadcasts break firebase - not nice.
         window['sent-' + name] = Math.random(); // HUGE thanks to the folks at White Mountain Science for fixing the multiple broadcast bug! (lines 32-40)
-        fb.child('broadcasts/' + name).set(window['sent-' + name]); //Change value of broadcast so other clients get an update
+        console.log('broadcast block');
         }
     };
     
-   ext.mesh_hat = function(name) {
-       fb.child('broadcasts/' + name).on('value', function(snap){window['new-' + name] = snap.val();console.log(name);}); // Make sure broadcasts are unique (don't activate twice)
-       if(window['last-' + name] != window['new-' + name] && window['new-' + name] != window['sent-' + name]){
-           window['last-' + name] = window['new-' + name];
-           return true;
-       } else {
-           return false;
-       }
-   }
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
             [' ', 'mesh broadcast %s', 'broadcast'],
-            ['h', 'when I receive mesh %s', 'mesh_hat']
         ],
         url: 'http://technoboy10.tk/mesh'
     };
@@ -56,3 +73,8 @@
     // Register the extension
     ScratchExtensions.register('Mesh', descriptor, ext);
 })({});
+
+
+
+
+
