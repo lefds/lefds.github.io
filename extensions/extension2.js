@@ -17,7 +17,7 @@
 
     });
 	
-	console.log"Inicializando");
+	console.log("Inicializando");
     window['temp'] = 0; // init
 	//Vou assumir que é aqui que tem lugar o código de inicialização
 	
