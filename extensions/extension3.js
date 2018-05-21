@@ -18,7 +18,7 @@
         data:null,
 
         success: function(){
-			client = new Paho.MQTT.Client('test.mosquitto.org', Number(80),11212313);
+			client = new Paho.MQTT.Client('test.mosquitto.org', Number(80),"LSSANTOS112123132");
 			console.log('MQTT Client handle obtained');
 		},
 		
