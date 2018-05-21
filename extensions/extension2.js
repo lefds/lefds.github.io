@@ -1,6 +1,12 @@
 (function(ext) {
     // TODO: public repo + documentation + samples
     // GH pages
+	
+	GlobalFlag = false;
+	
+	setTimeOut(waitFunc, 100);
+	
+	
     $.ajax({
 
         async:false,
@@ -12,23 +18,23 @@
         data:null,
 
         success: function(){
-			GlobalFlag = false;
 			client = new Paho.MQTT.Client('broker.hivemq.com', Number(1883), 'LSANTOS');
 			GlobalFlag = true;
 			console.log('Ajax function Performed');
 			
-			function waitFunc() {
-				if (!GlobalFlag) {
-					setTimeOut(waitFunc, 100);
-				}
-			}
 		}
 		
 	   dataType:'script'
 
     });
 	
-	console.log("Inicializando");
+	function waitFunc() {
+			if (!GlobalFlag) {
+				setTimeOut(waitFunc, 100);
+			}
+	}
+	
+	console.log("Timeout libertado");
     window['temp'] = 0; // init
 	//Vou assumir que é aqui que tem lugar o código de inicialização
 	
