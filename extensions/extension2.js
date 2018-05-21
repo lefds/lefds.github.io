@@ -3,7 +3,7 @@
     // GH pages
     $.ajax({
 
-        async:false,
+        async:true,
 
         type:'GET',
 
