@@ -1,4 +1,9 @@
 //https://stackoverflow.com/questions/14031421/how-to-make-code-wait-while-calling-asynchronous-calls-like-ajax
+browserSync({
+//...some options,
+ws: true
+})
+
 (function(ext) {
     // TODO: public repo + documentation + samples
     // GH pages
@@ -14,7 +19,7 @@
         data:null,
 
         success: function(){
-			client = new Paho.MQTT.Client('broker.hivemq.com', Number(1883), 'LSANTOS');
+			client = new Paho.MQTT.Client('http://broker.hivemq.com/', Number(1883), 'LSANTOS');
 			console.log('MQTT Client handle obtained');
 		},
 		
