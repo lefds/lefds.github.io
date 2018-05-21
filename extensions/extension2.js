@@ -4,6 +4,12 @@
 	
 	GlobalFlag = false;
 	
+	function waitFunc() {
+			if (!GlobalFlag) {
+				setTimeOut(waitFunc, 100);
+			}
+	}
+
 	setTimeOut(waitFunc, 100);
 	
 	
@@ -20,19 +26,13 @@
         success: function(){
 			client = new Paho.MQTT.Client('broker.hivemq.com', Number(1883), 'LSANTOS');
 			GlobalFlag = true;
-			console.log('Ajax function Performed');
-			
+			console.log('Ajax function Performed');			
 		}
 		
 	   dataType:'script'
 
     });
 	
-	function waitFunc() {
-			if (!GlobalFlag) {
-				setTimeOut(waitFunc, 100);
-			}
-	}
 	
 	console.log("Timeout libertado");
     window['temp'] = 0; // init
