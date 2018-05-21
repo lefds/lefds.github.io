@@ -11,7 +11,7 @@
 
         data:null,
         
-        success: function(){client = new Paho.MQTT.Client('127.0.0.1', Number(1883), 'LSANTOS');console.log('ok');}, //Create a mqtt reference
+        success: function(){client = new Paho.MQTT.Client('broker.hivemq.com', Number(1883), 'LSANTOS');console.log('ok');}, //Create a mqtt reference
 
         dataType:'script'
 
