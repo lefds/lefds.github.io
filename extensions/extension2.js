@@ -39,10 +39,6 @@
 	console.log("Timeout libertado");
     window['temp'] = 0; // init
 	//Vou assumir que é aqui que tem lugar o código de inicialização
-	
-	client.onConnectionLost = onConnectionLost;
-	client.onMessageArrived = onMessageArrived;
-	client.connect({onSuccess:onConnect});
 
 	function onConnect() {
 	  // Once a connection has been made, make a subscription and send a message.
@@ -62,6 +58,12 @@
 	  console.log("onMessageArrived:"+message.payloadString);
 	  client.disconnect();
 	};
+	
+	
+	client.onConnectionLost = onConnectionLost;
+	client.onMessageArrived = onMessageArrived;
+	client.connect({onSuccess:onConnect});
+
 	
     
     // Cleanup function when the extension is unloaded
