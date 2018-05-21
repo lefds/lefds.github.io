@@ -58,11 +58,16 @@ Accepts a url as a parameter which can include url parameters e.g. https://megjl
 	//var wsport = 8080; // port for above
 	//var client = new Client(wsbroker, wsport, "myclientid_" + parseInt(Math.random() * 100, 10));
 	
-	$.getScript("http://lefds.github.io/extensions/mqttws31.js");
+	//$.getScript("http://lefds.github.io/extensions/mqttws31.js");
+	
+	
+	$.getScript("http://lefds.github.io/extensions/mqttws31.js", Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10))) {
+		console.log("Called"); //data returned
+	};
+	
 	console.log("Before attempting to load MQTT  ....");
 	//Using the HiveMQ public Broker, with a random client Id
-	//var client = new Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10));
-	var client = new Messaging.Client("127.0.0.1", 1883, "myclientid_" + parseInt(Math.random() * 100, 10));
+	var client = new Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10));
 
 	
 	 //Gets  called if the websocket/mqtt connection gets disconnected for any reason
@@ -89,7 +94,6 @@ Accepts a url as a parameter which can include url parameters e.g. https://megjl
 			 alert("Connection failed: " + message.errorMessage);
 		 }
 	 };
-	 
 
 	 //Creates a new Messaging.Message Object and sends it to the HiveMQ MQTT Broker
 	 var publish = function (payload, topic, qos) {
