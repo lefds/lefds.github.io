@@ -3,7 +3,7 @@
     // GH pages
     $.ajax({
 
-        async:true,
+        async:false,
 
         type:'GET',
 
@@ -11,7 +11,9 @@
 
         data:null,
         
-        success: function(){client = new Paho.MQTT.Client('broker.hivemq.com', Number(1883), 'LSANTOS');console.log('ok');}, //Create a mqtt reference
+        success: function(){
+			client = new Paho.MQTT.Client('broker.hivemq.com', Number(1883), 'LSANTOS');console.log('ok');}, //Create a mqtt reference
+			setTimeOut(waitFunc, 1000);
 
         dataType:'script'
 
