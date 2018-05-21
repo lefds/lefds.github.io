@@ -61,7 +61,9 @@ Accepts a url as a parameter which can include url parameters e.g. https://megjl
 	//$.getScript("http://lefds.github.io/extensions/mqttws31.js");
 	
 	
-	$.getScript("http://lefds.github.io/extensions/mqttws31.js", Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10))) {
+	$.getScript("http://lefds.github.io/extensions/mqttws31.js", new Messaging.Client("broker.mqttdashboard.com", 8000, "myclientid_" + parseInt(Math.random() * 100, 10))); {
+		console.log("Called ...."); //data returned
+		console.log("Called"); //data returned
 		console.log("Called"); //data returned
 	};
 	
