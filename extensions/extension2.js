@@ -59,6 +59,7 @@
 	  client.disconnect();
 	};
 	
+	
 	client.onConnectionLost = onConnectionLost;
 	client.onMessageArrived = onMessageArrived;
 	client.connect({onSuccess:onConnect});
