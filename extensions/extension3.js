@@ -1,12 +1,10 @@
 //https://stackoverflow.com/questions/14031421/how-to-make-code-wait-while-calling-asynchronous-calls-like-ajax
-browserSync({
-//...some options,
-ws: true
-})
 
 (function(ext) {
     // TODO: public repo + documentation + samples
     // GH pages
+
+	ws: true
 	
     $.ajax({
 
