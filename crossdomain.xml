@@ -4,5 +4,6 @@
   <allow-access-from domain="lefds.github.io"/>
   <allow-access-from domain="lefds.github.io/extensions"/>
   <allow-access-from domain="www.hivemq.com"/>
+  <allow-access-from domain="broker.hivemq.com"/>
   <allow-access-from domain="broker.mqttdashboard.com"/>
-</cross-domain-policy>
+</cross-domain-policy> 
