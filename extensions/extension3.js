@@ -45,6 +45,7 @@
 		console.log('2');
 		
 		function onConnect() {
+		  console.log('22');
 		  // Once a connection has been made, make a subscription and send a message.
 		  console.log("onConnect");
 		  client.subscribe("/World");
@@ -56,6 +57,7 @@
 		console.log('3');
 		
 		function onConnectionLost(responseObject) {
+		  console.log('33');			
 		  if (responseObject.errorCode !== 0)
 			console.log("onConnectionLost:"+responseObject.errorMessage);
 		};
@@ -63,19 +65,21 @@
 		console.log('4');
 		
 		function onMessageArrived(message) {
+		  console.log('44');
 		  console.log("onMessageArrived:"+message.payloadString);
 		  client.disconnect();
 		};
 		
-		console.log('4');
+		console.log('5');
 		client.onConnectionLost = onConnectionLost;
 		
-		console.log('5');
+		console.log('6');
 		client.onMessageArrived = onMessageArrived;
 		
-		console.log('6');
+		console.log('7');
 		client.connect({onSuccess:onConnect});
 		
+		console.log('8');
         console.log('broadcast block');
         }
     };
