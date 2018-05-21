@@ -26,8 +26,8 @@
         success: function(){
 			client = new Paho.MQTT.Client('broker.hivemq.com', Number(1883), 'LSANTOS');
 			GlobalFlag = true;
-			console.log('Ajax function Performed');			
-		}
+			console.log('Ajax function Performed');
+		},
 		
 	   dataType:'script'
 
