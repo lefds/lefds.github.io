@@ -34,3 +34,15 @@
         }
     };
     
+    // Block and block menu descriptions
+    var descriptor = {
+        blocks: [
+            [' ', 'mesh broadcast %s', 'broadcast'],
+        ],
+        url: 'http://technoboy10.tk/mesh'
+    };
+
+
+    // Register the extension
+    ScratchExtensions.register('Mesh', descriptor, ext);
+})({});
