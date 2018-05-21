@@ -4,6 +4,8 @@
 	
 	GlobalFlag = false;
 	
+	var client;
+	
 	function waitFunc() {
 			if (!GlobalFlag) {
 				setTimeout(waitFunc, 100);
