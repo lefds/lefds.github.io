@@ -6,11 +6,11 @@
 	
 	function waitFunc() {
 			if (!GlobalFlag) {
-				setTimeOut(waitFunc, 100);
+				setTimeout(waitFunc, 100);
 			}
 	}
 
-	setTimeOut(waitFunc, 100);
+	setTimeout(waitFunc, 100);
 	
 	
     $.ajax({
