@@ -28,6 +28,7 @@
 	
 	
     //window['temp'] = 0; // init
+	console.log('0');
 
 	// Cleanup function when the extension is unloaded
     ext._shutdown = function() {};
