@@ -17,7 +17,7 @@
         data:null,
 
         success: function(){
-			client = new Paho.MQTT.Client('http://broker.hivemq.com/', Number(1883), 'LSANTOS');
+			client = new Paho.MQTT.Client('broker.hivemq.com/', Number(1883), 'LSANTOS');
 			console.log('MQTT Client handle obtained');
 		},
 		
@@ -41,6 +41,8 @@
         if (name.length > 0){ // blank broadcasts break firebase - not nice.
         //window['sent-' + name] = Math.random(); // HUGE thanks to the folks at White Mountain Science for fixing the multiple broadcast bug! (lines 32-40)
 
+		console.log('2');
+		
 		function onConnect() {
 		  // Once a connection has been made, make a subscription and send a message.
 		  console.log("onConnect");
@@ -50,19 +52,27 @@
 		  client.send(message);
 		};
 		
+		console.log('3');
+		
 		function onConnectionLost(responseObject) {
 		  if (responseObject.errorCode !== 0)
 			console.log("onConnectionLost:"+responseObject.errorMessage);
 		};
+		
+		console.log('4');
 		
 		function onMessageArrived(message) {
 		  console.log("onMessageArrived:"+message.payloadString);
 		  client.disconnect();
 		};
 		
-		
+		console.log('4');
 		client.onConnectionLost = onConnectionLost;
+		
+		console.log('5');
 		client.onMessageArrived = onMessageArrived;
+		
+		console.log('6');
 		client.connect({onSuccess:onConnect});
 		
         console.log('broadcast block');
