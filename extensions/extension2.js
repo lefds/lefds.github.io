@@ -4,18 +4,27 @@
     $.ajax({
 
         async:false,
-
+		
         type:'GET',
 
         url:'https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js',
 
         data:null,
-        
-        success: function(){
-			client = new Paho.MQTT.Client('broker.hivemq.com', Number(1883), 'LSANTOS');console.log('ok');}, //Create a mqtt reference
-			setTimeOut(waitFunc, 1000);
 
-        dataType:'script'
+        success: function(){
+			GlobalFlag = false;
+			client = new Paho.MQTT.Client('broker.hivemq.com', Number(1883), 'LSANTOS');
+			GlobalFlag = true;
+			console.log('Ajax function Performed');
+			
+			function waitFunc() {
+				if (!GlobalFlag) {
+					setTimeOut(waitFunc, 100);
+				}
+			}
+		}
+		
+	   dataType:'script'
 
     });
 	
