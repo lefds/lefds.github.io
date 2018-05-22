@@ -15,8 +15,10 @@
 		
         type:'GET',
 
-        url:'https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js',
-
+        //url:'https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js',
+		//url:'paho.mqtt.javascript/src/paho-mqtt.js',
+		url:'lefds.github.io/extensions/paho-mqtt.js',
+		
         data:null,
 
         success: function(){
