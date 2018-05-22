@@ -37,6 +37,18 @@
 			console.log('7');
 			client.connect({onSuccess:onConnect});
 			
+			console.log('3');
+			
+			function onConnectionLost(responseObject) {
+			  console.log('33');			
+			  if (responseObject.errorCode !== 0)
+				console.log("onConnectionLost:"+responseObject.errorMessage);
+			};
+			
+			console.log('5');
+			client.onConnectionLost = onConnectionLost;
+			
+
 		},
 		
 	   dataType:'script'
@@ -61,13 +73,6 @@
         //window['sent-' + name] = Math.random(); // HUGE thanks to the folks at White Mountain Science for fixing the multiple broadcast bug! (lines 32-40)
 
 		
-		console.log('3');
-		
-		function onConnectionLost(responseObject) {
-		  console.log('33');			
-		  if (responseObject.errorCode !== 0)
-			console.log("onConnectionLost:"+responseObject.errorMessage);
-		};
 		
 		console.log('4');
 		
@@ -77,8 +82,6 @@
 		  client.disconnect();
 		};
 		
-		console.log('5');
-		client.onConnectionLost = onConnectionLost;
 		
 		console.log('6');
 		client.onMessageArrived = onMessageArrived;
