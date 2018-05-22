@@ -1,4 +1,4 @@
-//
+//https://lefds.github.io/extensions/extension4.js
 //https://stackoverflow.com/questions/14031421/how-to-make-code-wait-while-calling-asynchronous-calls-like-ajax
 
 
@@ -20,7 +20,7 @@
         data:null,
 
         success: function(){
-			client = new Paho.MQTT.Client('test.mosquitto.org', Number(80),"LSSANTOS112123132");
+			client = new Paho.MQTT.Client('test.mosquitto.org', Number(8080),"LSSANTOS112123132");
 			console.log('MQTT Client handle obtained');
 			
 			console.log('2'); 		
