@@ -1,4 +1,4 @@
-//https://lefds.github.io/extensions/extension4.js
+//https://lefds.github.io/extensions/extension5.js
 //https://stackoverflow.com/questions/14031421/how-to-make-code-wait-while-calling-asynchronous-calls-like-ajax
 
 
