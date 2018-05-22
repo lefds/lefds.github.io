@@ -7,7 +7,7 @@
     // TODO: public repo + documentation + samples
     // GH pages
 
-	//ws: true
+	ws: true
 	
     $.ajax({
 
@@ -22,6 +22,21 @@
         success: function(){
 			client = new Paho.MQTT.Client('test.mosquitto.org', Number(80),"LSSANTOS112123132");
 			console.log('MQTT Client handle obtained');
+			
+			console.log('2'); 		
+			function onConnect() {
+			  console.log('22');
+			  // Once a connection has been made, make a subscription and send a message.
+			  console.log("onConnect");
+			  client.subscribe("/World");
+			  message = new Paho.MQTT.Message("Hello");
+			  message.destinationName = "/World";
+			  client.send(message);
+			};
+
+			console.log('7');
+			client.connect({onSuccess:onConnect});
+			
 		},
 		
 	   dataType:'script'
@@ -45,18 +60,6 @@
         if (name.length > 0){ // blank broadcasts break firebase - not nice.
         //window['sent-' + name] = Math.random(); // HUGE thanks to the folks at White Mountain Science for fixing the multiple broadcast bug! (lines 32-40)
 
-		console.log('2');
-		
- 		
-		function onConnect() {
-		  console.log('22');
-		  // Once a connection has been made, make a subscription and send a message.
-		  console.log("onConnect");
-		  client.subscribe("/World");
-		  message = new Paho.MQTT.Message("Hello");
-		  message.destinationName = "/World";
-		  client.send(message);
-		};
 		
 		console.log('3');
 		
@@ -80,8 +83,6 @@
 		console.log('6');
 		client.onMessageArrived = onMessageArrived;
 		
-		console.log('7');
-		client.connect({onSuccess:onConnect});
 		
 		console.log('8');
         console.log('broadcast block');
