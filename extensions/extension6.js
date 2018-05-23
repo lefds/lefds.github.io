@@ -11,7 +11,7 @@
 	
 	var client;
 	
-	ext.ajax_success_onconnect = function onConnect() {
+	var ajax_success_onconnect = function onConnect() {
 			  console.log('22');
 			  // Once a connection has been made, make a subscription and send a message.
 			  console.log("onConnect");
