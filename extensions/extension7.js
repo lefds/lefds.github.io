@@ -39,6 +39,7 @@
 		  client.disconnect();
 	};
 
+
 	
 	console.log('Client ID = ' + mqttClientID);
 
