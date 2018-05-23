@@ -94,8 +94,7 @@
 			},
 
 		   dataType:'script'
-
-		});		
+		});
 	};
 
 
@@ -112,12 +111,4 @@
     // Register the extension
     ScratchExtensions.register('Mesh', descriptor, ext);
 
-
-	
-    
 })({});
-
-
-
-
-
