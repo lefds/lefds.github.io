@@ -11,7 +11,7 @@
 	
 	var client;
 	
-	var ajax_success_onconnect = function onConnect() {
+	var ajax_success_onConnect = function onConnect() {
 			  console.log('22');
 			  // Once a connection has been made, make a subscription and send a message.
 			  console.log("onConnect");
@@ -20,7 +20,20 @@
 			  message.destinationName = "/World";
 			  client.send(message);
 			};
-	
+			
+	var ajax_onConnectioLost = function onConnectionLost(responseObject) {
+			  console.log('33');			
+			  if (responseObject.errorCode !== 0)
+				console.log("onConnectionLost:"+responseObject.errorMessage);
+			};
+			
+
+	var ajax_onMessageArrived = function onMessageArrived(message) {
+			  console.log('44');
+			  console.log("onMessageArrived:"+message.payloadString);
+			  client.disconnect();
+			};
+			
     $.ajax({
 
         async:false,
@@ -36,42 +49,22 @@
 			console.log('MQTT Client handle obtained');
 			
 			console.log('2'); 		
-/*			
-			function onConnect() {
-			  console.log('22');
-			  // Once a connection has been made, make a subscription and send a message.
-			  console.log("onConnect");
-			  client.subscribe("/World");
-			  message = new Paho.MQTT.Message("Hello");
-			  message.destinationName = "/World";
-			  client.send(message);
-			};
-*/
 			console.log('7');
-			client.connect({onSuccess:ajax_success_onconnect});
+			
+			client.connect({onSuccess:ajax_success_onConnect});
 			
 			console.log('3');
 			
-			function onConnectionLost(responseObject) {
-			  console.log('33');			
-			  if (responseObject.errorCode !== 0)
-				console.log("onConnectionLost:"+responseObject.errorMessage);
-			};
 			
 			console.log('5');
-			client.onConnectionLost = onConnectionLost;
+			client.onConnectionLost = ajax_onConnectioLost;
 			
 			console.log('4');
 			
-			function onMessageArrived(message) {
-			  console.log('44');
-			  console.log("onMessageArrived:"+message.payloadString);
-			  client.disconnect();
-			};
 			
 			
 			console.log('6');
-			client.onMessageArrived = onMessageArrived;
+			client.onMessageArrived = ajax_onMessageArrived;
 		
 		},
 		
