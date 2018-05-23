@@ -126,7 +126,7 @@
 				client = new Paho.MQTT.Client(mqtt_server, mqtt_port, mqttClientID);
 				console.log('MQTT Client handle created');
 				
-				client.connect({onSuccess: ajax_success_onConnect};);
+				client.connect({onSuccess: ajax_success_onConnect});
 				connect_status_callback(1);
 				console.log('Client connection succeded ...');
 				
