@@ -40,7 +40,7 @@
 	};
 
 	
-	console.log('Client ID = ' + clientID);
+	console.log('Client ID = ' + mqttClientID);
 
 	// Cleanup function when the extension is unloaded
     ext._shutdown = function() {};
