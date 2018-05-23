@@ -142,13 +142,14 @@
 				client.onMessageArrived = ajax_onMessageArrived;
 */			
 			},
-			
+
+		   dataType:'script'
+/*			
 			error: function (){
 				connect_status_callback(-1);
 				console.log('Client connection aborted ...');
 			}
-			
-		   dataType:'script'
+*/			
 
 		});
 		
