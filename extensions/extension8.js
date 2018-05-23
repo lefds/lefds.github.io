@@ -84,7 +84,6 @@
 				console.log('MQTT Client handle created');
 				
 				client.connect({onSuccess: ajax_success_onConnect});
-				console.log('MQTT sucessfully connected');
 				connect_status_callback(1);
 			},
 
