@@ -87,10 +87,14 @@
 				console.log('MQTT sucessfully connected');
 				connect_status_callback(-1);
 			},
+			
+			error: function (){
+				console.log('Client connection aborted ...');				
+				connect_status_callback(-1);
+			},
 
 		   dataType:'script'
-
-		});		
+		});
 	};
 
 
@@ -107,12 +111,4 @@
     // Register the extension
     ScratchExtensions.register('Mesh', descriptor, ext);
 
-
-	
-    
 })({});
-
-
-
-
-
