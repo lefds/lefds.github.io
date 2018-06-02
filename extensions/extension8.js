@@ -105,7 +105,7 @@
             [' ', 'mesh broadcast %s', 'broadcast'],
 			['R', 'Connect to MQTT server %s on port %n', 'mqtt_connect', '192.168.100.100', 9001],
         ],
-        url: 'index.html',
+		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'sACN DMX Scratch Extension'
     };
 
