@@ -761,6 +761,9 @@ var PahoMQTT = (function (global) {
 		if (!("WebSocket" in global && global.WebSocket !== null)) {
 			throw new Error(format(ERROR.UNSUPPORTED, ["WebSocket"]));
 		}
+		//LS
+		console.log("Client Constructor: 765");
+		
 		if (!("localStorage" in global && global.localStorage !== null)) {
 			throw new Error(format(ERROR.UNSUPPORTED, ["localStorage"]));
 		}
@@ -814,6 +817,8 @@ var PahoMQTT = (function (global) {
 		for (var key in localStorage)
 			if (   key.indexOf("Sent:"+this._localKey) === 0 || key.indexOf("Received:"+this._localKey) === 0)
 			this.restore(key);
+		
+		console.log("Client Constructor End: 821");
 	};
 
 	// Messaging Client public instance members.
@@ -857,11 +862,12 @@ var PahoMQTT = (function (global) {
 	ClientImpl.prototype._MAX_TRACE_ENTRIES = 100;
 
 	ClientImpl.prototype.connect = function (connectOptions) {
+		console.log("connect function" + connectOptions);
 		var connectOptionsMasked = this._traceMask(connectOptions, "password");
 		this._trace("Client.connect", connectOptionsMasked, this.socket, this.connected);
 
 		//LS:	
-		Console.log("864: Será aqui?");
+		console.log("864: Será aqui?");
 		
 		if (this.connected)
 			throw new Error(format(ERROR.INVALID_STATE, ["already connected"]));
@@ -1652,7 +1658,7 @@ var PahoMQTT = (function (global) {
 
 	/** @ignore */
 	ClientImpl.prototype._traceMask = function (traceObject, masked) {
-		console.log('1688:tracemask');
+		console.log('1655:tracemask');
 		var traceObjectMasked = {};
 		for (var attr in traceObject) {
 			if (traceObject.hasOwnProperty(attr)) {
