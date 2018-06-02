@@ -994,6 +994,9 @@ var PahoMQTT = (function (global) {
 	};
 
 	ClientImpl.prototype.disconnect = function () {
+		//LS
+		console.log("997:disconnecting");
+		
 		this._trace("Client.disconnect");
 
 		if (this._reconnecting) {
@@ -1053,11 +1056,17 @@ var PahoMQTT = (function (global) {
 
 
 
+		//LS
+		console.log("1060: WebSocket creation ...");
+		
 		if (this.connectOptions.mqttVersion < 4) {
 			this.socket = new WebSocket(wsurl, ["mqttv3.1"]);
 		} else {
 			this.socket = new WebSocket(wsurl, ["mqtt"]);
 		}
+		//LS
+		console.log("1068: WebSocket creation ...");
+		
 		this.socket.binaryType = 'arraybuffer';
 		this.socket.onopen = scope(this._on_socket_open, this);
 		this.socket.onmessage = scope(this._on_socket_message, this);
@@ -1456,6 +1465,8 @@ var PahoMQTT = (function (global) {
 
 	/** @ignore */
 	ClientImpl.prototype._on_socket_error = function (error) {
+		//LS
+		console.log("1469__on_socket_error");
 		if (!this._reconnecting) {
 		this._disconnected(ERROR.SOCKET_ERROR.code , format(ERROR.SOCKET_ERROR, [error.data]));
 		}
