@@ -885,7 +885,7 @@ var PahoMQTT = (function (global) {
 		} else {
 			this._doConnect(this.uri);
 		}
-		Console.log("888: Será aqui?");
+		console.log("888: Será aqui?");
 
 	};
 
