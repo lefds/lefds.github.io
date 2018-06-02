@@ -99,32 +99,199 @@
 
 		});		
 	};
-
 	
+
 //
-  ext.get_temp = function(location, callback) {
-        // Make an AJAX call to the Open Weather Maps API
-        $.ajax({
-              url: 'http://api.openweathermap.org/data/2.5/weather?q='+location+'&units=imperial',
-              dataType: 'jsonp',
-              success: function( weather_data ) {
-                  // Got the data - parse it and return the temperature
-                  temperature = weather_data['main']['temp'];
-                  callback(temperature);
+ var output = '';
+    var filler = '';
+    var pop = '';
+    var area = '';
+    var request_option = '?fullText=true';
+    var url_beginning = 'https://restcountries.eu/rest/v1/name/';
+
+    ext.getInfo = function(option, country, callback) {
+      var fullNameRequest = new XMLHttpRequest();
+      fullNameRequest.onreadystatechange = function() {
+        if (fullNameRequest.readyState === XMLHttpRequest.DONE) {
+          var fullNameText = fullNameRequest.responseText;
+          try {
+            switch (option) {
+              case 'Capital':      output = JSON.parse(fullNameText)[0].capital;         break;
+              case 'Region':       output = JSON.parse(fullNameText)[0].region;          break;
+              case 'Sub-Region':   output = JSON.parse(fullNameText)[0].subregion;       break;
+              case 'Native Name':  output = JSON.parse(fullNameText)[0].nativeName;      break;
+              case 'Calling Code': output = JSON.parse(fullNameText)[0].callingCodes[0]; break;
+              case 'Population':   filler = ((JSON.parse(fullNameText)[0].population).toString()).split('');
+                                    for (i=filler.length-3; i >0; i=i-3) { filler.splice(i, 0, ','); }
+                                    for (i = 0; i < filler.length; i++) { output = output.concat(filler[i]); } break;
+              case 'Area':         filler = ((JSON.parse(fullNameText)[0].area).toString()).split('');
+                                    for (i=filler.length-3; i >0; i=i-3) { filler.splice(i, 0, ','); }
+                                    for (i = 0; i < filler.length; i++) { output = output.concat(filler[i]); }
+                                    output = output.concat(' sq. km'); break;
+              case 'Population Density': pop = (JSON.parse(fullNameText)[0].population).toString();
+                                    area = (JSON.parse(fullNameText)[0].area).toString();
+                                    if (area === null || area == ' ' || area === '') {
+                                      output = 'This country has no area.';
+                                    }
+                                    output = (Math.round((parseInt(pop)/parseInt(area)))).toString();
+                                    output = output.concat(' people per sq. km'); break;
+              case 'Main Language': filler = JSON.parse(fullNameText)[0].languages[0];
+                                    switch (filler) {
+                                      case 'ar': output = 'Arabic';     break;
+                                      case 'bg': output = 'Bulgarian';  break;
+                                      case 'ca': output = 'Catalan';    break;
+                                      case 'zh': output = 'Chinese';    break;
+                                      case 'hr': output = 'Croatian';   break;
+                                      case 'cs': output = 'Czech';      break;
+                                      case 'da': output = 'Danish';     break;
+                                      case 'nl': output = 'Dutch';      break;
+                                      case 'en': output = 'English';    break;
+                                      case 'et': output = 'Estonian';   break;
+                                      case 'fi': output = 'Finnish';    break;
+                                      case 'fr': output = 'French';     break;
+                                      case 'de': output = 'German';     break;
+                                      case 'el': output = 'Greek';      break;
+                                      case 'he': output = 'Hebrew';     break;
+                                      case 'hi': output = 'Hindi';      break;
+                                      case 'hu': output = 'Hungarian';  break;
+                                      case 'is': output = 'Icelandic';  break;
+                                      case 'id': output = 'Indonesian'; break;
+                                      case 'it': output = 'Italian';    break;
+                                      case 'ja': output = 'Japanese';   break;
+                                      case 'ko': output = 'Korean';     break;
+                                      case 'lv': output = 'Latvian';    break;
+                                      case 'lt': output = 'Lithuanian'; break;
+                                      case 'ms': output = 'Malay';      break;
+                                      case 'no': output = 'Norwegian';  break;
+                                      case 'fa': output = 'Persian';    break;
+                                      case 'pl': output = 'Polish';     break;
+                                      case 'pt': output = 'Portuguese'; break;
+                                      case 'ro': output = 'Romanian';   break;
+                                      case 'ru': output = 'Russian';    break;
+                                      case 'sr': output = 'Serbian';    break;
+                                      case 'sk': output = 'Slovak';     break;
+                                      case 'sl': output = 'Slovenian';  break;
+                                      case 'es': output = 'Spanish';    break;
+                                      case 'sv': output = 'Swedish';    break;
+                                      case 'th': output = 'Thai';       break;
+                                      case 'tr': output = 'Turkish';    break;
+                                      case 'uk': output = 'Ukrainian';  break;
+                                      case 'ur': output = 'Urdu';       break;
+                                      case 'vi': output = 'Vietnamese'; break;
+                                      case 'ps': output = 'Pashto';     break;
+                                      default: output = 'The language with the ISO Language Code \'' + filler +'.\'';
+                                    } break;
+            }
+            if (output === '' || output == ' ') {
+              output = 'This country has no ' + option + '.';
+            }
+            callback(output);
+            output = '';
+            filler = '';
+          } catch (e) {
+            var halfNameRequest = new XMLHttpRequest();
+            halfNameRequest.onreadystatechange = function() {
+              if (halfNameRequest.readyState === XMLHttpRequest.DONE) {
+                var halfNameText = halfNameRequest.responseText;
+                try {
+                  switch (option) {
+                    case 'Capital':      output = JSON.parse(halfNameText)[0].capital;         break;
+                    case 'Region':       output = JSON.parse(halfNameText)[0].region;          break;
+                    case 'Sub-Region':   output = JSON.parse(halfNameText)[0].subregion;       break;
+                    case 'Native Name':  output = JSON.parse(halfNameText)[0].nativeName;      break;
+                    case 'Calling Code': output = JSON.parse(halfNameText)[0].callingCodes[0]; break;
+                    case 'Population':   filler = ((JSON.parse(halfNameText)[0].population).toString()).split('');
+                                          for (i=filler.length-3; i >0; i=i-3) { filler.splice(i, 0, ','); }
+                                          for (i = 0; i < filler.length; i++) { output = output.concat(filler[i]); } break;
+                    case 'Area':         filler = ((JSON.parse(halfNameText)[0].area).toString()).split('');
+                                          for (i=filler.length-3; i >0; i=i-3) { filler.splice(i, 0, ','); }
+                                          for (i = 0; i < filler.length; i++) { output = output.concat(filler[i]); }
+                                          output = output.concat(' sq. km'); break;
+                    case 'Population Density': pop = (JSON.parse(halfNameText)[0].population).toString();
+                                          area = (JSON.parse(halfNameText)[0].area).toString();
+                                          output = (Math.round((parseInt(pop)/parseInt(area)))).toString();
+                                          output = output.concat(' people per sq. km'); break;
+                    case 'Main Language': filler = JSON.parse(halfNameText)[0].languages[0];
+                                          switch (filler) {
+                                            case 'ar': output = 'Arabic';     break;
+                                            case 'bg': output = 'Bulgarian';  break;
+                                            case 'ca': output = 'Catalan';    break;
+                                            case 'zh': output = 'Chinese';    break;
+                                            case 'hr': output = 'Croatian';   break;
+                                            case 'cs': output = 'Czech';      break;
+                                            case 'da': output = 'Danish';     break;
+                                            case 'nl': output = 'Dutch';      break;
+                                            case 'en': output = 'English';    break;
+                                            case 'et': output = 'Estonian';   break;
+                                            case 'fi': output = 'Finnish';    break;
+                                            case 'fr': output = 'French';     break;
+                                            case 'de': output = 'German';     break;
+                                            case 'el': output = 'Greek';      break;
+                                            case 'he': output = 'Hebrew';     break;
+                                            case 'hi': output = 'Hindi';      break;
+                                            case 'hu': output = 'Hungarian';  break;
+                                            case 'is': output = 'Icelandic';  break;
+                                            case 'id': output = 'Indonesian'; break;
+                                            case 'it': output = 'Italian';    break;
+                                            case 'ja': output = 'Japanese';   break;
+                                            case 'ko': output = 'Korean';     break;
+                                            case 'lv': output = 'Latvian';    break;
+                                            case 'lt': output = 'Lithuanian'; break;
+                                            case 'ms': output = 'Malay';      break;
+                                            case 'no': output = 'Norwegian';  break;
+                                            case 'fa': output = 'Persian';    break;
+                                            case 'pl': output = 'Polish';     break;
+                                            case 'pt': output = 'Portuguese'; break;
+                                            case 'ro': output = 'Romanian';   break;
+                                            case 'ru': output = 'Russian';    break;
+                                            case 'sr': output = 'Serbian';    break;
+                                            case 'sk': output = 'Slovak';     break;
+                                            case 'sl': output = 'Slovenian';  break;
+                                            case 'es': output = 'Spanish';    break;
+                                            case 'sv': output = 'Swedish';    break;
+                                            case 'th': output = 'Thai';       break;
+                                            case 'tr': output = 'Turkish';    break;
+                                            case 'uk': output = 'Ukrainian';  break;
+                                            case 'ur': output = 'Urdu';       break;
+                                            case 'vi': output = 'Vietnamese'; break;
+                                            case 'ps': output = 'Pashto';     break;
+                                            default: output = 'The language with the ISO Language Code \'' + filler +'.\'';
+                                          } break;
+                    }
+                  if (output === '' || output == ' ') {
+                    output = 'This country has no ' + option + '.';
+                  }
+                } catch (e) {
+                  output = 'Please choose a real country.';
+                }
+                callback(output);
+                output = '';
+                filler = '';
               }
-        });
+            };
+            halfNameRequest.open("GET", url_beginning + country);
+            halfNameRequest.send();
+          }
+        }
+      };
+      fullNameRequest.open("GET", url_beginning + country + request_option);
+      fullNameRequest.send();
     };
 
+//	
 	
-
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
             [' ', 'mesh broadcast %s', 'broadcast'],
 			['R', 'Connect to MQTT server %s on port %n', 'mqtt_connect', '192.168.100.100', 9001],
-            ['R', 'current temperature in city %s', 'get_temp', 'Boston, MA'],
+			['R', '%m.option_input of %s', 'getInfo', 'Capital', 'Afghanistan']
+		],
+        menus: {
+          option_input: ['Area', 'Calling Code', 'Capital', 'Main Language', 'Native Name', 'Population', 'Population Density', 'Region', 'Sub-Region']
+        },			
 			
-        ],
+        //],
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'sACN DMX Scratch Extension'
     };
