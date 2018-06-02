@@ -1,4 +1,35 @@
-//https://lefds.github.io/extensions/extension7.js
+// https://lefds.github.io/extensions/extension7.js
+// http://scratchx.org/
+// http://www.hivemq.com/demos/websocket-client/
+// http://www.steves-internet-guide.com/mqtt-hosting-brokers-and-servers/
+// https://github.com/lefds/lefds.github.io/
+// https://www.hivemq.com/blog/mqtt-essentials-part-4-mqtt-publish-subscribe-unsubscribe
+// http://www.steves-internet-guide.com/install-mosquitto-linux/
+
+
+//Moquitto installation on Ubuntu
+//Source: http://www.steves-internet-guide.com/install-mosquitto-linux/
+//sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
+//sudo apt-get update
+//sudo apt-get install mosquitto
+// sudo apt-get install mosquitto-clients
+// Depois de instalar é preciso alterara a configuração do server
+// Configuração do servidor (MQTTT broker) que nos interessa
+// "Websockets allows you to receive MQTT data directly into a web browser."
+// Como fazer: http://www.steves-internet-guide.com/mqtt-websockets/ 
+// Na verdade basta acrescentar ao ficheiro de configuração duas linhas: 
+// sudo gedit /etc/mosquitto/mosquitto.conf&
+// Eu acrescentei no final
+// # lsantos@isec.pt added
+//   listener 9001
+//   protocol websockets
+// depois foi apenas parar e arrancar o serviço 
+// sudo /etc/init.d/mosquitto stop
+// sudo /etc/init.d/mosquitto start
+// Depois foi só testar através do cliente "http://www.hivemq.com/demos/websocket-client/"
+// e obtive sucesso. a ligar-me.
+// /usr/share/doc/mosquitto/examples/mosquitto.conf.example
+
 
 (function(ext) {
     // TODO: public repo + documentation + samples
@@ -90,7 +121,7 @@
 			
 			error: function (){
 				console.log('Client connection aborted ...');				
-				connect_status_callback(-1);
+				connect_status_callback(1);
 			},
 
 		   dataType:'script'
