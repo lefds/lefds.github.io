@@ -781,6 +781,8 @@ var PahoMQTT = (function (global) {
 		// compatibility to when the path was not configurable and assumed to
 		// be /mqtt
 		this._localKey=host+":"+port+(path!="/mqtt"?":"+path:"")+":"+clientId+":";
+		//LS
+		console.log('this._localKey=' + this._localKey);
 
 		// Create private instance-only message queue
 		// Internal queue of messages to be sent, in sending order.
