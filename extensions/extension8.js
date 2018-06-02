@@ -110,9 +110,7 @@
 		displayName: 'sACN DMX Scratch Extension'
     };
 
-
     // Register the extension
     ScratchExtensions.register('sACN DMX Extension', descriptor, ext);
-
 
 })({});
