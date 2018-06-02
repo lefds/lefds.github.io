@@ -104,13 +104,8 @@
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-            [' ', 'mesh broadcast %s', 'broadcast'],
 			['R', 'Connect to MQTT server %s on port %n', 'mqtt_connect', '192.168.100.100', 9001],
-			['R', '%m.option_input of %s', 'getInfo', 'Capital', 'Afghanistan']
 		],
-        },
-			
-        //],
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'sACN DMX Scratch Extension'
     };
