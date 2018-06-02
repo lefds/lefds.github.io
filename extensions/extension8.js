@@ -76,6 +76,8 @@
 		// https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js
 		 
 		// Documented at: http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings
+		//Esta linha vai chamar a função "jQuery.ajax( url [, settings ] )" ou seja 
+		//Perform an asynchronous HTTP (Ajax) request.
 		$.ajax({
 			async:false,	//this may temporarely lock the browser but it is the price to pay ...
 			type:'GET',
@@ -98,12 +100,30 @@
 		});		
 	};
 
+	
+//
+  ext.get_temp = function(location, callback) {
+        // Make an AJAX call to the Open Weather Maps API
+        $.ajax({
+              url: 'http://api.openweathermap.org/data/2.5/weather?q='+location+'&units=imperial',
+              dataType: 'jsonp',
+              success: function( weather_data ) {
+                  // Got the data - parse it and return the temperature
+                  temperature = weather_data['main']['temp'];
+                  callback(temperature);
+              }
+        });
+    };
+
+	
 
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
             [' ', 'mesh broadcast %s', 'broadcast'],
 			['R', 'Connect to MQTT server %s on port %n', 'mqtt_connect', '192.168.100.100', 9001],
+            ['R', 'current temperature in city %s', 'get_temp', 'Boston, MA'],
+			
         ],
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'sACN DMX Scratch Extension'
