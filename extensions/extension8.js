@@ -107,7 +107,7 @@
     var pop = '';
     var area = '';
     var request_option = '?fullText=true';
-    var url_beginning = 'https://restcountries.eu/rest/v1/name/';
+    var url_beginning = 'https://restcountries.eu/rest/v1/names/';
 
     ext.getInfo = function(option, country, callback) {
       var fullNameRequest = new XMLHttpRequest();
