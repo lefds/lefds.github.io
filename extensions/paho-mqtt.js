@@ -58,7 +58,10 @@
 client = new Paho.MQTT.Client(location.hostname, Number(location.port), "clientId");
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
-client.connect({onSuccess:onConnect});
+//client.connect({onSuccess:onConnect});
+//LS: minha tentativa de usar o OnFailure callback do construtor apesar de não pertencer á API pública
+client.connect({onSuccess:onConnect}, {onFailure:OnConnectFailure});
+
 function onConnect() {
   // Once a connection has been made, make a subscription and send a message.
   console.log("onConnect");
@@ -67,6 +70,22 @@ function onConnect() {
   message.destinationName = "/World";
   client.send(message);
 };
+
+//LS
+//Eles implementam onConnect mas não se percebe bem por que não dão visibilidade ao onFailure
+//Há um motivo latente: este método aparenta poder ser chamado múltiplas vezes. 
+		 * <ol>
+		 * <li>invocationContext as passed in to the onFailure method in the connectOptions.
+		 * <li>errorCode a number indicating the nature of the error.
+		 * <li>errorMessage text describing the error.
+		 * </ol>
+
+//Vamos testar
+function  OnConnectFailure (invocationContext, errorCode, errorMessage) {
+	console.log("onConnectAbort:" + "invocationContext:" +invocationContext + "errorCode: " + errorCode + "errorMessage" +errorMessage);
+}
+
+
 function onConnectionLost(responseObject) {
   if (responseObject.errorCode !== 0)
 	console.log("onConnectionLost:"+responseObject.errorMessage);
@@ -75,6 +94,9 @@ function onMessageArrived(message) {
   console.log("onMessageArrived:"+message.payloadString);
   client.disconnect();
 };
+
+
+
  * </pre></code>
  * @namespace Paho.MQTT
  */
@@ -1886,14 +1908,14 @@ var PahoMQTT = (function (global) {
 		 * @param {boolean} connectOptions.cleanSession - if true(default) the client and server
 		 *                    persistent state is deleted on successful connect.
 		 * @param {boolean} connectOptions.useSSL - if present and true, use an SSL Websocket connection.
-		 * @param {object} connectOptions.invocationContext - passed to the onSuccess callback or onFailure callback.
+		 * @param {object} connectOptions.invocationContext - passed to the onSuccess callback or \ callback.
 		 * @param {function} connectOptions.onSuccess - called when the connect acknowledgement
 		 *                    has been received from the server.
 		 * A single response object parameter is passed to the onSuccess callback containing the following fields:
 		 * <ol>
 		 * <li>invocationContext as passed in to the onSuccess method in the connectOptions.
 		 * </ol>
-     * @param {function} connectOptions.onFailure - called when the connect request has failed or timed out.
+		 * @param {function} connectOptions.onFailure - called when the connect request has failed or timed out.
 		 * A single response object parameter is passed to the onFailure callback containing the following fields:
 		 * <ol>
 		 * <li>invocationContext as passed in to the onFailure method in the connectOptions.
