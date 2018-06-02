@@ -861,7 +861,7 @@ var PahoMQTT = (function (global) {
 		this._trace("Client.connect", connectOptionsMasked, this.socket, this.connected);
 
 		//LS:	
-		Console.log("Será aqui?");
+		Console.log("864: Será aqui?");
 		
 		if (this.connected)
 			throw new Error(format(ERROR.INVALID_STATE, ["already connected"]));
@@ -885,6 +885,7 @@ var PahoMQTT = (function (global) {
 		} else {
 			this._doConnect(this.uri);
 		}
+		Console.log("888: Será aqui?");
 
 	};
 
