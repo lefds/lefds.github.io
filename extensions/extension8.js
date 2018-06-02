@@ -1,4 +1,4 @@
-//https://lefds.github.io/extensions/extension7.js
+//https://lefds.github.io/extensions/extension8.js
 
 (function(ext) {
     // TODO: public repo + documentation + samples
@@ -8,6 +8,9 @@
 	
 	var client = null;
 	
+	//As a client ID I will use a random mumber to avoid collisions
+	//When one client attempts to connect t the broker using the same ID another session is using
+	//the first client session is terminated (by default).
 	//An universe size of 100.000 must be enough to handle a class of 100 diferents student IDs
 	var mqttClientID =  Math.floor(Math.random() * Math.floor(100000)) + ".SACN.ISEC.PT";
 	
@@ -39,7 +42,6 @@
 		  client.disconnect();
 	};
 
-
 	
 	console.log('Client ID = ' + mqttClientID);
 
@@ -65,12 +67,12 @@
 	//BEGIN: As minhas extensões MQTT
 	
 	//O bloco de connect ao MQTT broker será o típico "reporter block that waits"
-	//pois terá de se ligar mas também esperar e reportar se correu bem ou mal a ligação 
+	//pois terá de se ligar mas também esperar e reportar (i.e. retornar) se correu bem ou mal a ligação 
 	//https://github.com/LLK/scratchx/wiki#command-blocks-that-wait
 		
 	ext.mqtt_connect = function(mqtt_server, mqtt_port, connect_status_callback) {
-		// Use AJAX to load the MQTT JavaScript Broker API (paho-mqtt.js)
-		// The "paho-mqtt.js" is hosted this time at my own GitHub but sourced from
+		// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
+		// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
 		// https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js
 		 
 		// Documented at: http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings
@@ -86,6 +88,10 @@
 				client.connect({onSuccess: ajax_success_onConnect});
 				connect_status_callback(1);
 			},
+			
+			error: function(){
+				connect_status_callback(-1);
+			},
 
 		   dataType:'script'
 
@@ -97,21 +103,15 @@
     var descriptor = {
         blocks: [
             [' ', 'mesh broadcast %s', 'broadcast'],
-			['R', 'Connect to MQTT server %s on port %n', 'mqtt_connect', 'test.mosquitto.org', 8080],
+			['R', 'Connect to MQTT server %s on port %n', 'mqtt_connect', '192.168.100.100', 9001],
         ],
-        url: 'http://technoboy10.tk/mesh'
+        url: 'index.html',
+		displayName: 'sACN DMX Scratch Extension'
     };
 
 
     // Register the extension
-    ScratchExtensions.register('Mesh', descriptor, ext);
+    ScratchExtensions.register('sACN DMX Extension', descriptor, ext);
 
 
-	
-    
 })({});
-
-
-
-
-
