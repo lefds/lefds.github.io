@@ -781,6 +781,7 @@ var PahoMQTT = (function (global) {
 		// compatibility to when the path was not configurable and assumed to
 		// be /mqtt
 		this._localKey=host+":"+port+(path!="/mqtt"?":"+path:"")+":"+clientId+":";
+		
 		//LS
 		console.log('this._localKey=' + this._localKey);
 
@@ -859,6 +860,9 @@ var PahoMQTT = (function (global) {
 		var connectOptionsMasked = this._traceMask(connectOptions, "password");
 		this._trace("Client.connect", connectOptionsMasked, this.socket, this.connected);
 
+		//LS:	
+		Console.log("Será aqui?");
+		
 		if (this.connected)
 			throw new Error(format(ERROR.INVALID_STATE, ["already connected"]));
 		if (this.socket)
