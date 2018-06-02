@@ -89,7 +89,7 @@
 				try {
 					client.connect({onSuccess: ajax_success_onConnect});
 			  } catch (e) {
-				  console.log('Danou-se!', e);
+				  console.log('Danou-se!',e);
 			  }
 
 				connect_status_callback(1);
