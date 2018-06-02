@@ -885,6 +885,7 @@ var PahoMQTT = (function (global) {
 		} else {
 			this._doConnect(this.uri);
 		}
+		//LS
 		console.log("888: Será aqui?");
 
 	};
@@ -1651,6 +1652,7 @@ var PahoMQTT = (function (global) {
 
 	/** @ignore */
 	ClientImpl.prototype._traceMask = function (traceObject, masked) {
+		console.log('1688:tracemask');
 		var traceObjectMasked = {};
 		for (var attr in traceObject) {
 			if (traceObject.hasOwnProperty(attr)) {
