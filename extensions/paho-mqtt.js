@@ -1650,6 +1650,9 @@ var PahoMQTT = (function (global) {
 					return;
 				}
 			} else {
+				//LS
+				console.log("1654: we never had a connection");
+				
 				// Otherwise we never had a connection, so indicate that the connect has failed.
 				if (this.connectOptions.mqttVersion === 4 && this.connectOptions.mqttVersionExplicit === false) {
 					this._trace("Failed to connect V4, dropping back to V3");
