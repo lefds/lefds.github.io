@@ -83,13 +83,14 @@ function onConnect() {
 //Vamos testar
 function  OnConnectFailure (invocationContext, errorCode, errorMessage) {
 	console.log("onConnectAbort:" + "invocationContext:" +invocationContext + "errorCode: " + errorCode + "errorMessage" +errorMessage);
-}
+};
 
 
 function onConnectionLost(responseObject) {
   if (responseObject.errorCode !== 0)
 	console.log("onConnectionLost:"+responseObject.errorMessage);
 };
+
 function onMessageArrived(message) {
   console.log("onMessageArrived:"+message.payloadString);
   client.disconnect();
@@ -884,7 +885,13 @@ var PahoMQTT = (function (global) {
 	ClientImpl.prototype._MAX_TRACE_ENTRIES = 100;
 
 	ClientImpl.prototype.connect = function (connectOptions) {
-		console.log("connect function" + connectOptions);
+		//LS
+		for (var attr in connectOptions)) {
+			console.log("connect function var:" + Object.values(attr));
+		}
+		
+	
+	
 		var connectOptionsMasked = this._traceMask(connectOptions, "password");
 		this._trace("Client.connect", connectOptionsMasked, this.socket, this.connected);
 
@@ -915,7 +922,6 @@ var PahoMQTT = (function (global) {
 		}
 		//LS
 		console.log("888: Será aqui?");
-
 	};
 
 	ClientImpl.prototype.subscribe = function (filter, subscribeOptions) {
