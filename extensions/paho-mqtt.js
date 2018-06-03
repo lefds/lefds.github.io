@@ -1492,7 +1492,7 @@ var PahoMQTT = (function (global) {
 		if (!this._reconnecting) {
 		this._disconnected(ERROR.SOCKET_ERROR.code , format(ERROR.SOCKET_ERROR, [error.data]));
 		console.log("1494__on_socket_error: Deifnitive disconnect");
-		}
+		} else console.log("1494__on_socket_error: Not to already disconnect");
 	};
 
 	/** @ignore */
