@@ -1675,6 +1675,8 @@ var PahoMQTT = (function (global) {
 
 	/** @ignore */
 	ClientImpl.prototype._trace = function () {
+		//LS
+		console.log("Chamou o trace");
 		// Pass trace message back to client's callback function
 		if (this.traceFunction) {
 			for (var i in arguments)
@@ -1699,6 +1701,7 @@ var PahoMQTT = (function (global) {
 		}
 	};
 
+	//Este método visa apenas substituir por ***** a password pelo que percebo
 	/** @ignore */
 	ClientImpl.prototype._traceMask = function (traceObject, masked) {
 		console.log('1655:tracemask');
