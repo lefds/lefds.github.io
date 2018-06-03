@@ -1,3 +1,4 @@
+//https://lefds.github.io/extensions/alarm-example.js
 //https://github.com/LLK/scratchx/wiki#command-blocks-that-wait
 
 (function(ext) {
