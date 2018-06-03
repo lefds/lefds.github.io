@@ -1661,6 +1661,7 @@ var PahoMQTT = (function (global) {
 						this._doConnect(this.uri);
 					}
 				} else if(this.connectOptions.onFailure) {
+					console.log("onFailure está definido!");
 					this.connectOptions.onFailure({invocationContext:this.connectOptions.invocationContext, errorCode:errorCode, errorMessage:errorText});
 				}
 			}
