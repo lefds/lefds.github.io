@@ -886,7 +886,7 @@ var PahoMQTT = (function (global) {
 
 	ClientImpl.prototype.connect = function (connectOptions) {
 		//LS
-		for (var attr in connectOptions)) {
+		for (var attr in connectOptions) {
 			console.log("connect function var:" + Object.values(attr));
 		}
 		
