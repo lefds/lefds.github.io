@@ -30,7 +30,7 @@
 	
 
 	var ajax_success_onConnectError = function  OnConnectError(invocationContext, errorCode, errorMessage) {
-		console.log("onConnectAbort:" + "invocationContext:" +invocationContext + "errorCode: " + errorCode + "errorMessage" +errorMessage);
+		console.log("onConnectAbort:" +invocationContext + " errorCode: " + errorCode + " errorMessage:" + errorMessage);
 	};
 
 	
