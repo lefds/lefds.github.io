@@ -884,7 +884,7 @@ var PahoMQTT = (function (global) {
 	ClientImpl.prototype._traceBuffer = null;
 	ClientImpl.prototype._MAX_TRACE_ENTRIES = 100;
 
-	
+
 	ClientImpl.prototype.connect = function (connectOptions) {
 		//LS
 		for (var attr in connectOptions) {
