@@ -1490,10 +1490,11 @@ var PahoMQTT = (function (global) {
 		//LS
 		console.log("1469__on_socket_error: " + ERROR.SOCKET_ERROR.code + " > " + format(ERROR.SOCKET_ERROR, [error.data]) +"\n");
 		if (!this._reconnecting) {
+			console.log("1494__on_socket_error: Before Definitive disconnect ");
 			this._disconnected(ERROR.SOCKET_ERROR.code , format(ERROR.SOCKET_ERROR, [error.data]));
-			console.log("1494__on_socket_error: Definitive disconnect");
+			console.log("1494__on_socket_error: After Definitive disconnect ");
 		} else {
-			console.log("1496__on_socket_error: Do no call _disconnect\n");
+			console.log("1496__on_socket_error:  _disconnect not called\n");
 		}
 	};
 
