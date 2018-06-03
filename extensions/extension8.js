@@ -29,7 +29,7 @@
 	};
 	
 
-	var ajax_success_onConnectError = function  OnConnectError(invocationContext, errorCode, errorMessage) {
+	var ajax_success_onConnectError = function  OnConnectError (invocationContext, errorCode, errorMessage) {
 		console.log("onConnectAbort:" +invocationContext + " errorCode: " + errorCode + " errorMessage:" + errorMessage);
 	};
 
@@ -91,6 +91,7 @@
 			success: function(){
 				client = new Paho.MQTT.Client(mqtt_server, mqtt_port, mqttClientID);
 				console.log('MQTT Client handle created');
+				client.onConnectionLost = ajax_onConnectionLost;	
 				client.connect({onSuccess: ajax_success_onConnect},{onFailure: ajax_success_onConnectError});
 				connect_status_callback(1);
 			},
