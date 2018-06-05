@@ -1,6 +1,5 @@
 //https://lefds.github.io/extensions/extension9.js
 
-
 (function(ext) {
     // TODO: public repo + documentation + samples
     // GH pages
@@ -8,6 +7,7 @@
 	ws: true
 	
 	var client = null;
+	var SACN_CameoFXBar_29CHMODE_Ready_Published = false;
 	
 	//As a client ID I will use a random mumber to avoid collisions
 	//When one client attempts to connect t the broker using the same ID another session is using
@@ -18,7 +18,15 @@
 	var ajax_success_onConnect = function onConnect() {
 		  // Once a MQTT connection has been made, make a subscription and send a message.
 		  console.log("onConnect");
-		  
+		  client.subscribe("/SACN/CameoFXBar/29CHMODE/Ready");
+
+		// Wait until a publish on the mentioned topic arrives
+		if (SACN_CameoFXBar_29CHMODE_Ready_Published === true) {
+		   return true;
+		}
+		return false;
+		
+		  /*
 		  message = new Paho.MQTT.Message("New Lighting programmer arrived ...");
 		  console.log("MQTT:Announce a new lighting programmer arriving.");
 		  
@@ -27,6 +35,7 @@
 		  
 		  client.send(message);
 		  console.log("MQTT:Publish the message");
+		  */
 	};
 	
 
@@ -42,9 +51,9 @@
 	};
 			
 
-	var ajax_onMessageArrived = function onMessageArrived(message) {
-		  console.log('44');
+	var ajax_onMessageArrived = function onMessageArrived(message) {	  
 		  console.log("onMessageArrived:" + message.payloadString);
+		  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
 		  client.disconnect();
 	};
 
@@ -73,7 +82,29 @@
 	//BEGIN
 	
 	ext.WhenLightningController = function(mqtt_server, mqtt_port) {
-	}
+		// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
+		// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
+		// https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js
+		 
+		// Documented at: http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings
+		//Esta linha vai chamar a função "jQuery.ajax( url [, settings ] )" ou seja 
+		//Perform an asynchronous HTTP (Ajax) request.
+		$.ajax({
+			async:false,	//this may temporarely lock the browser but it is the price to pay ...
+			type:'GET',
+			url:'https://lefds.github.io/extensions/paho-mqtt.js',
+			data:null,
+			success: function(){
+				client = new Paho.MQTT.Client(mqtt_server, mqtt_port, mqttClientID);
+				console.log('MQTT Client handle created');
+				client.onConnectionLost = ajax_onConnectionLost;
+				client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});				
+			},
+			
+		   dataType:'script'
+
+		});		
+	};
 	
 	//BEGIN: As minhas extensões MQTT
 		
