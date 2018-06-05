@@ -69,7 +69,14 @@
     };
 
 	
+	//BEGIN
+	
+	ext.WhenLightningController = function(mqtt_server, mqtt_port) {
+	}
+	
 	//BEGIN: As minhas extensões MQTT
+		
+	
 	
 	//O bloco de connect ao MQTT broker será o típico "reporter block that waits"
 	//pois terá de se ligar mas também esperar e reportar (i.e. retornar) se correu bem ou mal a ligação 
@@ -110,8 +117,8 @@
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-			['R', 'Connect to MQTT server %s on port %n', 'mqtt_connect', '192.168.100.100', 9001],
-			['h', 'when distance %m.lessMore %n',          'whenDistance', '<', 20],
+			['h', 'When Lightning Controller at IP <%s> Port <%n> is ready', 'WhenLightningController', '192.168.100.100', 9001],			
+//			['R', 'Connect to MQTT server %s on port %n', 'mqtt_connect', '192.168.100.100', 9001],
 		],
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'sACN DMX Scratch Extension'
