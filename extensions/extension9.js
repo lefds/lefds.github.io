@@ -117,7 +117,7 @@
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-			['h', 'When Lightning Controller at IP %s:%n is ready', 'WhenLightningController', '192.168.100.100', 9001],
+			['h', 'When Lightning Controller at IP %s : %n is ready', 'WhenLightningController', '192.168.100.100', 9001],
 //			['R', 'Connect to MQTT server %s on port %n', 'mqtt_connect', '192.168.100.100', 9001],
 		],
 		url: 'https://lefds.github.io/extensions/index.html',
