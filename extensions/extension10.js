@@ -72,7 +72,7 @@ https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-
 	console.log('Client ID = ' + MQTTClientID);
 
 	ext._getStatus = function() {
-		console.log(_getStatus being called)
+		console.log(_getStatus being called);
 		if (!connected)
 			return { status:1, msg:'Disconnected' };
 		else
