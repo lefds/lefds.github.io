@@ -1,4 +1,6 @@
 //https://lefds.github.io/extensions/extension10.js
+https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-javascript
+
 
 (function(ext) {
     // TODO: public repo + documentation + samples
@@ -8,6 +10,8 @@
 
 	//MQTT handle to talk with MQTT broker (Mosquitto)
 	var MQTT_Client = null;
+	
+	var connected = false;
 
 	//Flags when this Scratch client is notified that the Lighting robot (Cameo) is ready to be  controlled
 	var SACN_CameoFXBar_29CHMODE_Ready_Published = false;
@@ -18,13 +22,7 @@
 	//An universe size of 100.000 must be enough to handle a class of 100 diferents student IDs
 	var MQTTClientID =  Math.floor(Math.random() * Math.floor(100000)) + ".SACN.ISEC.PT";
 	
-	
-	
-	function init() {
-		console.log("Estou no Init");
-	}
-
-	
+		
 
 	var ajax_success_onConnect = function onConnect() {
 		  // Once a MQTT connection has been made, make a subscription and send a message.
@@ -69,7 +67,31 @@
 	};
 
 	
+	
+	//Code Execution begins here when the extension javascript file is loaded at http://scratchx.org/#
 	console.log('Client ID = ' + MQTTClientID);
+
+	ext._getStatus = function() {
+		console.log(_getStatus being called)
+		if (!connected)
+			return { status:1, msg:'Disconnected' };
+		else
+		return { status:2, msg:'Connected' };
+	};
+	
+	//Perform an asynchronous HTTP (Ajax) request.
+	$.ajax({
+		async:false,	//this may temporarely lock the browser but it is the price to pay ...
+		type:'GET',
+		url:'https://lefds.github.io/extensions/paho-mqtt.js',
+		data:null,
+		success: function(){
+			connected = true;
+			console.log("MQTT Java Script module sucessufuly loaded!");
+		},
+		
+	   dataType:'script'
+	});	
 
 	// Cleanup function when the extension is unloaded
     ext._shutdown = function() {};
@@ -114,7 +136,7 @@
 			
 		   dataType:'script'
 
-		});		
+		});
 	};
 			
 		
