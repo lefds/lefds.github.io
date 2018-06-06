@@ -122,21 +122,10 @@ https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-
 		// Documented at: http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings
 		//Esta linha vai chamar a função "jQuery.ajax( url [, settings ] )" ou seja 
 		//Perform an asynchronous HTTP (Ajax) request.
-		$.ajax({
-			async:false,	//this may temporarely lock the browser but it is the price to pay ...
-			type:'GET',
-			url:'https://lefds.github.io/extensions/paho-mqtt.js',
-			data:null,
-			success: function(){
-				MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
-				console.log('MQTT Client handle created');
-				MQTT_Client.onConnectionLost = ajax_onConnectionLost;
-				MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});				
-			},
-			
-		   dataType:'script'
-
-		});
+		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
+		console.log('MQTT Client handle created');
+		MQTT_Client.onConnectionLost = ajax_onConnectionLost;
+		MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});				
 	};
 			
 		
