@@ -1,5 +1,9 @@
 //https://lefds.github.io/extensions/extension10.js
-https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-javascript
+//Using: https://www.eclipse.org/paho/downloads.php
+// More sources helping
+//   - https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-javascript
+//
+//
 
 
 (function(ext) {
@@ -22,7 +26,6 @@ https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-
 	//An universe size of 100.000 must be enough to handle a class of 100 diferents student IDs
 	var MQTTClientID =  Math.floor(Math.random() * Math.floor(100000)) + ".SACN.ISEC.PT";
 	
-		
 
 	var ajax_success_onConnect = function onConnect() {
 		  // Once a MQTT connection has been made, make a subscription and send a message.
@@ -102,15 +105,6 @@ https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-
         return {status: 2, msg: 'Ready'};
     };
     
-    ext.broadcast = function(name) {
-        if (name.length > 0){ // blank broadcasts break firebase - not nice.
-        //window['sent-' + name] = Math.random(); // HUGE thanks to the folks at White Mountain Science for fixing the multiple broadcast bug! (lines 32-40)
-				
-		console.log('8');
-        console.log('broadcast block');
-        }
-    };
-
 	
 	//BEGIN: As minhas extensões MQTT
 	
@@ -122,6 +116,7 @@ https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-
 		// Documented at: http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings
 		//Esta linha vai chamar a função "jQuery.ajax( url [, settings ] )" ou seja 
 		//Perform an asynchronous HTTP (Ajax) request.
+		console.log("WhenLightningController Hat block activated');
 		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
 		console.log('MQTT Client handle created');
 		MQTT_Client.onConnectionLost = ajax_onConnectionLost;
