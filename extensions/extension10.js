@@ -154,7 +154,6 @@
            alarm_went_off = false;
            return true;
        }
-	   console.log("When_alarm beeing called");
        return false;
     };
 
