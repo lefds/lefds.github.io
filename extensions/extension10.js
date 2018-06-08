@@ -127,7 +127,7 @@
 		MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});
 		console.log("WhenLightningController Hat block returning true");
 */
-		return false;
+		return true;
 	};
 			
 
