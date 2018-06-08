@@ -117,16 +117,19 @@
 		// Documented at: http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings
 		//Esta linha vai chamar a função "jQuery.ajax( url [, settings ] )" ou seja 
 		//Perform an asynchronous HTTP (Ajax) request.
+		
 		console.log("WhenLightningController Hat block activated");
+		
+/*		
 		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
 		console.log('MQTT Client handle created');
 		MQTT_Client.onConnectionLost = ajax_onConnectionLost;
 		MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});
 		console.log("WhenLightningController Hat block returning true");
+*/
 		return false;
 	};
-	
-		
+			
 
     // Block and block menu descriptions
     var descriptor = {
