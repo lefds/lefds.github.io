@@ -120,9 +120,11 @@
 		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
 		console.log('MQTT Client handle created');
 		MQTT_Client.onConnectionLost = ajax_onConnectionLost;
-		MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});				
+		MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});
+		console.log("WhenLightningController Hat block returning true");
+		return true;
 	};
-			
+	
 		
 
     // Block and block menu descriptions
