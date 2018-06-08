@@ -108,6 +108,7 @@
 	
 	//BEGIN: As minhas extensões MQTT
 	
+	//Hat block that an app shoul use to be notified that the Lightning equipment is ready
 	ext.WhenLightningController = function(mqtt_server, mqtt_port) {
 		// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
 		// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
@@ -122,7 +123,7 @@
 		MQTT_Client.onConnectionLost = ajax_onConnectionLost;
 		MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});
 		console.log("WhenLightningController Hat block returning true");
-		return true;
+		return false;
 	};
 	
 		
