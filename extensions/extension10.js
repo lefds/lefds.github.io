@@ -129,13 +129,11 @@
 */
 
 	  if (connected === true) {
-		   connected = false;
 		   return true;
        }
 	   connected = true;
        return false;
 	};
-			
 
     // Block and block menu descriptions
     var descriptor = {
