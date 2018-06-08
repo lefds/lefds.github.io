@@ -135,10 +135,32 @@
        return false;
 	};
 
+	
+	var alarm_went_off = false; // This becomes true after the alarm goes off
+	
+	ext.set_alarm = function(time) {
+       window.setTimeout(function() {
+           alarm_went_off = true;
+       }, time*1000);
+    };
+
+    ext.when_alarm = function() {
+       // Reset alarm_went_off if it is true, and return true
+       // otherwise, return false.
+       if (alarm_went_off === true) {
+           alarm_went_off = false;
+           return true;
+       }
+
+       return false;
+    };
+
+	
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
 			['h', 'When Lightning Controller at IP %s : %n is ready', 'WhenLightningController', '192.168.100.100', 9001],
+            ['h', 'when alarm goes off', 'when_alarm'],			
 		],
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'sACN DMX Scratch Extension'
