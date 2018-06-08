@@ -135,7 +135,9 @@
        return false;
 	};
 
-	
+
+//Example to be removed but that helps understangin that hat blocks are continously beeing called!
+//source: https://github.com/LLK/scratchx/wiki#hat-blocks
 	var alarm_went_off = false; // This becomes true after the alarm goes off
 	
 	ext.set_alarm = function(time) {
@@ -147,11 +149,12 @@
     ext.when_alarm = function() {
        // Reset alarm_went_off if it is true, and return true
        // otherwise, return false.
+	   console.log("When_alarm beeing called");
        if (alarm_went_off === true) {
            alarm_went_off = false;
            return true;
        }
-
+	   console.log("When_alarm beeing called");
        return false;
     };
 
