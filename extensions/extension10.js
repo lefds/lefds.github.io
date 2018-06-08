@@ -118,7 +118,7 @@
 		//Esta linha vai chamar a função "jQuery.ajax( url [, settings ] )" ou seja 
 		//Perform an asynchronous HTTP (Ajax) request.
 		
-		console.log("WhenLightningController Hat block activated");
+		console.log("WhenLightningController Hat block activated" + mqtt_server + ":" +  mqtt_port);
 		
 /*		
 		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
@@ -127,7 +127,13 @@
 		MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});
 		console.log("WhenLightningController Hat block returning true");
 */
-		return true;
+
+	  if (connected === true) {
+		   connected = false;
+		   return true;
+       }
+	   connected = true;
+       return false;
 	};
 			
 
