@@ -157,7 +157,6 @@
 		
 		MQTT_Client.disconnect();
 */		
-		return true;
 	}
 
 
