@@ -88,9 +88,7 @@
 	   dataType:'script'
 	});	
 
-	// Cleanup function when the extension is unloaded
-    ext._shutdown = function() {};
-
+	
     // Status reporting code
     // Use this to report missing hardware, plugin or unsupported browser
     ext._getStatus = function() {
@@ -141,6 +139,7 @@
 			await sleep(1000);
 		}
 		
+		console.log("WhenLightningController returning true");
 		return true;
 		
 
