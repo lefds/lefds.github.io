@@ -118,12 +118,15 @@
 		MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});
 		console.log("Connection attempt in course ...");
 
+		//https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+		function sleep(ms) {
+		  return new Promise(resolve => setTimeout(resolve, ms));
+		}
 		
 		// Wait until the Lighting server flags that it is on-line and ready		
 		while (!SACN_CameoFXBar_29CHMODE_Ready_Published) {
 			console.log("Lighting server is still not online and ready");
-			function Sleep(){} // Does nothing.
-			setTimeout(Sleep, 5000); // Go to sleep for n milliseconds.								
+			sleep(2000;)
 		}
 		
 		if (SACN_CameoFXBar_29CHMODE_Ready_Published === true) {
