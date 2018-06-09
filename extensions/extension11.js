@@ -103,7 +103,8 @@
 	var try_mqtt_connection = true;
 	
 	
-	ext.WhenLightningController = function(mqtt_server, mqtt_port) {
+	ext.WhenLightningController = async function(mqtt_server, mqtt_port) {
+		
 		
 	//ext.WhenLightningController = function() {
 		// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
@@ -119,9 +120,8 @@
 		
 	    if (try_mqtt_connection === false) {
 			try_mqtt_connection = false;
-			
-		    return true;
-        }
+			return true;
+		}
 		return false;
 	}
 /*		
