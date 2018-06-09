@@ -141,6 +141,7 @@
 			await sleep(1000);
 		}
 		
+		console.log("WhenLightningController returning true");
 		return true;
 		
 
