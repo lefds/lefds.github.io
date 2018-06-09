@@ -199,7 +199,7 @@
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-			['h', 'When Lightning Controller at IP %s : %n is ready', 'WhenLightningController1', '192.168.100.100', 9001],
+//			['h', 'When Lightning Controller at IP %s : %n is ready', 'WhenLightningController1', '192.168.100.100', 9001],
 			['h', 'When Lightning Controller is ready', 'WhenLightningController'],
             ['h', 'when alarm goes off', 'when_alarm'],
 			['', 'run alarm after %n seconds', 'set_alarm', '10'],
