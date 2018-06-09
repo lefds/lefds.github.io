@@ -177,8 +177,10 @@
 	   console.log("When_alarm beeing called");
        if (alarm_went_off === true) {
            alarm_went_off = false;
+		   console.log("Alarm went off!");
            return true;
        }
+	   console.log("Alarm not went off yet!");
        return false;
     };
 
