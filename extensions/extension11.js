@@ -100,7 +100,7 @@
 	
 	
 	//Hat block that a scratch app should use to be notified that the Lightning equipment is ready
-	var try_mqtt_connection = true;
+	var when_mqtt_connected = true;
 	
 	
 	ext.WhenLightningController = async function(mqtt_server, mqtt_port) {
@@ -118,8 +118,33 @@
 		// remains being called. If the functions returns false the following blocks are not called. 		
 		//console.log("WhenLightningController Hat block activated" + mqtt_server + ":" +  mqtt_port);
 		
-	    if (try_mqtt_connection === false) {
-			try_mqtt_connection = false;
+	    if (when_mqtt_connected === true) {
+			when_mqtt_connection = false;			
+			//Tenta ligar
+			MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
+			console.log('MQTT Client handle created');
+			MQTT_Client.onConnectionLost = mqtt_onConnectionLost;
+			MQTT_Client.onMessageArrived = mqtt_onMessageArrived;
+
+			
+			MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});
+			console.log("Connection attempt in course ...");
+
+			
+			//https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+			function sleep(ms) {
+			  return new Promise(resolve => setTimeout(resolve, ms));
+			}
+			
+			// Wait until the Lighting server flags that it is on-line and ready		
+			while (!SACN_CameoFXBar_29CHMODE_Ready_Published) {
+				console.log("Lighting server is still not online and ready");
+				await sleep(1000);
+			}
+			
+			console.log("WhenLightningController returning true");
+			return true;
+			
 			return true;
 		}
 		return false;
