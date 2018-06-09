@@ -98,7 +98,8 @@
 	
 	//BEGIN: As minhas extensões MQTT
 	
-	//Hat block that an app shoul use to be notified that the Lightning equipment is ready
+	
+	//Hat block that a scratch app should use to be notified that the Lightning equipment is ready
 	var try_mqtt_connection = false;
 	
 	
@@ -118,9 +119,10 @@
 		
 	    if (try_mqtt_connection === true) {
 			try_mqtt_connection = false;
-		   return false;
+		    return true;
         }
-		return true;
+		return false;
+	}
 /*		
 	    try_mqtt_connection = true;
 
@@ -162,9 +164,9 @@
 		
 		MQTT_Client.disconnect();
 */
-		
+/*		
 	}
-
+*/
 
 
 //Example to be removed but that helps understangin that hat blocks are continously beeing called!
