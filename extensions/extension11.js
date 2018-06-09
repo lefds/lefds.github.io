@@ -100,7 +100,7 @@
 	
 	//Hat block that an app shoul use to be notified that the Lightning equipment is ready
 	var try_mqtt_connection = false;
-	ext.WhenLightningController = async function(mqtt_server, mqtt_port) {
+	ext.WhenLightningController = function(mqtt_server, mqtt_port) {
 		// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
 		// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
 		// https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js
@@ -115,7 +115,8 @@
 	    if (try_mqtt_connection === true) {			
 		   return false;
         }
-		
+		return true;
+/*		
 	    try_mqtt_connection = true;
 
 		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
@@ -155,7 +156,8 @@
 
 		
 		MQTT_Client.disconnect();
-*/		
+*/
+		
 	}
 
 
