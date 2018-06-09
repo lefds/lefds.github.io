@@ -117,7 +117,7 @@
 		// remains being called. If the functions returns false the following blocks are not called. 		
 		//console.log("WhenLightningController Hat block activated" + mqtt_server + ":" +  mqtt_port);
 		
-	    if (try_mqtt_connection === true) {
+	    if (try_mqtt_connection === false) {
 			try_mqtt_connection = false;
 			
 		    return true;
