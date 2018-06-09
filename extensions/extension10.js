@@ -26,28 +26,12 @@
 	//An universe size of 100.000 must be enough to handle a class of 100 diferents student IDs
 	var MQTTClientID =  Math.floor(Math.random() * Math.floor(100000)) + ".SACN.ISEC.PT";
 	
-
+	var LightigReadyTopic = "/SACN/CameoFXBar/29CHMODE/Ready";
+	
 	var ajax_success_onConnect = function onConnect() {
-		  // Once a MQTT connection has been made, make a subscription and send a message.
-		  console.log("onConnect");
-		  MQTT_Client.subscribe("/SACN/CameoFXBar/29CHMODE/Ready");
-
-		// Wait until a publish on the mentioned topic arrives
-		if (SACN_CameoFXBar_29CHMODE_Ready_Published === true) {
-		   return true;
-		}
-		return false;
-		
-		  /*
-		  message = new Paho.MQTT.Message("New Lighting programmer arrived ...");
-		  console.log("MQTT:Announce a new lighting programmer arriving.");
-		  
-		  message.destinationName = "/DMX-Universe01";
-		  console.log("MQTT:Choose the topic to publish it!");
-		  
-		  MQTT_Client.send(message);
-		  console.log("MQTT:Publish the message");
-		  */
+		  // Once a MQTT connection has been made, subcribe the topic that used by the Lihting server to flag it is ready.
+		  console.log("Subscribing the topic: " + LightigReadyTopic);
+		  MQTT_Client.subscribe(LightigReadyTopic);
 	};
 	
 
@@ -63,10 +47,10 @@
 	};
 			
 
-	var ajax_onMessageArrived = function onMessageArrived(message) {	  
-		  console.log("onMessageArrived:" + message.payloadString);
+	var ajax_onMessageArrived = function onMessageArrived(message) {
+		  console.log("MQTT MessageArrived:" + message.payloadString);
+		  //by now we are assuming it the "ready" topic is being published
 		  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
-		  MQTT_Client.disconnect();
 	};
 
 	
@@ -109,31 +93,61 @@
 	//BEGIN: As minhas extensões MQTT
 	
 	//Hat block that an app shoul use to be notified that the Lightning equipment is ready
+	var try_mqtt_connection = false;
 	ext.WhenLightningController = function(mqtt_server, mqtt_port) {
 		// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
 		// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
 		// https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js
 		 
 		// Documented at: http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings
-		//Esta linha vai chamar a função "jQuery.ajax( url [, settings ] )" ou seja 
-		//Perform an asynchronous HTTP (Ajax) request.
+		// Not well documented anywhere.
+		// The hat block code is running all the time on its own thread.
+		// whenever it returns true the following blocks are executed but the hat block fucntion
+		// remains being called. If the functions returns false the following blocks are not called. 		
+		//console.log("WhenLightningController Hat block activated" + mqtt_server + ":" +  mqtt_port);
 		
-		console.log("WhenLightningController Hat block activated" + mqtt_server + ":" +  mqtt_port);
+	    if (try_mqtt_connection === true) {
+		   return false;
+        }
 		
-/*		
+	    try_mqtt_connection = true;
+
 		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
 		console.log('MQTT Client handle created');
 		MQTT_Client.onConnectionLost = ajax_onConnectionLost;
 		MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});
-		console.log("WhenLightningController Hat block returning true");
-*/
+		console.log("Connection attempt in course ...");
 
-	  if (connected === true) {
+		
+		// Wait until the Lighting server flags that it is on-line and ready		
+		while (!SACN_CameoFXBar_29CHMODE_Ready_Published) {
+			console.log("Lighting server is still not online and ready");
+			function Sleep(){} // Does nothing.
+			setTimeout(Sleep, 5000); // Go to sleep for n milliseconds.								
+		}
+		
+		if (SACN_CameoFXBar_29CHMODE_Ready_Published === true) {
+			console.log("Lighting server is on-line and ready!");
 		   return true;
-       }
-	   connected = true;
-       return false;
-	};
+		}
+		return false;
+		
+		  /*
+		  message = new Paho.MQTT.Message("New Lighting programmer arrived ...");
+		  console.log("MQTT:Announce a new lighting programmer arriving.");
+		  
+		  message.destinationName = "/DMX-Universe01";
+		  console.log("MQTT:Choose the topic to publish it!");
+		  
+		  MQTT_Client.send(message);
+		  console.log("MQTT:Publish the message");
+		  */
+		
+		
+		MQTT_Client.disconnect();
+		return false;
+	}
+
 
 
 //Example to be removed but that helps understangin that hat blocks are continously beeing called!
