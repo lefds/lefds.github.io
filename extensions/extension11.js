@@ -100,7 +100,7 @@
 	
 	
 	//Hat block that a scratch app should use to be notified that the Lightning equipment is ready
-	var try_mqtt_connection = false;
+	var try_mqtt_connection = true;
 	
 	
 	ext.WhenLightningController = function(mqtt_server, mqtt_port) {
@@ -119,6 +119,7 @@
 		
 	    if (try_mqtt_connection === true) {
 			try_mqtt_connection = false;
+			
 		    return true;
         }
 		return false;
