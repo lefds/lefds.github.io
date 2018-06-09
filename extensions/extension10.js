@@ -126,7 +126,7 @@
 		// Wait until the Lighting server flags that it is on-line and ready		
 		while (!SACN_CameoFXBar_29CHMODE_Ready_Published) {
 			console.log("Lighting server is still not online and ready");
-			sleep(2000;)
+			sleep(2000);
 		}
 		
 		if (SACN_CameoFXBar_29CHMODE_Ready_Published === true) {
