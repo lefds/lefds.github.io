@@ -102,7 +102,9 @@
 	var try_mqtt_connection = false;
 	
 	
-	ext.WhenLightningController = function(mqtt_server, mqtt_port) {
+	//ext.WhenLightningController = function(mqtt_server, mqtt_port) {
+		
+	ext.WhenLightningController = function() {
 		// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
 		// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
 		// https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js
@@ -166,6 +168,9 @@
 
 
 //Example to be removed but that helps understangin that hat blocks are continously beeing called!
+
+
+
 //source: https://github.com/LLK/scratchx/wiki#hat-blocks
 	var alarm_went_off = false; // This becomes true after the alarm goes off
 	
@@ -192,7 +197,8 @@
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-			['h', 'When Lightning Controller at IP %s : %n is ready', 'WhenLightningController', '192.168.100.100', 9001],			
+			['h', 'When Lightning Controller at IP %s : %n is ready', 'WhenLightningController1', '192.168.100.100', 9001],
+			['h', 'When Lightning Controller is ready', 'WhenLightningController'],
             ['h', 'when alarm goes off', 'when_alarm'],
 			['', 'run alarm after %n seconds', 'set_alarm', '10'],
 		],
