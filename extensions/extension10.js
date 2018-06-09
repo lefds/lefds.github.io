@@ -2,7 +2,7 @@
 //Using: https://www.eclipse.org/paho/downloads.php
 // More sources helping
 //   - https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-javascript
-//
+// Tested with: http://www.hivemq.com/demos/websocket-client/ 
 //
 
 
@@ -27,6 +27,15 @@
 	var MQTTClientID =  Math.floor(Math.random() * Math.floor(100000)) + ".SACN.ISEC.PT";
 	
 	var LightigReadyTopic = "/SACN/CameoFXBar/29CHMODE/Ready";
+
+
+	// Cleanup function when the extension is unloaded
+    ext._shutdown = function() {
+		if(MQTT_Client !== null) {
+			MQTT_Client.disconnect();
+		}
+	};
+
 	
 	var ajax_success_onConnect = function onConnect() {
 		  // Once a MQTT connection has been made, subcribe the topic that used by the Lihting server to flag it is ready.
@@ -40,15 +49,14 @@
 	};
 
 	
-	var ajax_onConnectionLost = function onConnectionLost(responseObject) {
+	var mqtt_onConnectionLost = function onConnectionLost(responseObject) {
 		  console.log('MQTT:onConnectionLost');			
 		  if (responseObject.errorCode !== 0)
-			console.log("onConnectionLost:"+responseObject.errorMessage);
+			console.log("MQTT Connection Lost:"+responseObject.errorMessage);
 	};
-			
 
-	var ajax_onMessageArrived = function onMessageArrived(message) {
-		  console.log("MQTT MessageArrived:" + message.payloadString);
+	var mqtt_onMessageArrived = function onMessageArrived(message) {
+		  console.log("MQTT Message Arrived: " + message.payloadString);
 		  //by now we are assuming it the "ready" topic is being published
 		  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
 	};
@@ -106,7 +114,7 @@
 		// remains being called. If the functions returns false the following blocks are not called. 		
 		//console.log("WhenLightningController Hat block activated" + mqtt_server + ":" +  mqtt_port);
 		
-	    if (try_mqtt_connection === true) {
+	    if (try_mqtt_connection === true) {			
 		   return false;
         }
 		
@@ -114,10 +122,14 @@
 
 		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
 		console.log('MQTT Client handle created');
-		MQTT_Client.onConnectionLost = ajax_onConnectionLost;
+		MQTT_Client.onConnectionLost = mqtt_onConnectionLost;
+		MQTT_Client.onMessageArrived = mqtt_onMessageArrived;
+
+		
 		MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});
 		console.log("Connection attempt in course ...");
 
+/*		
 		//https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
 		function sleep(ms) {
 		  return new Promise(resolve => setTimeout(resolve, ms));
@@ -132,10 +144,11 @@
 		if (SACN_CameoFXBar_29CHMODE_Ready_Published === true) {
 			console.log("Lighting server is on-line and ready!");
 		   return true;
-		}
+		}		
 		return false;
-		
-		  /*
+*/		
+
+/*
 		  message = new Paho.MQTT.Message("New Lighting programmer arrived ...");
 		  console.log("MQTT:Announce a new lighting programmer arriving.");
 		  
@@ -144,11 +157,11 @@
 		  
 		  MQTT_Client.send(message);
 		  console.log("MQTT:Publish the message");
-		  */
-		
+
 		
 		MQTT_Client.disconnect();
-		return false;
+*/		
+		return true;
 	}
 
 
