@@ -105,6 +105,7 @@
 	
 	ext.WhenLightningController = async function(mqtt_server, mqtt_port) {
 		
+		
 	//ext.WhenLightningController = function() {
 		// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
 		// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
