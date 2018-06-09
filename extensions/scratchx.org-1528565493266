@@ -1,0 +1,82 @@
+18:27:14.765 analytics.js:10 XHR finished loading: POST "https://www.google-analytics.com/j/collect?v=1&_v=j68&a=43228996&t=pageview&_s=1&dl=http%3A%2F%2Fscratchx.org%2F&dp=home&ul=pt-pt&de=UTF-8&dt=ScratchX&sd=24-bit&sr=1280x720&vp=739x588&je=0&fl=30.0%20r0&_u=AACAAMABAAAAAC~&jid=174485518&gjid=2093384900&cid=869754666.1524331242&tid=UA-30688952-3&_gid=1193559196.1528380309&_r=1&z=133974254".
+wd @ analytics.js:10
+pe @ analytics.js:8
+Sa @ analytics.js:13
+Ha.D @ analytics.js:11
+pc.send @ analytics.js:46
+X.b.(anonymous function) @ analytics.js:24
+Z.v @ analytics.js:54
+Z.D @ analytics.js:53
+N.N @ analytics.js:58
+rc @ analytics.js:47
+z @ analytics.js:47
+(anonymous) @ analytics.js:58
+(anonymous) @ analytics.js:58
+18:27:15.508 (index):1 Cross-origin plugin content from  must have a visible size larger than 400 x 300 pixels, or it will be blocked. Invisible content is always blocked.
+18:27:20.772 VM21336 extension11.js:67 Client ID = 80447.SACN.ISEC.PT
+18:27:20.936 VM21336 extension11.js:85 MQTT Java Script module sucessufuly loaded!
+18:29:57.067 extension11.js:67 Client ID = 19355.SACN.ISEC.PT
+18:29:57.335 extension11.js:85 MQTT Java Script module sucessufuly loaded!
+18:30:54.192 extension11.js:122 MQTT Client handle created
+18:30:54.196 extension11.js:128 Connection attempt in course ...
+18:30:54.196 extension11.js:138 Lighting server is still not online and ready
+18:30:54.321 extension11.js:42 Subscribing the topic: /SACN/CameoFXBar/29CHMODE/Ready
+18:30:55.198 extension11.js:138 Lighting server is still not online and ready
+18:30:56.198 extension11.js:138 Lighting server is still not online and ready
+18:30:57.199 extension11.js:138 Lighting server is still not online and ready
+18:30:58.200 extension11.js:138 Lighting server is still not online and ready
+18:30:59.201 extension11.js:138 Lighting server is still not online and ready
+18:31:00.201 extension11.js:138 Lighting server is still not online and ready
+18:31:01.203 extension11.js:138 Lighting server is still not online and ready
+18:31:02.204 extension11.js:138 Lighting server is still not online and ready
+18:31:03.205 extension11.js:138 Lighting server is still not online and ready
+18:31:04.207 extension11.js:138 Lighting server is still not online and ready
+18:31:05.208 extension11.js:138 Lighting server is still not online and ready
+18:31:06.209 extension11.js:138 Lighting server is still not online and ready
+18:31:07.210 extension11.js:138 Lighting server is still not online and ready
+18:31:08.211 extension11.js:138 Lighting server is still not online and ready
+18:31:09.211 extension11.js:138 Lighting server is still not online and ready
+18:31:10.212 extension11.js:138 Lighting server is still not online and ready
+18:31:11.213 extension11.js:138 Lighting server is still not online and ready
+18:31:12.214 extension11.js:138 Lighting server is still not online and ready
+18:31:13.215 extension11.js:138 Lighting server is still not online and ready
+18:31:14.216 extension11.js:138 Lighting server is still not online and ready
+18:31:15.217 extension11.js:138 Lighting server is still not online and ready
+18:31:16.218 extension11.js:138 Lighting server is still not online and ready
+18:31:17.219 extension11.js:138 Lighting server is still not online and ready
+18:31:18.221 extension11.js:138 Lighting server is still not online and ready
+18:31:19.222 extension11.js:138 Lighting server is still not online and ready
+18:31:20.224 extension11.js:138 Lighting server is still not online and ready
+18:31:21.225 extension11.js:138 Lighting server is still not online and ready
+18:31:22.226 extension11.js:138 Lighting server is still not online and ready
+18:31:23.228 extension11.js:138 Lighting server is still not online and ready
+18:31:24.230 extension11.js:138 Lighting server is still not online and ready
+18:31:25.231 extension11.js:138 Lighting server is still not online and ready
+18:31:26.233 extension11.js:138 Lighting server is still not online and ready
+18:31:27.235 extension11.js:138 Lighting server is still not online and ready
+18:31:28.237 extension11.js:138 Lighting server is still not online and ready
+18:31:29.238 extension11.js:138 Lighting server is still not online and ready
+18:31:30.240 extension11.js:138 Lighting server is still not online and ready
+18:31:31.241 extension11.js:138 Lighting server is still not online and ready
+18:31:32.242 extension11.js:138 Lighting server is still not online and ready
+18:31:33.243 extension11.js:138 Lighting server is still not online and ready
+18:31:34.245 extension11.js:138 Lighting server is still not online and ready
+18:31:35.246 extension11.js:138 Lighting server is still not online and ready
+18:31:36.248 extension11.js:138 Lighting server is still not online and ready
+18:31:37.250 extension11.js:138 Lighting server is still not online and ready
+18:31:38.250 extension11.js:138 Lighting server is still not online and ready
+18:31:39.251 extension11.js:138 Lighting server is still not online and ready
+18:31:40.254 extension11.js:138 Lighting server is still not online and ready
+18:31:41.254 extension11.js:138 Lighting server is still not online and ready
+18:31:42.254 extension11.js:138 Lighting server is still not online and ready
+18:31:43.255 extension11.js:138 Lighting server is still not online and ready
+18:31:44.256 extension11.js:138 Lighting server is still not online and ready
+18:31:45.258 extension11.js:138 Lighting server is still not online and ready
+18:31:46.259 extension11.js:138 Lighting server is still not online and ready
+18:31:47.261 extension11.js:138 Lighting server is still not online and ready
+18:31:48.261 extension11.js:138 Lighting server is still not online and ready
+18:31:49.262 extension11.js:138 Lighting server is still not online and ready
+18:31:50.263 extension11.js:138 Lighting server is still not online and ready
+18:31:51.264 extension11.js:138 Lighting server is still not online and ready
+18:31:52.265 extension11.js:138 Lighting server is still not online and ready
+18:31:53.267 extension11.js:138 Lighting server is still not online and ready
