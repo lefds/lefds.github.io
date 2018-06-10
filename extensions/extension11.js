@@ -103,13 +103,13 @@
 	//var when_mqtt_connected = true;
 	var when_mqtt_connected = false;
 	
-	// ext.WhenLightningController = async function(mqtt_server, mqtt_port) {
+	//ext.WhenLightningController1 = function(mqtt_server, mqtt_port) {
 		
 	ext.WhenLightningController1 = function() {
 		
 	   console.log("When_WhenLightningController1 beeing called");
-       if (alarm_went_off === true) {
-           alarm_went_off = false;
+       if (when_mqtt_connected === true) {
+           when_mqtt_connected = false;
 		   console.log("went off!");
            return true;
        }
