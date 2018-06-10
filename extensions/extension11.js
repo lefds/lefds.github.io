@@ -33,7 +33,8 @@
 	   dataType:'script'
 	});	
 
-	
+
+	//Called by scratch two times per second	
 	ext._getStatus = function() {
 		console.log("_getStatus being called");
 		if (!MQTT_API_Loaded)
@@ -136,7 +137,7 @@
 			callback(false);
 		}
 		console.log("ConnectToLightingController: MQTT broker found ...");
-		callback (true);
+		callback(true);
 	}
 		
 
