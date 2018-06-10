@@ -149,13 +149,14 @@
 	//Example: https://github.com/LLK/scratchx/wiki#reporter-blocks-that-wait
 	//Neste módulo apenas quando a função callback é chamada o bloco termina a sua execução
 	//Na nossa situação ligamo-nos ao broker MQTT e esperamos até ter um publish do Lihting server e informar que está pronto
-	ext.ConnectToLightingController1 = function(mqtt_server, mqtt_port, callback) {
+	ext.ConnectToLightingController = function (mqtt_server, mqtt_port, callback) {
 		console.log("ConnectToLightingController: Preparing to connect to the MQTT broker at " + mqtt_server + ":" +  mqtt_port);
 		callback(1);
 		return;
 	}
 	
-	ext.ConnectToLightingController = function(mqtt_server, mqtt_port, callback) {
+	
+	ext.ConnectToLightingController1 = function(mqtt_server, mqtt_port, callback) {
 		console.log("ConnectToLightingController: Preparing to connect to the MQTT broker at " + mqtt_server + ":" +  mqtt_port);
 		if (MQTT_Client != null) MQTT_Client.disconnect();		
 		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
