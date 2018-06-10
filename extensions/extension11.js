@@ -149,6 +149,12 @@
 	//Example: https://github.com/LLK/scratchx/wiki#reporter-blocks-that-wait
 	//Neste módulo apenas quando a função callback é chamada o bloco termina a sua execução
 	//Na nossa situação ligamo-nos ao broker MQTT e esperamos até ter um publish do Lihting server e informar que está pronto
+	ext.ConnectToLightingController1 = function(mqtt_server, mqtt_port, callback) {
+		console.log("ConnectToLightingController: Preparing to connect to the MQTT broker at " + mqtt_server + ":" +  mqtt_port);
+		callback(1);
+		return;
+	}
+	
 	ext.ConnectToLightingController = function(mqtt_server, mqtt_port, callback) {
 		console.log("ConnectToLightingController: Preparing to connect to the MQTT broker at " + mqtt_server + ":" +  mqtt_port);
 		if (MQTT_Client != null) MQTT_Client.disconnect();		
@@ -366,8 +372,8 @@
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-			['R', 'Connect to the Lighting Controller at IP %s : %n is ready', 'ConnectToLightingController', '192.168.100.100', 9001],
-			['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady'],
+		['R', 'Connect to the Lighting Controller at IP %s : %n is ready', 'ConnectToLightingController', '192.168.100.100', 9001],
+		['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady']
 		],
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'sACN DMX Scratch Extension'
