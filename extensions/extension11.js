@@ -100,13 +100,25 @@
 	
 	
 	//Hat block that a scratch app should use to be notified that the Lightning equipment is ready
-	var when_mqtt_connected = true;
+	//var when_mqtt_connected = true;
+	var when_mqtt_connected = false;
 	
-	
-	ext.WhenLightningController = async function(mqtt_server, mqtt_port) {
+	// ext.WhenLightningController = async function(mqtt_server, mqtt_port) {
 		
 		
-	//ext.WhenLightningController = function() {
+	ext.WhenLightningController1 = function() {
+		
+	   console.log("When_WhenLightningController1 beeing called");
+       if (alarm_went_off === true) {
+           alarm_went_off = false;
+		   console.log("went off!");
+           return true;
+       }
+	   console.log("not went off yet!");
+       return false;
+    };
+		
+		
 		// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
 		// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
 		// https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js
@@ -117,7 +129,8 @@
 		// whenever it returns true the following blocks are executed but the hat block fucntion
 		// remains being called. If the functions returns false the following blocks are not called. 		
 		//console.log("WhenLightningController Hat block activated" + mqtt_server + ":" +  mqtt_port);
-		
+
+		/*		
 	    if (when_mqtt_connected === true) {
 			when_mqtt_connection = false;			
 			//Tenta ligar
@@ -225,8 +238,8 @@
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-			['h', 'When Lightning Controller at IP %s : %n is ready', 'WhenLightningController1', '192.168.100.100', 9001],
-//			['h', 'When Lightning Controller is ready', 'WhenLightningController'],
+//			['h', 'When Lightning Controller at IP %s : %n is ready', 'WhenLightningController', '192.168.100.100', 9001],
+			['h', 'When Lightning Controller is ready', 'WhenLightningController1'],
             ['h', 'when alarm goes off', 'when_alarm'],
 			['', 'run alarm after %n seconds', 'set_alarm', '10'],
 		],
