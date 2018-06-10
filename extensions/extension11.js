@@ -1,9 +1,16 @@
 //https://lefds.github.io/extensions/extension11.js
+//http://savaka2.github.io/scratch-extensions-directory/
 //Using: https://www.eclipse.org/paho/downloads.php
 // More sources helping
 //   - https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-javascript
 // Tested with: http://www.hivemq.com/demos/websocket-client/ 
-//
+// Nota:Na extensão 
+//    https://khanning.github.io/scratch-isstracker-extension/iss_extension.js
+// usam um método que corre uma função de x em x milisegundos
+// updateISSLocation();
+//  var poller = setInterval(updateISSLocation, 2000);
+// e no shutdow desligam a função
+
 
 
 (function(ext) {
@@ -155,10 +162,12 @@
 
 		if (MQTT_Client === null) {
 			console.log("ConnectToLightingController: MQTT broker not found ...");
-			callback(false);
+			callback(1);
+			return;
 		}
 		console.log("ConnectToLightingController: MQTT broker found ...");
-		callback(true);
+		callback(2);
+		return;
 	}
 		
 
