@@ -69,6 +69,30 @@
 	//An universe size of 100.000 must be enough to handle a class of 100 diferents student IDs
 	var MQTTClientID =  Math.floor(Math.random() * Math.floor(100000)) + ".SACN.ISEC.PT";
 	console.log('Client ID = ' + MQTTClientID);
+
+
+
+
+	//Called by scratch two times per second	
+	//Value	Color	Meaning
+	//0		red		error
+	//1		yellow	not ready
+	//2		green	ready
+	//=> IF a 0 is returned the Scratch simply stops the extension at all!
+	ext._getStatus = function() {
+		console.log("Getting status");
+		if (MQTT_API_Loaded) {
+			if (MQTT_Connection_Established) {
+				if (MQTT_Client !== null) {
+					return { status:2, msg:'Ongoing lighting server communication.' };
+				}
+				return { status:1, msg:'MQTT Broker connection established!' };
+			}
+			return { status:1, msg:'MQTT API loaded but broker connection not yet established!' };
+		}
+		//We must introduce here a delay and retry
+		return { status:0, msg:'MQTT API not yet loaded!'};
+	};
 	
 
 	// Cleanup function when the extension is unloaded
@@ -349,25 +373,6 @@
 */
 
 
-	//Called by scratch two times per second	
-	//Value	Color	Meaning
-	//0		red		error
-	//1		yellow	not ready
-	//2		green	ready
-	//=> IF a 0 is returned the Scratch simply stops the extension at all!
-	ext._getStatus = function() {
-		return { status:2, msg:'Ongoing lighting server communication.' };
-		if (MQTT_API_Loaded) {
-			if (MQTT_Connection_Established) {
-				if (MQTT_Client !== null) {
-					return { status:2, msg:'Ongoing lighting server communication.' };
-				}
-				return { status:1, msg:'MQTT Broker connection established!' };
-			}
-			return { status:1, msg:'MQTT API loaded but broker connection not yet established!' };
-		}
-		return { status:0, msg:'MQTT API not yet loaded!'};
-	};
 	
 
 	
