@@ -150,6 +150,7 @@
 	
 	ext.WaitLightingServerBecomesReady = function() {
 	   lighting_server_announces_ready = SACN_CameoFXBar_29CHMODE_Ready_Published;
+	   
        if (lighting_server_announces_ready === true) {
            lighting_server_announces_ready = false;		  
 		   console.log("WaitLightingServerBecomesReady: Lighting server announces it is ready");
