@@ -86,12 +86,12 @@
 				if (MQTT_Client !== null) {
 					return { status:2, msg:'Ongoing lighting server communication.' };
 				}
-				return { status:1, msg:'MQTT Broker connection established!' };
+				return { status:2, msg:'MQTT Broker connection established!' };
 			}
-			return { status:1, msg:'MQTT API loaded but broker connection not yet established!' };
+			return { status:2, msg:'MQTT API loaded but broker connection not yet established!' };
 		}
 		//We must introduce here a delay and retry
-		return { status:1, msg:'MQTT API not yet loaded!'};
+		return { status:2, msg:'MQTT API not yet loaded!'};
 	};
 	
 
