@@ -8,15 +8,51 @@
 
 (function(ext) {
     // TODO: public repo + documentation + samples
-    // GH pages
-
+    // GH pages	
+	
 	ws: true
 
-	//MQTT handle to talk with MQTT broker (Mosquitto)
+	// ======================== MQTT Paho API Module stuff =======================================
+	var MQTT_API_Loaded = false;	
+
+	//Perform an asynchronous HTTP (Ajax) request.
+	// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
+	// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
+	// https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js	 
+	// Documented at: http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings	
+	$.ajax({
+		async:false,	//this may temporarely lock the browser but it is the price to pay ...
+		type:'GET',
+		url:'https://lefds.github.io/extensions/paho-mqtt.js',
+		data:null,
+		success: function(){
+			MQTT_API_Loaded  = true;
+			console.log("MQTT Java Script module sucessufuly loaded!");
+		},
+		
+	   dataType:'script'
+	});	
+
+	
+	ext._getStatus = function() {
+		console.log("_getStatus being called");
+		if (!MQTT_API_Loaded)
+			return { status:1, msg:'MQTT API loaded.' };
+		else
+		return { status:2, msg:'Unbale to load the MQTT API!'};
+	};
+
+
+	
+	
+	// ======================== MQTT Broker stuff =======================================
+
+	//MQTT handle to talk with the MQTT broker (Mosquitto - WebSocket protocol)
 	var MQTT_Client = null;
 	
-	var connected = false;
-
+	//MQTT Topic used by the Lighting server to flag it is ready
+	var LightingReadyTopic = "/SACN/CameoFXBar/29CHMODE/Ready";
+	
 	//Flags when this Scratch client is notified that the Lighting robot (Cameo) is ready to be  controlled
 	var SACN_CameoFXBar_29CHMODE_Ready_Published = false;
 	
@@ -25,9 +61,8 @@
 	//the first client session is closed (by default).
 	//An universe size of 100.000 must be enough to handle a class of 100 diferents student IDs
 	var MQTTClientID =  Math.floor(Math.random() * Math.floor(100000)) + ".SACN.ISEC.PT";
+	console.log('Client ID = ' + MQTTClientID);
 	
-	var LightigReadyTopic = "/SACN/CameoFXBar/29CHMODE/Ready";
-
 
 	// Cleanup function when the extension is unloaded
     ext._shutdown = function() {
@@ -36,75 +71,160 @@
 		}
 	};
 
-	
-	var ajax_success_onConnect = function onConnect() {
+
+	var mqtt_success_onConnect = function onConnect() {
+		  console.log("mqtt_success_onConnect: The MQTT broker is online.");
 		  // Once a MQTT connection has been made, subcribe the topic that used by the Lihting server to flag it is ready.
-		  console.log("Subscribing the topic: " + LightigReadyTopic);
-		  MQTT_Client.subscribe(LightigReadyTopic);
-	};
-	
-
-	var ajax_success_onConnectError = function  OnConnectError (invocationContext, errorCode, errorMessage) {
-		console.log("onConnectAbort:" +invocationContext + " errorCode: " + errorCode + " errorMessage:" + errorMessage);
+		  console.log("mqtt_success_onConnect: Subscribing the topic: " + LightingReadyTopic);
+		  MQTT_Client.subscribe(LightingReadyTopic);
 	};
 
-	
+
 	var mqtt_onConnectionLost = function onConnectionLost(responseObject) {
-		  console.log('MQTT:onConnectionLost');			
+		  console.log("mqtt_onConnectionLost: Connection lost with the MQTT broker");
+		  MQTT_Client = null;
 		  if (responseObject.errorCode !== 0)
 			console.log("MQTT Connection Lost:"+responseObject.errorMessage);
 	};
 
 	var mqtt_onMessageArrived = function onMessageArrived(message) {
-		  console.log("MQTT Message Arrived: " + message.payloadString);
-		  //by now we are assuming it the "ready" topic is being published
+		  console.log("mqtt_onMessageArrived: MQTT Message Arrived: " + message.payloadString);
+		  //by now we are assuming it is the "ready" topic the single one being published by the broker
 		  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
-	};
+	};	
 
+  
+  
+	
+	//BEGIN: Extensões Scratch para dialogar com o MQTT	Broker
 	
 	
-	//Code Execution begins here when the extension javascript file is loaded at http://scratchx.org/#
-	console.log('Client ID = ' + MQTTClientID);
+	//https://github.com/LLK/scratchx/wiki#reporter-blocks-that-wait
+		/* Example	
+		ext.get_temp = function(location, callback) {
+			// Make an AJAX call to the Open Weather Maps API
+			$.ajax({
+				  url: 'http://api.openweathermap.org/data/2.5/weather?q='+location+'&units=imperial',
+				  dataType: 'jsonp',
+				  success: function( weather_data ) {
+					  // Got the data - parse it and return the temperature
+					  temperature = weather_data['main']['temp'];
+					  callback(temperature);
+				  }
+			});
+		};
+		*/
 
-	ext._getStatus = function() {
-		console.log("_getStatus being called");
-		if (!connected)
-			return { status:1, msg:'Disconnected' };
-		else
-		return { status:2, msg:'Connected' };
-	};
-	
-	//Perform an asynchronous HTTP (Ajax) request.
-	$.ajax({
-		async:false,	//this may temporarely lock the browser but it is the price to pay ...
-		type:'GET',
-		url:'https://lefds.github.io/extensions/paho-mqtt.js',
-		data:null,
-		success: function(){
-			connected = true;
-			console.log("MQTT Java Script module sucessufuly loaded!");
-		},
+	//Block: ConnectToLightingController
+	//Scratch extension type: Report block that waits
+	//Example: https://github.com/LLK/scratchx/wiki#reporter-blocks-that-wait
+	//Neste módulo apenas quando a função callback é chamada o bloco termina a sua execução
+	//Na nossa situação ligamo-nos ao broker MQTT e esperamos até ter um publish do Lihting server e informar que está pronto
+	ext.ConnectToLightingController = function(mqtt_server, mqtt_port, callback) {
+		console.log("ConnectToLightingController: Preparing to connect to the MQTT broker at " + mqtt_server + ":" +  mqtt_port);
+		if (MQTT_Client != null) MQTT_Client.disconnect();		
+		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
+		console.log('ConnectToLightingController: New MQTT Client handle created ...');
+		MQTT_Client.onConnectionLost = mqtt_onConnectionLost;
+		MQTT_Client.onMessageArrived = mqtt_onMessageArrived;
+		console.log('ConnectToLightingController: Attemping to connect to the MQTT broker now ...');
+		MQTT_Client.connect({onSuccess: mqtt_success_onConnect, onFailure: mqtt_success_onConnectError});
+		console.log('ConnectToLightingController: Connection in course ...');
+
+		if (MQTT_Client === null) {
+			console.log("ConnectToLightingController: MQTT broker not found ...");
+			callback(false);
+		}
+		console.log("ConnectToLightingController: MQTT broker found ...");
+		callback (true);
+	}
 		
-	   dataType:'script'
-	});	
 
+	//Hat block that flags a ready Lighting Server
+	// Not well documented anywhere.
+	// The hat block code is running all the time on its own thread.
+	// whenever it returns true the following blocks are executed but the hat block fucntion
+	// remains being called. If the functions returns false the following blocks are not called. 		
+
+	var lighting_server_announces_ready = false;
 	
-    // Status reporting code
-    // Use this to report missing hardware, plugin or unsupported browser
-    ext._getStatus = function() {
-        return {status: 2, msg: 'Ready'};
+	ext.WaitLightingServerBecomesReady = function() {
+	   lighting_server_announces_ready = SACN_CameoFXBar_29CHMODE_Ready_Published;
+       if (lighting_server_announces_ready === true) {
+           lighting_server_announces_ready = false;		  
+		   console.log("WaitLightingServerBecomesReady: Lighting server announces it is ready");
+           return true;
+       }
+	   console.log("WaitLightingServerBecomesReady: Lighting server not yet ready!");
+       return false;
     };
-    
+		
+		/*		
+	    if (when_mqtt_connected === true) {
+			when_mqtt_connection = false;			
+			//Tenta ligar
+
+			
+			
+
+			
+			//https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+			function sleep(ms) {
+			  return new Promise(resolve => setTimeout(resolve, ms));
+			}
+			
+			// Wait until the Lighting server flags that it is on-line and ready		
+			while (!SACN_CameoFXBar_29CHMODE_Ready_Published) {
+				console.log("Lighting server is still not online and ready");
+				await sleep(1000);
+			}
+			
+			console.log("WhenLightningController returning true");
+			return true;
+			
+			return true;
+		}
+		return false;
+	}
+/*		
+	    try_mqtt_connection = true;
+
+		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
+		console.log('MQTT Client handle created');
+		MQTT_Client.onConnectionLost = mqtt_onConnectionLost;
+		MQTT_Client.onMessageArrived = mqtt_onMessageArrived;
+
+		
+		MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});
+		console.log("Connection attempt in course ...");
+
+		
+		//https://stackoverflow.com/questions/951021/what-is-the-javascript-version-of-sleep
+		function sleep(ms) {
+		  return new Promise(resolve => setTimeout(resolve, ms));
+		}
+		
+		// Wait until the Lighting server flags that it is on-line and ready		
+		while (!SACN_CameoFXBar_29CHMODE_Ready_Published) {
+			console.log("Lighting server is still not online and ready");
+			await sleep(1000);
+		}
+		
+		console.log("WhenLightningController returning true");
+		return true;
 	
-	//BEGIN: As minhas extensões MQTT
+	
 	
 	
 	//Hat block that flags a ready Lightning Server
+	// Not well documented anywhere.
+	// The hat block code is running all the time on its own thread.
+	// whenever it returns true the following blocks are executed but the hat block fucntion
+	// remains being called. If the functions returns false the following blocks are not called. 		
+	
 	var lighting_server_announces_ready = false;
 	var lighting_server_ready = true;
-	
-
-		
+			
 	ext.WaitLightingServerBecomesReady = function() {
        if (lighting_server_announces_ready === true) {
            lighting_server_announces_ready = false;
@@ -141,7 +261,7 @@
 			MQTT_Client.onMessageArrived = mqtt_onMessageArrived;
 
 			
-			MQTT_Client.connect({onSuccess: ajax_success_onConnect, onFailure: ajax_success_onConnectError});
+			MQTT_Client.connect({onSuccess: mqtt_success_onConnect, onFailure: mqtt_success_onConnectError});
 			console.log("Connection attempt in course ...");
 
 			
@@ -208,41 +328,14 @@
 	}
 */
 
-
-//Example to be removed but that helps understangin that hat blocks are continously beeing called!
-
-
-
-//source: https://github.com/LLK/scratchx/wiki#hat-blocks
-	var alarm_went_off = false; // This becomes true after the alarm goes off
 	
-	ext.set_alarm = function(time) {
-       window.setTimeout(function() {
-           alarm_went_off = true;
-       }, time*1000);
-    };
-
-    ext.when_alarm = function() {
-       // Reset alarm_went_off if it is true, and return true
-       // otherwise, return false.
-	   console.log("When_alarm beeing called");
-       if (alarm_went_off === true) {
-           alarm_went_off = false;
-		   console.log("Alarm went off!");
-           return true;
-       }
-	   console.log("Alarm not went off yet!");
-       return false;
-    };
 
 	
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-//			['h', 'When Lightning Controller at IP %s : %n is ready', 'WhenLightningController', '192.168.100.100', 9001],
+			['R', 'Connect to the Lighting Controller at IP %s : %n is ready', 'ConnectToLightingController', '192.168.100.100', 9001],
 			['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady'],
-            ['h', 'when alarm goes off', 'when_alarm'],
-			['', 'run alarm after %n seconds', 'set_alarm', '10'],
 		],
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'sACN DMX Scratch Extension'
