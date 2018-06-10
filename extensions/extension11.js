@@ -52,25 +52,6 @@
 	});	
 
 
-	//Called by scratch two times per second	
-	//Value	Color	Meaning
-	//0		red		error
-	//1		yellow	not ready
-	//2		green	ready
-	ext._getStatus = function() {
-		if (MQTT_API_Loaded) {
-			if (MQTT_Connection_Established) {
-				if (MQTT_Client !== null) {
-					return { status:2, msg:'Ongoing lighting server communication.' };
-				}
-				return { status:1, msg:'MQTT Broker connection established!' };
-			}
-			return { status:0, msg:'MQTT API loaded but broker connection not yet established!' };
-		}		
-		return { status:0, msg:'MQTT API not yet loaded!'};
-	};
-
-
 	
 	
 	// ======================== MQTT Broker stuff =======================================
@@ -367,6 +348,24 @@
 	}
 */
 
+
+	//Called by scratch two times per second	
+	//Value	Color	Meaning
+	//0		red		error
+	//1		yellow	not ready
+	//2		green	ready
+	ext._getStatus = function() {
+		if (MQTT_API_Loaded) {
+			if (MQTT_Connection_Established) {
+				if (MQTT_Client !== null) {
+					return { status:2, msg:'Ongoing lighting server communication.' };
+				}
+				return { status:1, msg:'MQTT Broker connection established!' };
+			}
+			return { status:0, msg:'MQTT API loaded but broker connection not yet established!' };
+		}		
+		return { status:0, msg:'MQTT API not yet loaded!'};
+	};
 	
 
 	
