@@ -99,24 +99,26 @@
 	//BEGIN: As minhas extensões MQTT
 	
 	
-	//Hat block that a scratch app should use to be notified that the Lightning equipment is ready
-	//var when_mqtt_connected = true;
-	var when_mqtt_connected = false;
+	//Hat block that flags a ready Lightning Server
+	var lighting_server_announces_ready = false;
+	var lighting_server_ready = true;
 	
-	//ext.WhenLightningController1 = function(mqtt_server, mqtt_port) {
+
 		
-	ext.WhenLightningController1 = async function() {
-		
-	   console.log("When_WhenLightningController1 beeing called");
-       if (when_mqtt_connected === true) {
-           when_mqtt_connected = false;
-		   console.log("went off!");
+	ext.WaitLightingServerBecomesReady = function() {
+       if (lighting_server_announces_ready === true) {
+           lighting_server_announces_ready = false;
+		   lighting_server_ready  = true;
+		   console.log("Lighting server announces it is ready");
            return true;
        }
-	   console.log("not went off yet!");
+	   console.log("Lighting server not yet ready!");
        return false;
     };
-		
+
+
+	
+	//ext.WhenLightningController1 = function(mqtt_server, mqtt_port) {
 		
 		// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
 		// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
@@ -238,7 +240,7 @@
     var descriptor = {
         blocks: [
 //			['h', 'When Lightning Controller at IP %s : %n is ready', 'WhenLightningController', '192.168.100.100', 9001],
-			['h', 'When Lightning Controller is ready', 'WhenLightningController1'],
+			['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady'],
             ['h', 'when alarm goes off', 'when_alarm'],
 			['', 'run alarm after %n seconds', 'set_alarm', '10'],
 		],
