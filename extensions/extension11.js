@@ -105,7 +105,7 @@
 	
 	//ext.WhenLightningController1 = function(mqtt_server, mqtt_port) {
 		
-	ext.WhenLightningController1 = function() {
+	ext.WhenLightningController1 = async function() {
 		
 	   console.log("When_WhenLightningController1 beeing called");
        if (when_mqtt_connected === true) {
