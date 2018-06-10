@@ -12,8 +12,19 @@
 	
 	ws: true
 
+	//Several global variables important to understand the extension status
+	
+	
+	var MQTT_API_Loaded = false;
+	
+	var MQTT_Connection_Established = false;
+		
+	//MQTT handle to talk with the MQTT broker (Mosquitto - WebSocket protocol)
+	var MQTT_Client = null;
+
+	
 	// ======================== MQTT Paho API Module stuff =======================================
-	var MQTT_API_Loaded = false;	
+
 
 	//Perform an asynchronous HTTP (Ajax) request.
 	// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
@@ -35,12 +46,21 @@
 
 
 	//Called by scratch two times per second	
+	//Value	Color	Meaning
+	//0		red		error
+	//1		yellow	not ready
+	//2		green	ready
 	ext._getStatus = function() {
-		console.log("_getStatus being called");
-		if (!MQTT_API_Loaded)
-			return { status:1, msg:'MQTT API loaded.' };
-		else
-		return { status:2, msg:'Unbale to load the MQTT API!'};
+		if (MQTT_API_Loaded) {
+			if (MQTT_Connection_Established) {
+				if (MQTT_Client !== null) {
+					return { status:2, msg:'Ongoing lighting server communication.' };
+				}
+				return { status:1, msg:'MQTT Broker connection established!' };
+			}
+			return { status:0, msg:'MQTT API loaded but broker connection not yet established!' };
+		}		
+		return { status:0, msg:'MQTT API not yet loaded!'};
 	};
 
 
@@ -48,8 +68,6 @@
 	
 	// ======================== MQTT Broker stuff =======================================
 
-	//MQTT handle to talk with the MQTT broker (Mosquitto - WebSocket protocol)
-	var MQTT_Client = null;
 	
 	//MQTT Topic used by the Lighting server to flag it is ready
 	var LightingReadyTopic = "/SACN/CameoFXBar/29CHMODE/Ready";
@@ -74,17 +92,20 @@
 
 
 	var mqtt_success_onConnect = function onConnect() {
-		  console.log("mqtt_success_onConnect: The MQTT broker is online.");
-		  // Once a MQTT connection has been made, subcribe the topic that used by the Lihting server to flag it is ready.
-		  console.log("mqtt_success_onConnect: Subscribing the topic: " + LightingReadyTopic);
-		  MQTT_Client.subscribe(LightingReadyTopic);
+		MQTT_Connection_Established = true;
+		console.log("mqtt_success_onConnect: The MQTT broker is online.");
+		  
+		// Once a MQTT connection has been made, subcribe the topic that used by the Lihting server to flag it is ready.
+		console.log("mqtt_success_onConnect: Subscribing the topic: " + LightingReadyTopic);
+		MQTT_Client.subscribe(LightingReadyTopic);
 	};
 
 
 	var mqtt_onConnectionLost = function onConnectionLost(responseObject) {
-		  console.log("mqtt_onConnectionLost: Connection lost with the MQTT broker");
-		  MQTT_Client = null;
-		  if (responseObject.errorCode !== 0)
+		MQTT_Connection_Established = false;
+		console.log("mqtt_onConnectionLost: Connection lost with the MQTT broker");
+		MQTT_Client = null;
+		if (responseObject.errorCode !== 0)
 			console.log("MQTT Connection Lost:"+responseObject.errorMessage);
 	};
 
