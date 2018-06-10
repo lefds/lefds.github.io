@@ -354,6 +354,7 @@
 	//0		red		error
 	//1		yellow	not ready
 	//2		green	ready
+	//=> IF a 0 is returned the Scratch simply stops the extension at all!
 	ext._getStatus = function() {
 		return { status:2, msg:'Ongoing lighting server communication.' };
 		if (MQTT_API_Loaded) {
@@ -363,8 +364,8 @@
 				}
 				return { status:1, msg:'MQTT Broker connection established!' };
 			}
-			return { status:0, msg:'MQTT API loaded but broker connection not yet established!' };
-		}		
+			return { status:1, msg:'MQTT API loaded but broker connection not yet established!' };
+		}
 		return { status:0, msg:'MQTT API not yet loaded!'};
 	};
 	
