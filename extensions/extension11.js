@@ -71,27 +71,20 @@
 	console.log('Client ID = ' + MQTTClientID);
 
 
-
+	var Current_Extension_Status = 2;
+	var Current_Extension_Status_Report = "SCAN DMX Extension being loaded"
+	
 
 	//Called by scratch two times per second	
 	//Value	Color	Meaning
 	//0		red		error
 	//1		yellow	not ready
 	//2		green	ready
-	//=> IF a 0 is returned the Scratch simply stops the extension at all!
+	//=> IF a 0 or 1 is returned the Scratch simply stops the extension at all!
+	//The _getStatus functions is immediattly and periodically called.
+	//We can use a global message and variable to flag important events
 	ext._getStatus = function() {
-		console.log("Getting status");
-		if (MQTT_API_Loaded) {
-			if (MQTT_Connection_Established) {
-				if (MQTT_Client !== null) {
-					return { status:2, msg:'Ongoing lighting server communication.' };
-				}
-				return { status:2, msg:'MQTT Broker connection established!' };
-			}
-			return { status:2, msg:'MQTT API loaded but broker connection not yet established!' };
-		}
-		//We must introduce here a delay and retry
-		return { status:2, msg:'MQTT API not yet loaded!'};
+		return { status: Current_Extension_Status, msg:Current_Extension_Status_Report };
 	};
 	
 
