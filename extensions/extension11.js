@@ -20,7 +20,11 @@
 	ws: true
 
 	//Several global variables important to understand the extension status
+
 	
+	var Current_Extension_Status = 2;
+	var Current_Extension_Status_Report = "1/4: SCAN DMX Extension being loaded"
+		
 	
 	var MQTT_API_Loaded = false;
 	
@@ -28,6 +32,7 @@
 		
 	//MQTT handle to talk with the MQTT broker (Mosquitto - WebSocket protocol)
 	var MQTT_Client = null;
+
 
 	
 	// ======================== MQTT Paho API Module stuff =======================================
@@ -45,9 +50,13 @@
 		data:null,
 		success: function(){
 			MQTT_API_Loaded  = true;
+			Current_Extension_Status_Report = "2/4: MQTT API Sucessfully loaded."
 			console.log("MQTT Java Script module sucessufuly loaded!");
 		},
-		
+		error: function (jqXHR jqXHR, String textStatus, String errorThrown){
+			Current_Extension_Status_Report = "0/4: Fatal Error while loading MQTT API: <"+ textStatus + ">";
+			Current_Extension_Status = 0;			
+		},
 	   dataType:'script'
 	});	
 
@@ -71,9 +80,6 @@
 	console.log('Client ID = ' + MQTTClientID);
 
 
-	var Current_Extension_Status = 2;
-	var Current_Extension_Status_Report = "SCAN DMX Extension being loaded"
-	
 
 	//Called by scratch two times per second	
 	//Value	Color	Meaning
@@ -147,14 +153,14 @@
 	//Example: https://github.com/LLK/scratchx/wiki#reporter-blocks-that-wait
 	//Neste módulo apenas quando a função callback é chamada o bloco termina a sua execução
 	//Na nossa situação ligamo-nos ao broker MQTT e esperamos até ter um publish do Lihting server e informar que está pronto
-	ext.ConnectToLightingController = function (mqtt_server, mqtt_port, callback) {
+	ext.ConnectToLightingController1 = function (mqtt_server, mqtt_port, callback) {
 		console.log("ConnectToLightingController: Preparing to connect to the MQTT broker at " + mqtt_server + ":" +  mqtt_port);
 		callback(1);
 		return;
 	}
 	
 	
-	ext.ConnectToLightingController1 = function(mqtt_server, mqtt_port, callback) {
+	ext.ConnectToLightingController = function(mqtt_server, mqtt_port, callback) {
 		console.log("ConnectToLightingController: Preparing to connect to the MQTT broker at " + mqtt_server + ":" +  mqtt_port);
 		if (MQTT_Client != null) MQTT_Client.disconnect();		
 		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
