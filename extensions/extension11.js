@@ -91,7 +91,7 @@
 			return { status:1, msg:'MQTT API loaded but broker connection not yet established!' };
 		}
 		//We must introduce here a delay and retry
-		return { status:0, msg:'MQTT API not yet loaded!'};
+		return { status:1, msg:'MQTT API not yet loaded!'};
 	};
 	
 
