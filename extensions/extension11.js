@@ -53,7 +53,7 @@
 			Current_Extension_Status_Report = "2/4: MQTT API Sucessfully loaded."
 			console.log("MQTT Java Script module sucessufuly loaded!");
 		},
-		error: function (jqXHR jqXHR, String textStatus, String errorThrown){
+		error: function (jqXHR, textStatus, errorThrown){
 			Current_Extension_Status_Report = "0/4: Fatal Error while loading MQTT API: <"+ textStatus + ">";
 			Current_Extension_Status = 0;			
 		},
