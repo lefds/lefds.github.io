@@ -355,6 +355,7 @@
 	//1		yellow	not ready
 	//2		green	ready
 	ext._getStatus = function() {
+		return { status:2, msg:'Ongoing lighting server communication.' };
 		if (MQTT_API_Loaded) {
 			if (MQTT_Connection_Established) {
 				if (MQTT_Client !== null) {
