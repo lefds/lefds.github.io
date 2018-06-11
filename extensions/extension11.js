@@ -50,6 +50,11 @@
 		5:2,
 		6:2,
 	}
+	
+	console.log("0:" + ExtensionStatusValue[0]);
+	console.log("1:" + ExtensionStatusValue[1]);
+	console.log("0:" + ExtensionStatusValue.0);
+	
 	var ExtensionStatusReport = {
 		0:"Fatal error (used to stop extension execution)!",
 		1:"SCAN DMX Extension being loaded.",
@@ -71,6 +76,7 @@
 	//We can use a global message and variable to flag important events
 	var Current_Extension_Status = EXTENSION_LOADING_STATUS;
 
+	
 	ext._getStatus = function() {
 		console.log("get status:<" + ExtensionStatusValue.Current_Extension_Status +">:" + "<"+ ExtensionStatusReport.Current_Extension_Status+">:");
 		return { status: ExtensionStatusValue.Current_Extension_Status, msg: ExtensionStatusReport.Current_Extension_Status};
