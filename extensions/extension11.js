@@ -21,10 +21,60 @@
 
 	//Several global variables important to understand the extension status
 
+
+	//Extension Status progress (reported over the green exttension led on the Scratch GUI)
+	//  0/6: Fatal error (used to stop extension execution)
+	//  1/6: SCAN DMX Extension being loaded
+	//	2/6: MQTT: API Sucessfully loaded.
+	//  3/6: MQTT: connection established & alive
+	//  4/6: Lighting Server: on-line & waiting scratch cients
+	//  5/6: Lighting Server: on-line, accepted our control request & waiting more scratch cients
+	//  6/6: Lighting Server: on-line, accepting our control requests
 	
-	var Current_Extension_Status = 2;
-	var Current_Extension_Status_Report = "1/4: SCAN DMX Extension being loaded"
-		
+	
+	const FATAL_ERROR_STATUS = 0;
+	const EXTENSION_LOADING_STATUS = 1;
+	const MQTT_API_LOADED_STATUS = 2;
+	const MQTT_CONNECTED_STATUS = 3;
+	const LIGHTING_SERVER_ONLINE_STATUS = 4;
+	const LIGHTING_SERVER_JOIN_STATUS = 5;
+	const LIGHTING_SERVER_CONTROL_STATUS = 6;
+	
+	
+	var ExtensionStatusValue = {
+		0:0,
+		1:2,
+		2:2,
+		3:2,
+		4:2,
+		5:2,
+		6:2,
+	}
+	var ExtensionStatusReport = {
+		0:"Fatal error (used to stop extension execution)!",
+		1:"SCAN DMX Extension being loaded.",
+		2:"MQTT: API Sucessfully loaded.",
+		3:"MQTT: connection established & alive.",
+		4:"Lighting Server: on-line & waiting scratch cients.",
+		5:"Lighting Server: on-line, accepted our control request & waiting more scratch cients.",
+		6:"Lighting Server: on-line, accepting our control requests."		
+	};
+
+
+	//Called by scratch two times per second	
+	//Value	Color	Meaning
+	//0		red		error
+	//1		yellow	not ready
+	//2		green	ready
+	//=> IF a 0 or 1 is returned the Scratch simply stops the extension at all!
+	//The _getStatus functions is immediattly and periodically called.
+	//We can use a global message and variable to flag important events
+	var Current_Extension_Status = EXTENSION_LOADING_STATUS;
+
+	ext._getStatus = function() {
+		return { status: ExtensionStatusValue.Current_Extension_Status, msg: ExtensionStatusReport.Current_Extension_Status};
+	};
+
 	
 	var MQTT_API_Loaded = false;
 	
@@ -49,13 +99,13 @@
 		url:'https://lefds.github.io/extensions/paho-mqtt.js',
 		data:null,
 		success: function(){
-			MQTT_API_Loaded  = true;
-			Current_Extension_Status_Report = "2/4: MQTT API Sucessfully loaded."
 			console.log("MQTT Java Script module sucessufuly loaded!");
+			MQTT_API_Loaded  = true;
+			Current_Extension_Status = MQTT_API_LOADED_STATUS;
 		},
-		error: function (jqXHR, textStatus, errorThrown){
-			Current_Extension_Status_Report = "0/4: Fatal Error while loading MQTT API: <"+ textStatus + ">";
-			Current_Extension_Status = 0;			
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("Error while loading MQTT JavaScript API: <"+ textStatus + ">";)
+			Current_Extension_Status = FATAL_ERROR_STATUS; 
 		},
 	   dataType:'script'
 	});	
@@ -79,19 +129,6 @@
 	var MQTTClientID =  Math.floor(Math.random() * Math.floor(100000)) + ".SACN.ISEC.PT";
 	console.log('Client ID = ' + MQTTClientID);
 
-
-
-	//Called by scratch two times per second	
-	//Value	Color	Meaning
-	//0		red		error
-	//1		yellow	not ready
-	//2		green	ready
-	//=> IF a 0 or 1 is returned the Scratch simply stops the extension at all!
-	//The _getStatus functions is immediattly and periodically called.
-	//We can use a global message and variable to flag important events
-	ext._getStatus = function() {
-		return { status: Current_Extension_Status, msg:Current_Extension_Status_Report };
-	};
 	
 
 	// Cleanup function when the extension is unloaded
@@ -103,8 +140,9 @@
 
 
 	var mqtt_success_onConnect = function onConnect() {
-		MQTT_Connection_Established = true;
 		console.log("mqtt_success_onConnect: The MQTT broker is online.");
+		Current_Extension_Status = MQTT_CONNECTED_STATUS;		
+		MQTT_Connection_Established = true;
 		  
 		// Once a MQTT connection has been made, subcribe the topic that used by the Lihting server to flag it is ready.
 		console.log("mqtt_success_onConnect: Subscribing the topic: " + LightingReadyTopic);
@@ -112,24 +150,25 @@
 	};
 
 
-	var mqtt_onConnectionLost = function onConnectionLost(responseObject) {
-		MQTT_Connection_Established = false;
-		console.log("mqtt_onConnectionLost: Connection lost with the MQTT broker");
+	var mqtt_failure_onConnect = function onConnectionLost(responseObject) {
+		console.log("mqtt_onConnectionLost: Connection lost with the MQTT broker <" + responseObject.errorMessage  +">");
+		Current_Extension_Status = MQTT_API_LOADED_STATUS;
+		MQTT_Connection_Established = false;		
 		MQTT_Client = null;
-		if (responseObject.errorCode !== 0)
-			console.log("MQTT Connection Lost:"+responseObject.errorMessage);
 	};
 
+	
 	var mqtt_onMessageArrived = function onMessageArrived(message) {
 		  console.log("mqtt_onMessageArrived: MQTT Message Arrived: " + message.payloadString);
 		  //by now we are assuming it is the "ready" topic the single one being published by the broker
+		  Current_Extension_Status = LIGHTING_SERVER_JOIN_STATUS;		  
 		  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
 	};	
 
   
-  
+
 	
-	//BEGIN: Extensões Scratch para dialogar com o MQTT	Broker
+	//Scratch extension blocks
 	
 	
 	//https://github.com/LLK/scratchx/wiki#reporter-blocks-that-wait
@@ -148,39 +187,45 @@
 		};
 		*/
 
-	//Block: ConnectToLightingController
-	//Scratch extension type: Report block that waits
-	//Example: https://github.com/LLK/scratchx/wiki#reporter-blocks-that-wait
-	//Neste módulo apenas quando a função callback é chamada o bloco termina a sua execução
-	//Na nossa situação ligamo-nos ao broker MQTT e esperamos até ter um publish do Lihting server e informar que está pronto
-	ext.ConnectToLightingController1 = function (mqtt_server, mqtt_port, callback) {
-		console.log("ConnectToLightingController: Preparing to connect to the MQTT broker at " + mqtt_server + ":" +  mqtt_port);
-		callback(1);
-		return;
-	}
+	//Block: ConnectToMQTTBroker
+	//Type: Report block that waits
+	//Help: //https://github.com/LLK/scratchx/wiki#reporter-blocks-that-wait
+	//Hints:
+	//  - This block returns just when the callback function is called
+	//Algorithm:
+	//  - Disconnect from the current MQTT broker (if any)
+	//  - Attempt to connect to the specified MQTT broker
+	//  - Report connection status after a given milliseconds timeout
 	
+	const MQTT_CONNECTION_TIMEOUT = 2000;  // miliseconds
 	
-	ext.ConnectToLightingController = function(mqtt_server, mqtt_port, callback) {
+	ext.ConnectToMQTTBroker = function(mqtt_server, mqtt_port, callback) {
 		console.log("ConnectToLightingController: Preparing to connect to the MQTT broker at " + mqtt_server + ":" +  mqtt_port);
-		if (MQTT_Client != null) MQTT_Client.disconnect();		
+		
+		// Disconnect from the current MQTT broker (if any)
+		if (MQTT_Client != null) {
+			MQTT_Client.disconnect();	//Disconnect from a previous selected MQTT broker
+			Current_Extension_Status = MQTT_API_LOADED_STATUS;
+			MQTT_Connection_Established = false;
+		}
+		
+		MQTT_Connection_Established = null;
+		
+		// Connect to the specified MQTT broker
 		MQTT_Client = new Paho.MQTT.Client(mqtt_server, mqtt_port, MQTTClientID);
-		console.log('ConnectToLightingController: New MQTT Client handle created ...');
+		console.log('ConnectToLightingController: New MQTT Client handle created ...');		
 		MQTT_Client.onConnectionLost = mqtt_onConnectionLost;
 		MQTT_Client.onMessageArrived = mqtt_onMessageArrived;
 		console.log('ConnectToLightingController: Attemping to connect to the MQTT broker now ...');
-		MQTT_Client.connect({onSuccess: mqtt_success_onConnect, onFailure: mqtt_success_onConnectError});
+		MQTT_Client.connect({onSuccess: mqtt_success_onConnect, onFailure: mqtt_failure_onConnect});
 		console.log('ConnectToLightingController: Connection in course ...');
 
-		if (MQTT_Client === null) {
-			console.log("ConnectToLightingController: MQTT broker not found ...");
-			callback(1);
+		window.setTimeout(function() {
+            callback(MQTT_Connection_Established);
 			return;
-		}
-		console.log("ConnectToLightingController: MQTT broker found ...");
-		callback(2);
-		return;
+        }, MQTT_CONNECTION_TIMEOUT);		
 	}
-		
+
 
 	//Hat block that flags a ready Lighting Server
 	// Not well documented anywhere.
@@ -378,7 +423,7 @@
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-		['R', 'Connect to the Lighting Controller at IP %s : %n is ready', 'ConnectToLightingController', '192.168.100.100', 9001],
+		['R', 'Connect to the MQTT Broker at IP %s : %n', 'ConnectToMQTTBroker', '192.168.100.100', 9001],
 		['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady']
 		],
 		url: 'https://lefds.github.io/extensions/index.html',
