@@ -75,8 +75,8 @@
 
 	
 	ext._getStatus = function() {
-		console.log("get status:<" + ExtensionStatusValue.Current_Extension_Status +">:" + "<"+ ExtensionStatusReport.Current_Extension_Status+">:");
-		return { status: ExtensionStatusValue[Current_Extension_Status], msg: ExtensionStatusReport[Current_Extension_Status]};
+		console.log("get status:<" + ExtensionStatusValue[Current_Extension_Status] + ">:" + "<" + ExtensionStatusReport[Current_Extension_Status] + ">:");
+		return { status: ExtensionStatusValue[Current_Extension_Status], msg: ExtensionStatusReport[Current_Extension_Status];
 	};
 
 	
