@@ -72,6 +72,7 @@
 	var Current_Extension_Status = EXTENSION_LOADING_STATUS;
 
 	ext._getStatus = function() {
+		console.log("get status:<" + ExtensionStatusValue.Current_Extension_Status +">:" + "<"+ ExtensionStatusReport.Current_Extension_Status+">:");
 		return { status: ExtensionStatusValue.Current_Extension_Status, msg: ExtensionStatusReport.Current_Extension_Status};
 	};
 
