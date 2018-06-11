@@ -53,7 +53,7 @@
 	
 	console.log("0:" + ExtensionStatusValue[0]);
 	console.log("1:" + ExtensionStatusValue[1]);
-	console.log("0:" + ExtensionStatusValue.0);
+	
 	
 	var ExtensionStatusReport = {
 		0:"Fatal error (used to stop extension execution)!",
