@@ -50,10 +50,7 @@
 		5:2,
 		6:2,
 	}
-	
-	console.log("0:" + ExtensionStatusValue[0]);
-	console.log("1:" + ExtensionStatusValue[1]);
-	
+		
 	
 	var ExtensionStatusReport = {
 		0:"Fatal error (used to stop extension execution)!",
@@ -79,7 +76,7 @@
 	
 	ext._getStatus = function() {
 		console.log("get status:<" + ExtensionStatusValue.Current_Extension_Status +">:" + "<"+ ExtensionStatusReport.Current_Extension_Status+">:");
-		return { status: ExtensionStatusValue.Current_Extension_Status, msg: ExtensionStatusReport.Current_Extension_Status};
+		return { status: ExtensionStatusValue[Current_Extension_Status], msg: ExtensionStatusReport[Current_Extension_Status]};
 	};
 
 	
