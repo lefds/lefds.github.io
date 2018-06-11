@@ -104,7 +104,7 @@
 			Current_Extension_Status = MQTT_API_LOADED_STATUS;
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("Error while loading MQTT JavaScript API: <"+ textStatus + ">";)
+			console.log("Error while loading MQTT JavaScript API: <"+ textStatus + ">");
 			Current_Extension_Status = FATAL_ERROR_STATUS; 
 		},
 	   dataType:'script'
