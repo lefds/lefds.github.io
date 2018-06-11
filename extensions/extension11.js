@@ -75,7 +75,7 @@
 
 	
 	ext._getStatus = function() {
-		console.log("get status:<" + ExtensionStatusValue[Current_Extension_Status] + ">:" + "<" + ExtensionStatusReport[Current_Extension_Status] + ">:");
+		//console.log("get status:<" + ExtensionStatusValue[Current_Extension_Status] + ">:" + "<" + ExtensionStatusReport[Current_Extension_Status] + ">:");
 		return { status: ExtensionStatusValue[Current_Extension_Status], msg: ExtensionStatusReport[Current_Extension_Status]};
 	};
 
@@ -154,13 +154,20 @@
 	};
 
 
-	var mqtt_failure_onConnect = function onConnectionLost(responseObject) {
-		console.log("mqtt_onConnectionLost: Connection lost with the MQTT broker <" + responseObject.errorMessage  +">");
+	var mqtt_failure_onConnect = function onConnectionFailure() {
+		console.log("mqtt_failure_onConnect: Connection failue");
 		Current_Extension_Status = MQTT_API_LOADED_STATUS;
 		MQTT_Connection_Established = false;		
 		MQTT_Client = null;
 	};
 
+
+	var mqtt_onConnectionLost = function onConnectionLost(responseObject) {
+		console.log("mqtt_onConnectionLost: Connection lost with the MQTT broker <" + responseObject.errorMessage  +">");
+		Current_Extension_Status = MQTT_API_LOADED_STATUS;
+		MQTT_Connection_Established = false;		
+		MQTT_Client = null;
+	};
 	
 	var mqtt_onMessageArrived = function onMessageArrived(message) {
 		  console.log("mqtt_onMessageArrived: MQTT Message Arrived: " + message.payloadString);
