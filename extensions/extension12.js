@@ -129,6 +129,7 @@
 	var mqtt_onConnectionLost = function onConnectionLost(responseObject) {
 		console.log("mqtt_onConnectionLost: Connection lost with the MQTT broker <" + responseObject.errorMessage  +">");
 		//Current_Extension_Status = MQTT_API_LOADED_STATUS;
+		
 		Current_Extension_Status = FATAL_ERROR_STATUS;
 		MQTT_Connection_Established = false;		
 		MQTT_Client = null;
