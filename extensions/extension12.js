@@ -74,11 +74,12 @@
 	//The _getStatus functions is immediattly and periodically called.
 	//We can use a global message and variable to flag important events
 	var Current_Extension_Status = EXTENSION_LOADING_STATUS;
+	var Detailed_Extension_Status_Report = "";
 
 	
 	ext._getStatus = function() {
 		//console.log("get status:<" + ExtensionStatusValue[Current_Extension_Status] + ">:" + "<" + ExtensionStatusReport[Current_Extension_Status] + ">:");
-		return { status: ExtensionStatusValue[Current_Extension_Status], msg: ExtensionStatusReport[Current_Extension_Status]};
+		return { status: ExtensionStatusValue[Current_Extension_Status], msg: ExtensionStatusReport[Current_Extension_Status] + "["+ Detailed_Extension_Status_Report  +"]"};
 	};
 
 
