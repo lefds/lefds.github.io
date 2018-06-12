@@ -1,5 +1,6 @@
-//https://lefds.github.io/extensions/extension11.js
+//https://lefds.github.io/extensions/extension12.js
 //http://savaka2.github.io/scratch-extensions-directory/
+//https://github.com/LLK/scratchx/wiki
 //Using: https://www.eclipse.org/paho/downloads.php
 // More sources helping
 //   - https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-javascript
@@ -128,7 +129,7 @@
 
 	var mqtt_onConnectionLost = function onConnectionLost(responseObject) {
 		console.log("mqtt_onConnectionLost: Connection lost with the MQTT broker <" + responseObject.errorMessage  +">");
-		//Current_Extension_Status = MQTT_API_LOADED_STATUS;
+		// ;
 		
 		Current_Extension_Status = FATAL_ERROR_STATUS;
 		MQTT_Connection_Established = false;		
@@ -434,6 +435,16 @@
 */
 
 
+    // Functions for block with type 'w' will get a callback function as the 
+    // final argument. This should be called to indicate that the block can
+    // stop waiting.
+    ext.RequestLightingControl = function(callback) {
+        wait = Math.random();
+        console.log('Waiting for ' + wait + ' seconds');
+        window.setTimeout(function() {
+            callback();
+        }, wait*1000);
+    };
 	
 
 	
@@ -441,13 +452,22 @@
     var descriptor = {
         blocks: [
 		['R', 'Is the MQTT Broker at IP %s : %n ?', 'ConnectToMQTTBroker', '192.168.100.100', 9001],
-		['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady']
+		['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady'],
+		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1']
 		],
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'sACN DMX Scratch Extension'
     };
 
+	var menus = {
+      CameoSets: ['Derby1', 'Derby2', 'Par1', 'Par2', 'Laser', 'Flash', 'Player']
+	};
+	
     // Register the extension
     ScratchExtensions.register('sACN DMX Extension', descriptor, ext);
 
 })({});
+
+
+
+
