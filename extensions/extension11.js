@@ -251,10 +251,10 @@
 	   
        if (lighting_server_announces_ready === true) {
            lighting_server_announces_ready = false;		  
-		   console.log("WaitLightingServerBecomesReady: Lighting server announces it is ready");
+		   //console.log("WaitLightingServerBecomesReady: Lighting server announces it is ready");
            return true;
        }
-	   console.log("WaitLightingServerBecomesReady: Lighting server not yet ready!");
+	   //console.log("WaitLightingServerBecomesReady: Lighting server not yet ready!");
        return false;
     };
 		
@@ -434,7 +434,7 @@
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-		['R', 'Connect to the MQTT Broker at IP %s : %n', 'ConnectToMQTTBroker', '192.168.100.100', 9001],
+		['R', 'Is the MQTT Broker at IP %s : %n' ?, 'ConnectToMQTTBroker', '192.168.100.100', 9001],
 		['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady']
 		],
 		url: 'https://lefds.github.io/extensions/index.html',
