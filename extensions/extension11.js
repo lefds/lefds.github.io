@@ -434,7 +434,7 @@
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-		['R', 'Is the MQTT Broker at IP %s : %n' ?, 'ConnectToMQTTBroker', '192.168.100.100', 9001],
+		['R', 'Is the MQTT Broker at IP %s : %n ?', 'ConnectToMQTTBroker', '192.168.100.100', 9001],
 		['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady']
 		],
 		url: 'https://lefds.github.io/extensions/index.html',
