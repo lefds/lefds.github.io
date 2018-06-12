@@ -1,6 +1,7 @@
 //https://lefds.github.io/extensions/extension12.js
 //http://savaka2.github.io/scratch-extensions-directory/
 //https://github.com/LLK/scratchx/wiki
+//https://mryslab.github.io/s2-pi/
 //Using: https://www.eclipse.org/paho/downloads.php
 // More sources helping
 //   - https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-javascript
@@ -449,19 +450,20 @@
 
 	
     // Block and block menu descriptions
+	//Help on menus: https://mryslab.github.io/s2-pi/#creating-a-javascript-extension-file
     var descriptor = {
         blocks: [
 		['R', 'Is the MQTT Broker at IP %s : %n ?', 'ConnectToMQTTBroker', '192.168.100.100', 9001],
 		['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady'],
-		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1']
+		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1']		
 		],
+	    'menus': {
+			'CameoSets': ['Derby1', 'Derby2', 'Par1', 'Par2', 'Laser', 'Flash', 'Player']
+		},
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'sACN DMX Scratch Extension'
     };
 
-	var menus = {
-      CameoSets: ['Derby1', 'Derby2', 'Par1', 'Par2', 'Laser', 'Flash', 'Player']
-	};
 	
     // Register the extension
     ScratchExtensions.register('sACN DMX Extension', descriptor, ext);
