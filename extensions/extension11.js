@@ -79,44 +79,8 @@
 		return { status: ExtensionStatusValue[Current_Extension_Status], msg: ExtensionStatusReport[Current_Extension_Status]};
 	};
 
-	
-	var MQTT_API_Loaded = false;
-	
-	var MQTT_Connection_Established = false;
-		
-	//MQTT handle to talk with the MQTT broker (Mosquitto - WebSocket protocol)
-	var MQTT_Client = null;
 
 
-	
-	// ======================== MQTT Paho API Module stuff =======================================
-
-
-	//Perform an asynchronous HTTP (Ajax) request.
-	// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
-	// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
-	// https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js	 
-	// Documented at: http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings	
-	$.ajax({
-		async:false,	//this may temporarely lock the browser but it is the price to pay ...
-		type:'GET',
-		url:'https://lefds.github.io/extensions/paho-mqtt.js',
-		data:null,
-		success: function(){
-			console.log("MQTT Java Script module sucessufuly loaded!");
-			MQTT_API_Loaded  = true;
-			Current_Extension_Status = MQTT_API_LOADED_STATUS;
-		},
-		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("Error while loading MQTT JavaScript API: <"+ textStatus + ">");
-			Current_Extension_Status = FATAL_ERROR_STATUS; 
-		},
-	   dataType:'script'
-	});	
-
-
-	
-	
 	// ======================== MQTT Broker stuff =======================================
 
 	
@@ -175,6 +139,48 @@
 		  Current_Extension_Status = LIGHTING_SERVER_JOIN_STATUS;		  
 		  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
 	};	
+
+
+
+
+
+	
+	// ======================== MQTT Paho API Module stuff =======================================
+
+	
+	var MQTT_API_Loaded = false;
+	
+	var MQTT_Connection_Established = false;
+		
+	//MQTT handle to talk with the MQTT broker (Mosquitto - WebSocket protocol)
+	var MQTT_Client = null;
+
+	
+	//Perform an asynchronous HTTP (Ajax) request.
+	// Use AJAX to dynamically load the MQTT JavaScript Broker API (paho-mqtt.js)
+	// Actually currently I'm hosting "paho-mqtt.js" on my own GitHub
+	// https://github.com/eclipse/paho.mqtt.javascript/blob/master/src/paho-mqtt.js	 
+	// Documented at: http://api.jquery.com/jquery.ajax/#jQuery-ajax-settings	
+	$.ajax({
+		async:false,	//this may temporarely lock the browser but it is the price to pay ...
+		type:'GET',
+		url:'https://lefds.github.io/extensions/paho-mqtt.js',
+		data:null,
+		success: function(){
+			console.log("MQTT Java Script module sucessufuly loaded!");
+			MQTT_API_Loaded  = true;
+			Current_Extension_Status = MQTT_API_LOADED_STATUS;
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("Error while loading MQTT JavaScript API: <"+ textStatus + ">");
+			Current_Extension_Status = FATAL_ERROR_STATUS; 
+		},
+	   dataType:'script'
+	});	
+
+
+	
+	
 
   
 
