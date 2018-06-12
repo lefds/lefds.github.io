@@ -250,13 +250,11 @@
 	// whenever it returns true the following blocks are executed but the hat block fucntion
 	// remains being called. If the functions returns false the following blocks are not called. 		
 
-	var lighting_server_announces_ready = false;
 	
 	ext.WaitLightingServerBecomesReady = function() {
-	   lighting_server_announces_ready = SACN_CameoFXBar_29CHMODE_Ready_Published;
 	   
-       if (lighting_server_announces_ready === true) {
-           lighting_server_announces_ready = false;		  
+       if (SACN_CameoFXBar_29CHMODE_Ready_Published === true) {
+           SACN_CameoFXBar_29CHMODE_Ready_Published = false;		  
 		   //console.log("WaitLightingServerBecomesReady: Lighting server announces it is ready");
            return true;
        }
