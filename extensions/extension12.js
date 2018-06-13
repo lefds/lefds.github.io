@@ -180,11 +180,7 @@
 			  Current_Extension_Status = LIGHTING_SERVER_ONLINE_STATUS;
 			  Detailed_Extension_Status_Report = "";
 			  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
-		  };
-		  console.log("LightingAcceptControlTopic = " + LightingAcceptControlTopic);
-		  console.log("DestinationName            = " + message.destinationName);
-		  if (message.destinationName == LightingAcceptControlTopic) {
-			  console.log("PAssou aqui ...");
+		  } else if (message.destinationName == LightingAcceptControlTopic) {
 			  Current_Extension_Status = LIGHTING_SERVER_ONCONTROL_STATUS;
 			  SACN_CameoFXBar_29CHMODE_OnControl_Published = true;
 		  }	;
@@ -369,14 +365,15 @@
 			
 			//Then publish interest on controlling the selected cameo set
 			message = new Paho.MQTT.Message(MQTTClientID);
-			message.destinationName = LightingReadyTopic + cameo_controlset;
+			message.destinationName = LightingReadyTopic + "/" + cameo_controlset;
 			MQTT_Client.send(message);
-			LightingAcceptControlTopic = LightingAcceptControlTopic + "/" + cameo_controlset;
-			console.log("Publishing " + MQTTClientID + " at: <" + LightingReadyTopic + "/" + cameo_controlset +">");
+
+			LightingControlTopic = LightingControlTopic + "/" + cameo_controlset;
+			console.log("Topic to publish control messages is <" + LightingControlTopic + ">");
 			Current_Extension_Status = LIGHTING_SERVER_CONTROL_REQUESTED_STATUS;
 			Detailed_Extension_Status_Report = "Requested control over <" + cameo_controlset + ">.";
 		} else {
-			Detailed_Extension_Status_Report = "Warning: a control request over the Lighting equipment can happen just when the Ligthing server is on-line.";			
+			Detailed_Extension_Status_Report = "Warning: a control request over the Lighting equipment can happen just when the Ligthing server is on-line!";			
 		}
 		callback();
 		return;		
@@ -395,7 +392,7 @@
 		['h', 'When the DJ Extension Status change', 'FlagDJExtensionStatusChanges'],
 		['r', 'Current DJ Extension status.', 'ReportDJExtensionStatus'],
 		['R', 'Is the MQTT Broker at IP %s : %n ?', 'ConnectToMQTTBroker', '192.168.100.100', 9001],
-		['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady'],
+		['h', 'When Lighting Controller is ready', 'WaitLightingServerBecomesReady'],
 		['h', 'When the party begins', 'WaitLightingServerBecomesOncontrol'],		
 		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1'],		
 		],
