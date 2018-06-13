@@ -12,7 +12,7 @@
 //
 //  Publish Event on web browser: /SACN/CameoFXBar/29CHMODE/Ready
 //  Publish Event on web broser:  /SACN/CameoFXBar/29CHMODE/AcceptControl
-//  Publish Event on web broser:  /SACN/CameoFXBar/29CHMODE/AcceptyControl/1747.SACN.ISEC.PT/Derby1
+//  Publish Event on web broser:  /SACN/CameoFXBar/29CHMODE/AcceptyControl/25145.SACN.ISEC.PT/Derby1
 //
 
 // Nota:Na extensão 
@@ -358,7 +358,7 @@
 			message.destinationName = LightingReadyTopic + cameo_controlset;
 			MQTT_Client.send(message);
 			LightingAcceptControlTopic = LightingAcceptControlTopic + "/" + cameo_controlset;
-			console.log("Topic subscribed: <" + LightingReadyTopic + cameo_controlset +">");
+			console.log("Topic subscribed: <" + LightingReadyTopic + "/" + cameo_controlset +">");
 			Current_Extension_Status = LIGHTING_SERVER_CONTROL_REQUESTED_STATUS;
 			Detailed_Extension_Status_Report = "Requested control over <" + cameo_controlset + ">.";
 		} else {
