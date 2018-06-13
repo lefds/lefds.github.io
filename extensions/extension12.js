@@ -139,7 +139,10 @@
 	};
 	
 	var mqtt_onMessageArrived = function onMessageArrived(message) {
-		  console.log("mqtt_onMessageArrived: MQTT Message Arrived: " + message.payloadString);
+		  console.log("mqtt_onMessageArrived: MQTT Message Arrived - Destination name: " + message.destinationName);
+		  console.log("mqtt_onMessageArrived: MQTT Message Arrived - Payload: " + message.payloadString);	  
+		  
+		  //Inspect the messages arrived: we must check the related topic and messge payload
 		  //by now we are assuming it is the "ready" topic the single one being published by the broker
 		  Current_Extension_Status = LIGHTING_SERVER_JOIN_STATUS;		  
 		  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
@@ -433,8 +436,6 @@
 	}
 */
 
-	//MQTT Topic used by the Lighting server to flag it is ready
-	var LightingControlBaseTopic = "/SACN/CameoFXBar/29CHMODE/Ready/";
 
 
 	//Block: ConnectToMQTTBroker
@@ -446,12 +447,17 @@
 	//  - Check if the current status is the correct
 	//  - Subscribe interest on the selected Cameo Set
     ext.RequestLightingControl = function(cameo_controlset, callback) {
-		message = new Paho.MQTT.Message(MQTTClientID);
-		message.destinationName = LightingControlBaseTopic + cameo_controlset;
-		MQTT_Client.send(message);
-		console.log("Topic subscribed: <" + LightingControlBaseTopic + cameo_controlset +">");
+		if (ExtensionStatusValue == LIGHTING_SERVER_ONLINE_STATUS) {
+			message = new Paho.MQTT.Message(MQTTClientID);
+			message.destinationName = LightingReadyTopic + cameo_controlset;
+			MQTT_Client.send(message);
+			console.log("Topic subscribed: <" + LightingReadyTopic + cameo_controlset +">");
+			Detailed_Extension_Status_Report = "Info: control over the <" + cameo_controlset + "> Cameo set requested.";
+		} else {
+			Detailed_Extension_Status_Report = "Warning: a control request over the Lighting equipment can happen just when the Ligthing server is on-line.";			
+		}
 		callback();
-		return;
+		return;		
     };
 	
 	
