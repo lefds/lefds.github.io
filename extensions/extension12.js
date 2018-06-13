@@ -180,11 +180,14 @@
 			  Current_Extension_Status = LIGHTING_SERVER_ONLINE_STATUS;
 			  Detailed_Extension_Status_Report = "";
 			  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
-		  } else if (message.destinationName == LightingAcceptControlTopic) {
+		  };
+		  console.log("LightingAcceptControlTopic = " + LightingAcceptControlTopic);
+		  console.log("DestinationName            = " + message.destinationName);
+		  if (message.destinationName == LightingAcceptControlTopic) {
 			  console.log("PAssou aqui ...");
 			  Current_Extension_Status = LIGHTING_SERVER_ONCONTROL_STATUS;
 			  SACN_CameoFXBar_29CHMODE_OnControl_Published = true;
-		  }	
+		  }	;
 	};
 
 
