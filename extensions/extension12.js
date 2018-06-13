@@ -162,7 +162,7 @@
 		  if (message.destinationName == LightingReadyTopic) {
 			  Current_Extension_Status = LIGHTING_SERVER_JOIN_STATUS;
 			  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
-			  Detailed_Extension_Status_Report = ""
+			  Detailed_Extension_Status_Report = "";
 		  }
 	};
 
