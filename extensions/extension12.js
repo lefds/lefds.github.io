@@ -33,7 +33,7 @@
 	//  5/6: Lighting Server: on-line, accepted our control request & waiting more scratch cients
 	//  6/6: Lighting Server: on-line, accepting our control requests
 	
-	
+	const NO_STATUS = -1;
 	const FATAL_ERROR_STATUS = 0;
 	const EXTENSION_LOADING_STATUS = 1;
 	const MQTT_API_LOADED_STATUS = 2;
@@ -59,7 +59,7 @@
 		1:"SCAN DMX Extension being loaded.",
 		2:"MQTT: API Sucessfully loaded.",
 		3:"MQTT: connection established & alive.",
-		4:"Lighting Server: on-line & waiting scratch cients.",
+		4:"Lighting Server: on-line & waiting for scratch cients to request control.",
 		5:"Lighting Server: on-line, accepted our control request & waiting more scratch cients.",
 		6:"Lighting Server: on-line, accepting our control requests."		
 	};
@@ -74,8 +74,14 @@
 	//The _getStatus functions is immediattly and periodically called.
 	//We can use a global message and variable to flag important events
 	var Current_Extension_Status = EXTENSION_LOADING_STATUS;
+	
+	//Used to append more detailed information (help on debugging ...)
 	var Detailed_Extension_Status_Report = "";
-
+	
+	//Used by the hat block that can keep the programmer informed about the extension status evolution
+	var Previous_ExtensionStatus = NO_STATUS;
+	var Previous_Detailed_Extension_Status_Report = "";
+	
 	
 	ext._getStatus = function() {
 		//console.log("get status:<" + ExtensionStatusValue[Current_Extension_Status] + ">:" + "<" + ExtensionStatusReport[Current_Extension_Status] + ">:");
@@ -112,12 +118,13 @@
 
 	var mqtt_success_onConnect = function onConnect() {
 		console.log("mqtt_success_onConnect: The MQTT broker is online.");
-		Current_Extension_Status = MQTT_CONNECTED_STATUS;		
+		Current_Extension_Status = MQTT_CONNECTED_STATUS;
 		MQTT_Connection_Established = true;
 		  
 		// Once a MQTT connection has been made, subcribe the topic that used by the Lihting server to flag it is ready.
 		console.log("mqtt_success_onConnect: Subscribing the topic: " + LightingReadyTopic);
 		MQTT_Client.subscribe(LightingReadyTopic);
+		Detailed_Extension_Status_Report = "Waiting for the Lighting Control to become active ..."
 	};
 
 
@@ -144,9 +151,11 @@
 		  
 		  //Inspect the messages arrived: we must check the related topic and messge payload
 		  //by now we are assuming it is the "ready" topic the single one being published by the broker
-		  Current_Extension_Status = LIGHTING_SERVER_JOIN_STATUS;		  
+		  
+		  Current_Extension_Status = LIGHTING_SERVER_JOIN_STATUS;
 		  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
-	};	
+		  Detailed_Extension_Status_Report = "Waiting for the Lighting Control to become active ..."
+	};
 
 
 
@@ -186,11 +195,6 @@
 	   dataType:'script'
 	});	
 
-
-	
-	
-
-  
 
 	
 	//Scratch extension blocks
@@ -251,6 +255,46 @@
 	}
 
 
+	//Block: FlagDJExtensionStatusChanges
+	//Type: Hat block that wait
+	//Help: https://github.com/LLK/scratchx/wiki#hat-blocks
+	//Hints:
+	// - Not well documented anywhere.
+	// - The hat block code is running all the time on its own thread.
+	// - whenever it returns true the following blocks are executed but the hat block function
+	// - remains being called. If the functions returns false the following blocks are not called. 	
+	//Algorithm:
+	//  - This specific block is used to trigger DJ Scratch Extension status changes.
+	//    The full report can be obtained with the ReportDJExtensionStatus block.'
+	ext.FlagDJExtensionStatusChanges = function() {
+		var changes = false;
+		
+		if (Current_Extension_Status != Previous_ExtensionStatus) {
+			Previous_ExtensionStatus = Current_Extension_Status;
+			changes = true;
+		}
+		
+		if ( Detailed_Extension_Status_Report != Previous_Detailed_Extension_Status_Report) {
+			Previous_Detailed_Extension_Status_Report = Detailed_Extension_Status_Report;
+			changes = true;
+		}		
+		return (changes);
+    };
+	
+	
+	//Block: ReportDJExtensionStatus
+	//Type: reporter block
+	//Help: https://github.com/LLK/scratchx/wiki#reporter-blocks
+	//Algorithm:
+	//  - This block is used to return a String with the current DJ Scratch Extension status.
+	ext.ReportDJExtensionStatus = function() {
+			if(Detailed_Extension_Status_Report != "") {
+				return ExtensionStatusReport[Current_Extension_Status] + "["+ Detailed_Extension_Status_Report  +"]";
+			else {
+				return ExtensionStatusReport[Current_Extension_Status];
+			}
+	}
+	
 	//Hat block that flags a ready Lighting Server
 	// Not well documented anywhere.
 	// The hat block code is running all the time on its own thread.
@@ -466,6 +510,8 @@
 	//Help on menus: https://mryslab.github.io/s2-pi/#creating-a-javascript-extension-file
     var descriptor = {
         blocks: [
+		['h', 'When the DJ Extension Status change', 'FlagDJExtensionStatusChanges'],
+		['r', 'Current DJ Extension status.', 'ReportDJExtensionStatus'],
 		['R', 'Is the MQTT Broker at IP %s : %n ?', 'ConnectToMQTTBroker', '192.168.100.100', 9001],
 		['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady'],
 		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1']		
@@ -474,7 +520,7 @@
 			'CameoSets': ['Derby1', 'Derby2', 'Par1', 'Par2', 'Laser', 'Flash', 'Player']
 		},
 		url: 'https://lefds.github.io/extensions/index.html',
-		displayName: 'sACN DMX Scratch Extension'
+		displayName: 'DJ Scratch Extension'
     };
 
 	
