@@ -173,7 +173,7 @@
 	var mqtt_onMessageArrived = function onMessageArrived(message) {
 		  console.log("mqtt_onMessageArrived: MQTT Message Arrived - Destination name: " + message.destinationName);
 		  console.log("mqtt_onMessageArrived: MQTT Message Arrived - Payload: " + message.payloadString);
-		  
+		  console.log("Revisto...");
 		  //Inspect the messages arrived: we must check the related topic and messge payload
 		  //by now we are assuming it is the "ready" topic the single one being published by the broker
 		  if (message.destinationName == LightingReadyTopic) {
@@ -181,7 +181,7 @@
 			  Detailed_Extension_Status_Report = "";
 			  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
 		  } else if (message.destinationName == LightingAcceptControlTopic) {
-			  console.log("PAssou aqui ...")
+			  console.log("PAssou aqui ...");
 			  Current_Extension_Status = LIGHTING_SERVER_ONCONTROL_STATUS;
 			  SACN_CameoFXBar_29CHMODE_OnControl_Published = true;
 		  }	
