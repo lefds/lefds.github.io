@@ -116,8 +116,8 @@
 
 	
 	//MQTT Topic used by the Lighting server to flag the Scratch clients it is wating for them
-	var LightingReadyTopic = "/SACN/CameoFXBar/29CHMODE/Ready";
-
+	var LightingReadyTopic = "/SACN/CameoFXBar/29CHMODE/Ready";	
+	
 	//Flags when this Scratch client is notified that the Lighting robot (Cameo) is ready to be accept control requests
 	var SACN_CameoFXBar_29CHMODE_Ready_Published = false;
 	
@@ -127,6 +127,13 @@
 	                                  
 	//Flags when this Scratch client is notified that the Lighting robot (Cameo) is ready to be controlled
 	var SACN_CameoFXBar_29CHMODE_OnControl_Published = false;
+	
+	//MQTT Topic used by the Lighting server to terminate the party
+	var LightingStopAcceptControlTopic = "/SACN/CameoFXBar/29CHMODE/StopAcceptControl";
+
+	//Flags when this Scratch client is notified that the Lighting robot (Cameo) is no longer accepting to be controlled
+	var SACN_CameoFXBar_29CHMODE_OffControl_Published = false;
+	
 	
 	//MQTT Topic prefix used by the scratcher to control the Lighting server
 	//The full topic is: "/SACN/CameoFXBar/29CHMODE/<ClientId>/<cameoSet>/
@@ -385,6 +392,27 @@
        return false;
     };
 	
+
+	//Block: WaitLightingServerBecomesOffcontrol
+	//Type: Hat block
+	//Help: https://github.com/LLK/scratchx/wiki#hat-blocks
+	//Hints:
+	// - Not well documented anywhere.
+	// - The hat block code is running all the time on its own thread.
+	// - whenever it returns true the following blocks are executed but the hat block function
+	// - remains being called. If the functions returns false the following blocks are not called. 	
+	//Algorithm:
+	// - Hat block that flags a ready Lighting Server
+	ext.WaitLightingServerBecomesOffcontrol = function() {
+       if (SACN_CameoFXBar_29CHMODE_OffControl_Published === true) {
+           SACN_CameoFXBar_29CHMODE_OffControl_Published = false;
+		   console.log("WaitLightingServerBecomesOffcontrol: Lighting server announces it is no longer accepting control from scratchers");
+           return true;
+       }
+		   //console.log("WaitLightingServerBecomesOffcontrol: Lighting server is still accepting control from scratchers");
+       return false;
+    };
+
 	
 	//Block: RequestLightingControl
 	//Type: Command block that wait
@@ -427,9 +455,10 @@
 		['h', 'When the DJ Extension Status change', 'FlagDJExtensionStatusChanges'],
 		['r', 'Current DJ Extension status.', 'ReportDJExtensionStatus'],
 		['R', 'Is the MQTT Broker at IP %s : %n ?', 'ConnectToMQTTBroker', '192.168.100.100', 9001],
-		['w', 'Connect to the MQTT Broker at IP %s : %n ?', 'WConnectToMQTTBroker', '192.168.100.100', 9001],
+		['w', 'Connect to the MQTT Broker at IP %s : %n', 'WConnectToMQTTBroker', '192.168.100.100', 9001],
 		['h', 'When Lighting Controller is ready', 'WaitLightingServerBecomesReady'],
 		['h', 'When the party begins', 'WaitLightingServerBecomesOncontrol'],
+		['h', 'When the party ends', 'WaitLightingServerBecomesOffcontrol'],
 		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1'],
 		],
 	    'menus': {
