@@ -37,7 +37,7 @@
 	//  1/6: SCAN DMX Extension being loaded
 	//	2/6: MQTT: API Sucessfully loaded.
 	//  3/6: MQTT: connection established & alive
-	//  4/6: Lighting Server: on-line & waiting scratch cients
+	//  4/6: Lighting Server: on-line & waiting scratch clients
 	//  5/6: Lighting Server: on-line, accepted our control request & waiting more scratchers
 	//  6/6: Lighting Server: on-line, accepting our control requests
 	
@@ -67,9 +67,9 @@
 		1:"SCAN DMX Extension being loaded.",
 		2:"MQTT: API Sucessfully loaded.",
 		3:"MQTT: connection established & alive.",
-		4:"Lighting Server: on-line & waiting for scratch cients to request control.",
-		5:"Lighting Server: on-line, accepted our control request & waiting more scratch cients.",
-		6:"Lighting Server: on-line, accepting our control requests."		
+		4:"Lighting Server: on-line: waiting scratchers request control...",
+		5:"Lighting Server: on-line, accepted our control request & waiting more scratchers.",
+		6:"Lighting Server: on-line, accepting our DJ requests."
 	};
 
 
