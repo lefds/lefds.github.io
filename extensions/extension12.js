@@ -498,7 +498,7 @@
 	//  - Check if the current status is the correct
 	//  - Subscribe interest on the selected Cameo Set
     ext.RequestLightingControl = function(cameo_controlset, callback) {
-		if (ExtensionStatusValue == LIGHTING_SERVER_ONLINE_STATUS) {
+		if (Current_Extension_Status == LIGHTING_SERVER_ONLINE_STATUS) {
 			message = new Paho.MQTT.Message(MQTTClientID);
 			message.destinationName = LightingReadyTopic + cameo_controlset;
 			MQTT_Client.send(message);
