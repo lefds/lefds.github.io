@@ -289,8 +289,8 @@
 	//  - This block is used to return a String with the current DJ Scratch Extension status.
 	ext.ReportDJExtensionStatus = function() {
 			if(Detailed_Extension_Status_Report != "") {
-				return ExtensionStatusReport[Current_Extension_Status] + "["+ Detailed_Extension_Status_Report  +"]";
-			else {
+				return ExtensionStatusReport[Current_Extension_Status] + "["+ Detailed_Extension_Status_Report  + "]";
+			} else {
 				return ExtensionStatusReport[Current_Extension_Status];
 			}
 	}
