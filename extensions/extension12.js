@@ -6,6 +6,14 @@
 // More sources helping
 //   - https://pt.slideshare.net/DarrenAdkinson/understanding-scratchx-extensions-with-javascript
 // Tested with: http://www.hivemq.com/demos/websocket-client/ 
+//  IP: 192.168.100.100
+//  Port: 9001
+//  ClientID: LightingServer
+//
+//  PublishEvent 1: /SACN/CameoFXBar/29CHMODE/Ready
+//  PublishEvent 2: 
+//
+
 // Nota:Na extensão 
 //    https://khanning.github.io/scratch-isstracker-extension/iss_extension.js
 // usam um método que corre uma função de x em x milisegundos
@@ -93,7 +101,7 @@
 	// ======================== MQTT Broker stuff =======================================
 
 	
-	//MQTT Topic used by the Lighting server to flag it is ready
+	//MQTT Topic used by the Lighting server to flag the Scratch clients it is wating for them
 	var LightingReadyTopic = "/SACN/CameoFXBar/29CHMODE/Ready";
 	
 	//Flags when this Scratch client is notified that the Lighting robot (Cameo) is ready to be  controlled
@@ -151,10 +159,11 @@
 		  
 		  //Inspect the messages arrived: we must check the related topic and messge payload
 		  //by now we are assuming it is the "ready" topic the single one being published by the broker
-		  
-		  Current_Extension_Status = LIGHTING_SERVER_JOIN_STATUS;
-		  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
-		  Detailed_Extension_Status_Report = "Waiting for the Lighting Control to become active ..."
+		  if (message.destinationName == LightingReadyTopic) {
+			  Current_Extension_Status = LIGHTING_SERVER_JOIN_STATUS;
+			  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
+			  Detailed_Extension_Status_Report = ""
+		  }
 	};
 
 
@@ -289,7 +298,7 @@
 	//  - This block is used to return a String with the current DJ Scratch Extension status.
 	ext.ReportDJExtensionStatus = function() {
 			if(Detailed_Extension_Status_Report != "") {
-				return ExtensionStatusReport[Current_Extension_Status] + "["+ Detailed_Extension_Status_Report  + "]";
+				return ExtensionStatusReport[Current_Extension_Status] + "\n["+ Detailed_Extension_Status_Report  + "]";
 			} else {
 				return ExtensionStatusReport[Current_Extension_Status];
 			}
