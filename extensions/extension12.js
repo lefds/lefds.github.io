@@ -10,9 +10,16 @@
 //  Port: 9001
 //  ClientID: LightingServer
 //
-//  Publish Event on web browser: /SACN/CameoFXBar/29CHMODE/Ready
-//  Publish Event on web broser:  /SACN/CameoFXBar/29CHMODE/AcceptControl
-//  Publish Event on web broser:  /SACN/CameoFXBar/29CHMODE/AcceptyControl/25145.SACN.ISEC.PT/Derby1
+//  Lighting Server														              Scratcher
+//     => /SACN/CameoFXBar/29CHMODE/Ready
+//
+//															<= /SACN/CameoFXBar/29CHMODE/Ready/Derby1
+//
+//    (When all control sets are requested by scratchers)
+//     =>  /SACN/CameoFXBar/29CHMODE/AcceptControl
+//
+//															<= /SACN/CameoFXBar/29CHMODE/7066.SACN.ISEC.PT/Derby1
+//                                                             
 //
 
 // Nota:Na extensão 
@@ -117,15 +124,15 @@
 	
 	
 	//MQTT Topic used by the Lighting server to flag the party can begin
-	var LightingAcceptControlTopic = "/SACN/CameoFXBar/29CHMODE/AcceptControl";	
+	var LightingAcceptControlTopic = "/SACN/CameoFXBar/29CHMODE/AcceptControl";
 	
 	//Flags when this Scratch client is notified that the Lighting robot (Cameo) is ready to be controlled
 	SACN_CameoFXBar_29CHMODE_OnControl_Published = false;
 	
 	//MQTT Topic prefix used by the scratcher to control the Lighting server
-	//The full topic is: "/SACN/CameoFXBar/29CHMODE/AcceptyControl/<ClientId>/<cameoSet>/
+	//The full topic is: "/SACN/CameoFXBar/29CHMODE/<ClientId>/<cameoSet>/
 	//The message is a set of channel:value pairs: 1:255 29:127 ...
-	var LightingAcceptControlTopic = "/SACN/CameoFXBar/29CHMODE/AcceptyControl/" + MQTTClientID + "/";	
+	var LightingAcceptControlTopic = "/SACN/CameoFXBar/29CHMODE/" + MQTTClientID + "/";	
 	
 
 	
