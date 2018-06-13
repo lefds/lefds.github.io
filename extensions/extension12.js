@@ -217,8 +217,7 @@
 	//Algorithm:
 	//  - Disconnect from the current MQTT broker (if any)
 	//  - Attempt to connect to the specified MQTT broker
-	//  - Report connection status after a given milliseconds timeout
-	
+	//  - Report connection status after a given milliseconds timeout	
 	const MQTT_CONNECTION_TIMEOUT = 2000;  // miliseconds
 	
 	ext.ConnectToMQTTBroker = function(mqtt_server, mqtt_port, callback) {
@@ -253,9 +252,7 @@
 	// Not well documented anywhere.
 	// The hat block code is running all the time on its own thread.
 	// whenever it returns true the following blocks are executed but the hat block fucntion
-	// remains being called. If the functions returns false the following blocks are not called. 		
-
-	
+	// remains being called. If the functions returns false the following blocks are not called. 			
 	ext.WaitLightingServerBecomesReady = function() {
 	   
        if (SACN_CameoFXBar_29CHMODE_Ready_Published === true) {
@@ -436,19 +433,28 @@
 	}
 */
 
+	//MQTT Topic used by the Lighting server to flag it is ready
+	var LightingControlBaseTopic = "/SACN/CameoFXBar/29CHMODE/Ready/";
 
-    // Functions for block with type 'w' will get a callback function as the 
-    // final argument. This should be called to indicate that the block can
-    // stop waiting.
-    ext.RequestLightingControl = function(callback) {
-        wait = Math.random();
-        console.log('Waiting for ' + wait + ' seconds');
-        window.setTimeout(function() {
-            callback();
-        }, wait*1000);
+
+	//Block: ConnectToMQTTBroker
+	//Type: Command block that wait
+	//Help: https://github.com/LLK/scratchx/wiki#command-blocks-that-wait
+	//Hints:
+	//  - This block returns just when the callback function is called
+	//Algorithm:
+	//  - Check if the current status is the correct
+	//  - Subscribe interest on the selected Cameo Set
+    ext.RequestLightingControl = function(cameo_controlset, callback) {
+		message = new Paho.MQTT.Message(MQTTClientID);
+		message.destinationName = LightingControlBaseTopic + cameo_controlset;
+		MQTT_Client.send(message);
+		console.log("Topic subscribed: <" + LightingControlBaseTopic + cameo_controlset +">");
+		callback();
+		return;
     };
 	
-
+	
 	
     // Block and block menu descriptions
 	//Help on menus: https://mryslab.github.io/s2-pi/#creating-a-javascript-extension-file
