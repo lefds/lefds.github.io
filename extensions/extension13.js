@@ -303,27 +303,6 @@
         }, MQTT_CONNECTION_TIMEOUT);		
 	}
 
-	//Block: ConnectToMQTTBroker
-	//Type: Command block that wait
-	//Help: https://github.com/LLK/scratchx/wiki#command-blocks-that-wait
-	//Hints:
-	//  - This block returns just when the callback function is called
-	//Algorithm:
-	//  - Check if the current status is the correct
-	//  - Subscribe interest on the selected Cameo Set
-    ext.ConnectToMQTTBroker = function(cameo_controlset, callback) {
-		if (Current_Extension_Status == LIGHTING_SERVER_ONLINE_STATUS) {
-
-	//Block: ConnectToMQTTBroker
-	//Type: Report block that waits
-	//Help: //https://github.com/LLK/scratchx/wiki#reporter-blocks-that-wait
-	//Hints:
-	//  - This block returns just when the callback function is called
-	//Algorithm:
-	//  - Disconnect from the current MQTT broker (if any)
-	//  - Attempt to connect to the specified MQTT broker
-	//  - Report connection status after a given milliseconds timeout	
-		
 		
 	
 	//Block: FlagDJExtensionStatusChanges
@@ -458,13 +437,9 @@
 		},		
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'DJ Scratch Extension'
-    };
-
-	
-	
+    };	
     // Register the extension
     ScratchExtensions.register('sACN DMX Extension', descriptor, ext);
-
 })({});
 
 
