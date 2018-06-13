@@ -47,7 +47,7 @@
 	const MQTT_API_LOADED_STATUS = 2;
 	const MQTT_CONNECTED_STATUS = 3;
 	const LIGHTING_SERVER_ONLINE_STATUS = 4;
-	const LIGHTING_SERVER_JOIN_STATUS = 5;
+	const LIGHTING_SERVER_CONTROL_REQUESTED_STATUS = 5;
 	const LIGHTING_SERVER_CONTROL_STATUS = 6;
 	
 	
@@ -161,11 +161,10 @@
 		  //by now we are assuming it is the "ready" topic the single one being published by the broker
 		  if (message.destinationName == LightingReadyTopic) {
 			  Current_Extension_Status = LIGHTING_SERVER_ONLINE_STATUS;
-			  SACN_CameoFXBar_29CHMODE_Ready_Published = true;			  
+			  Detailed_Extension_Status_Report = ""
+			  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
 		  }
 	};
-
-
 
 
 
@@ -504,7 +503,8 @@
 			message.destinationName = LightingReadyTopic + cameo_controlset;
 			MQTT_Client.send(message);
 			console.log("Topic subscribed: <" + LightingReadyTopic + cameo_controlset +">");
-			Detailed_Extension_Status_Report = "Info: control over the <" + cameo_controlset + "> Cameo set requested.";
+			Current_Extension_Status = LIGHTING_SERVER_CONTROL_REQUESTED_STATUS;
+			Detailed_Extension_Status_Report = "Requested control over <" + cameo_controlset + ">.";
 		} else {
 			Detailed_Extension_Status_Report = "Warning: a control request over the Lighting equipment can happen just when the Ligthing server is on-line.";			
 		}
