@@ -181,6 +181,7 @@
 			  Detailed_Extension_Status_Report = "";
 			  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
 		  } else if (message.destinationName == LightingAcceptControlTopic) {
+			  console.log("PAssou aqui ...")
 			  Current_Extension_Status = LIGHTING_SERVER_ONCONTROL_STATUS;
 			  SACN_CameoFXBar_29CHMODE_OnControl_Published = true;
 		  }	
@@ -339,7 +340,7 @@
 	ext.WaitLightingServerBecomesOncontrol = function() {	   
        if (SACN_CameoFXBar_29CHMODE_OnControl_Published === true) {
            SACN_CameoFXBar_29CHMODE_OnControl_Published = false;
-		   //console.log("WaitLightingServerBecomesOncontrol: Lighting server announces it is accepting control from scratchers");
+		   console.log("WaitLightingServerBecomesOncontrol: Lighting server announces it is accepting control from scratchers");
            return true;
        }
 		   //console.log("WaitLightingServerBecomesOncontrol: Lighting server not yet ready to accept control from scratchers");
