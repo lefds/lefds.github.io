@@ -455,11 +455,12 @@
 		],
 	    'menus': {
 			'CameoSets': ['Derby1', 'Derby2', 'Par1', 'Par2', 'Laser', 'Flash', 'Player']
-		},
+		},		
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'DJ Scratch Extension'
     };
 
+	
 	
     // Register the extension
     ScratchExtensions.register('sACN DMX Extension', descriptor, ext);
