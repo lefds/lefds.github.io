@@ -18,7 +18,7 @@
 //    (When all control sets are requested by scratchers)
 //     =>  /SACN/CameoFXBar/29CHMODE/AcceptControl
 //
-//															<= /SACN/CameoFXBar/29CHMODE/77903.SACN.ISEC.PT/Derby1
+//															<= /SACN/CameoFXBar/29CHMODE/38561.SACN.ISEC.PT/Derby1
 //                                                             
 //
 
@@ -132,7 +132,7 @@
 	//MQTT Topic prefix used by the scratcher to control the Lighting server
 	//The full topic is: "/SACN/CameoFXBar/29CHMODE/<ClientId>/<cameoSet>/
 	//The message is a set of channel:value pairs: 1:255 29:127 ...
-	var LightingAcceptControlTopic = "/SACN/CameoFXBar/29CHMODE/" + MQTTClientID + "/";	
+	var LightingControlTopic = "/SACN/CameoFXBar/29CHMODE/" + MQTTClientID + "/";	
 	
 
 	// Cleanup function when the extension is unloaded
@@ -361,10 +361,10 @@
 		if (Current_Extension_Status == LIGHTING_SERVER_ONLINE_STATUS) {
 			
 			//First subscribe interest on the needed topic to know the party will begin			
-			MQTT_Client.subscribe(LightingAcceptControlTopic);
+			MQTT_Client.subscribe(LightingAcceptControlTopic); 
 			Detailed_Extension_Status_Report = "Subscribe interest on being informed about party begin <" + LightingAcceptControlTopic +">";
 			
-			//Then publish interest on controlling some cameo set
+			//Then publish interest on controlling the selected cameo set
 			message = new Paho.MQTT.Message(MQTTClientID);
 			message.destinationName = LightingReadyTopic + cameo_controlset;
 			MQTT_Client.send(message);
