@@ -100,6 +100,13 @@
 
 	// ======================== MQTT Broker stuff =======================================
 
+	//MQTT needs that every session is identified by a client ID. I will use a random mumber to avoid collisions
+	//When one client attempts to connect to the broker using the same ID another session is using
+	//the first client session is closed (by default).
+	//An universe size of 100.000 must be enough to handle a class of 100 diferents student IDs
+	var MQTTClientID =  Math.floor(Math.random() * Math.floor(100000)) + ".SACN.ISEC.PT";
+	console.log('Client ID = ' + MQTTClientID);
+
 	
 	//MQTT Topic used by the Lighting server to flag the Scratch clients it is wating for them
 	var LightingReadyTopic = "/SACN/CameoFXBar/29CHMODE/Ready";
@@ -114,12 +121,11 @@
 	//Flags when this Scratch client is notified that the Lighting robot (Cameo) is ready to be controlled
 	SACN_CameoFXBar_29CHMODE_OnControl_Published = false;
 	
-	//MQTT needs that every session is identified by a client ID. I will use a random mumber to avoid collisions
-	//When one client attempts to connect to the broker using the same ID another session is using
-	//the first client session is closed (by default).
-	//An universe size of 100.000 must be enough to handle a class of 100 diferents student IDs
-	var MQTTClientID =  Math.floor(Math.random() * Math.floor(100000)) + ".SACN.ISEC.PT";
-	console.log('Client ID = ' + MQTTClientID);
+	//MQTT Topic prefix used by the scratcher to control the Lighting server
+	//The full topic is: "/SACN/CameoFXBar/29CHMODE/AcceptyControl/<ClientId>/<cameoSet>/
+	//The message is a set of channel:value pairs: 1:255 29:127 ...
+	var LightingAcceptControlTopic = "/SACN/CameoFXBar/29CHMODE/AcceptyControl/" + MQTTClientID + "/";	
+	
 
 	
 
@@ -350,6 +356,7 @@
 			message = new Paho.MQTT.Message(MQTTClientID);
 			message.destinationName = LightingReadyTopic + cameo_controlset;
 			MQTT_Client.send(message);
+			LightingAcceptControlTopic = LightingAcceptControlTopic + cameo_controlset;
 			console.log("Topic subscribed: <" + LightingReadyTopic + cameo_controlset +">");
 			Current_Extension_Status = LIGHTING_SERVER_CONTROL_REQUESTED_STATUS;
 			Detailed_Extension_Status_Report = "Requested control over <" + cameo_controlset + ">.";
@@ -362,6 +369,10 @@
 	
 	
 	
+	//LightingAcceptControlTopic
+	
+	
+	
     // Block and block menu descriptions
 	//Help on menus: https://mryslab.github.io/s2-pi/#creating-a-javascript-extension-file
     var descriptor = {
@@ -370,8 +381,8 @@
 		['r', 'Current DJ Extension status.', 'ReportDJExtensionStatus'],
 		['R', 'Is the MQTT Broker at IP %s : %n ?', 'ConnectToMQTTBroker', '192.168.100.100', 9001],
 		['h', 'When Lightning Controller is ready', 'WaitLightingServerBecomesReady'],
-		['h', 'When the party begin', 'WaitLightingServerBecomesOncontrol'],		
-		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1']		
+		['h', 'When the party begins', 'WaitLightingServerBecomesOncontrol'],		
+		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1'],		
 		],
 	    'menus': {
 			'CameoSets': ['Derby1', 'Derby2', 'Par1', 'Par2', 'Laser', 'Flash', 'Player']
