@@ -17,8 +17,6 @@
 //
 //    (When all control sets are requested by scratchers)
 //     =>  /SACN/CameoFXBar/29CHMODE/AcceptControl
-//
-//															<= /SACN/CameoFXBar/29CHMODE/38561.SACN.ISEC.PT/Derby1
 //                                                             
 //
 
@@ -127,7 +125,7 @@
 	var LightingAcceptControlTopic = "/SACN/CameoFXBar/29CHMODE/AcceptControl";
 	                                  
 	//Flags when this Scratch client is notified that the Lighting robot (Cameo) is ready to be controlled
-	SACN_CameoFXBar_29CHMODE_OnControl_Published = false;
+	var SACN_CameoFXBar_29CHMODE_OnControl_Published = false;
 	
 	//MQTT Topic prefix used by the scratcher to control the Lighting server
 	//The full topic is: "/SACN/CameoFXBar/29CHMODE/<ClientId>/<cameoSet>/
@@ -362,7 +360,7 @@
 			
 			//First subscribe interest on the needed topic to know the party will begin			
 			MQTT_Client.subscribe(LightingAcceptControlTopic); 
-			console.log("Subcribing interested on <" + LightingAcceptControlTopic + " topic to know the party will begin.");
+			console.log("Subcribing interested on <" + LightingAcceptControlTopic + "> topic to know the party will begin.");
 			Detailed_Extension_Status_Report = "Subscribe interest on being informed about party begin <" + LightingAcceptControlTopic +">";
 			
 			//Then publish interest on controlling the selected cameo set
