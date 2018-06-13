@@ -458,7 +458,7 @@
 		['w', 'Connect to the MQTT Broker at IP %s : %n', 'WConnectToMQTTBroker', '192.168.100.100', 9001],
 		['h', 'When Lighting Controller is ready', 'WaitLightingServerBecomesReady'],
 		['h', 'When the party begins', 'WaitLightingServerBecomesOncontrol'],
-		['h', 'When the party ends', 'WaitLightingServerBecomesOffcontrol'],
+		['h', 'When the party is over', 'WaitLightingServerBecomesOffcontrol'],
 		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1'],
 		],
 	    'menus': {
