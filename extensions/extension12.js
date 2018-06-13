@@ -362,6 +362,7 @@
 			
 			//First subscribe interest on the needed topic to know the party will begin			
 			MQTT_Client.subscribe(LightingAcceptControlTopic); 
+			console.log("Subcribing interested on <" + LightingAcceptControlTopic + " topic to know the party will begin.");
 			Detailed_Extension_Status_Report = "Subscribe interest on being informed about party begin <" + LightingAcceptControlTopic +">";
 			
 			//Then publish interest on controlling the selected cameo set
@@ -369,7 +370,7 @@
 			message.destinationName = LightingReadyTopic + cameo_controlset;
 			MQTT_Client.send(message);
 			LightingAcceptControlTopic = LightingAcceptControlTopic + "/" + cameo_controlset;
-			console.log("Topic subscribed: <" + LightingReadyTopic + "/" + cameo_controlset +">");
+			console.log("Publishing " + MQTTClientID + " at: <" + LightingReadyTopic + "/" + cameo_controlset +">");
 			Current_Extension_Status = LIGHTING_SERVER_CONTROL_REQUESTED_STATUS;
 			Detailed_Extension_Status_Report = "Requested control over <" + cameo_controlset + ">.";
 		} else {
