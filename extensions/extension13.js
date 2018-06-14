@@ -513,7 +513,6 @@
 		CameoCH29ModeChannels.set(rgb_channel[color], value);
 		console.log("CameoCH29ModeChannels.(" + rgb_channel[color] +")=" +CameoCH29ModeChannels.get(rgb_channel[color]));
 		console.log("AQUI");
-
 	}
 	
 	
