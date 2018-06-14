@@ -11,7 +11,7 @@
 //  ClientID: LightingServer
 //
 //  Lighting Server														              Scratcher
-//     =>  
+//     =>  /SACN/CameoFXBar/29CHMODE/Ready
 //
 //															<= /SACN/CameoFXBar/29CHMODE/Ready/Derby1
 //
@@ -493,7 +493,7 @@
 	ext.Cameo29CHMODE_PrintChannelControlValues = function () {
 		var i;
 		console.log("Current Cameo29CHMODE Channel Values are:\n");
-		for (i = 1; i == 29; i++) { 
+		for (i = 1; i <= 30; i++) { 
 			console.log("CH" + i + "=" ); //+ CameoCH29ModeChannels[i] + " ");
 		}
 	}
