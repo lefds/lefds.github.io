@@ -494,7 +494,7 @@
 		var i;
 		console.log("Current Cameo29CHMODE Channel Values are:\n");
 		for (i = 1; i <= 30; i++) { 
-			console.log("CH" + i + "=" ); //+ CameoCH29ModeChannels[i] + " ");
+			console.log("CH" + i + "=" + CameoCH29ModeChannels[i] + " ");
 		}
 	}
 		
