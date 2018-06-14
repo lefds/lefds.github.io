@@ -473,7 +473,7 @@
 			console.log(key +":" + CameoCH29ModeChannels[key]);
 		});
 */
-	}	
+		
 	
 	//Block: Cameo29CHMODE_Blackout
 	//Type: Command block
