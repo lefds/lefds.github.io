@@ -493,11 +493,10 @@
 
 	//Channel functions
 
-	ext.Cameo29CHMODE_PrintChannelControlValues = function () {
-		var i;
+	ext.Cameo29CHMODE_PrintChannelControlValues = function () {		
 		console.log("Current Cameo29CHMODE Channel Values are:\n");
-		for (i = CameoCH29ModeChannels_FIRST_CHANNEL; i <= CameoCH29ModeChannels_LAST_CHANNEL; i++) {
-			console.log("CH" + i + "=" + CameoCH29ModeChannels[i] + " ");
+		for (var key in CameoCH29ModeChannels) {
+			console.log("CH" + key + "=" + CameoCH29ModeChannels[key] + " ");
 		}
 	}
 	
@@ -510,16 +509,12 @@
 	//Algorithm:
 	//  - 
 	ext.Cameo29CHMODE_Blackout = function () {
-		var i;
-		for (i = 1; i == 29; i++) { 
-			CameoCH29ModeChannels[i] = 0;
+		for(var key in CameoCH29ModeChannels){
+			CameoCH29ModeChannels[KEY] = 0;
 		}
 	}
-	
-	
-	
-	
-	
+		
+		
 		
 	//Block: Cameo29CHMODE_DerbyRGB
 	//Type: Command block
@@ -538,7 +533,7 @@
 			Red: derby_initial_channel,
 			Green: derby_initial_channel+1,
 			Blue: derby_initial_channel +2,
-		}
+		};
 		CameoCH29ModeChannels[rgb_channel[color]]=value;
 	}
 	
@@ -553,8 +548,9 @@
 		['w', 'Connect to the MQTT Broker at IP %s : %n', 'WConnectToMQTTBroker', '192.168.100.100', 9001],
 		['h', 'When Lighting Controller is ready', 'WaitLightingServerBecomesReady'],
 		['h', 'When the party begins', 'WaitLightingServerBecomesOncontrol'],
-		['h', 'When the party is over', 'WaitLightingServerBecomesOffcontrol'],
+		['h', 'When the party is over', 'WaitLightingServerBecomesOffcontrol'],		
 		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1'],
+		[' ', 'Blackout', 'Cameo29CHMODE_Blackout'],
 		[' ', 'Change %m.Derbys color %m.RGB %n%', 'DerbyRGB','Derby1','Red',0],
 		],
 	    'menus': {
