@@ -45,7 +45,7 @@
 	const CameoCH29ModeChannels_LAST_CHANNEL = 29;	
 	var CameoCH29ModeChannels = new Map();	
 	for (i = CameoCH29ModeChannels_FIRST_CHANNEL; i <= CameoCH29ModeChannels_LAST_CHANNEL; i ++) {
-		CameoCH29ModeChannel.set(KEY) = 0;
+		CameoCH29ModeChannels.set(KEY) = 0;
 		console.log("CameoCH29ModeChannels [" + i + "]=" + CameoCH29ModeChannels.get(i));
 	}
 	
