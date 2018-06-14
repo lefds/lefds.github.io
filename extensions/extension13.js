@@ -39,6 +39,42 @@
 
 	//Several global variables important to track the extension status
 
+	
+	//29CHMODE Channel:Value
+	
+	var CameoCH29ModeChannels = {
+		1:0,
+		2:0,
+		3:0,
+		4:0,
+		5:0,
+		6:0,
+		7:0,
+		8:0,
+		9:0,
+		10:0,
+		11:0,
+		12:0,
+		13:0,
+		14:0,
+		15:0,
+		16:0,
+		17:0,
+		18:0,
+		19:0,
+		20:0,
+		21:0,
+		22:0,
+		23:0,
+		24:0,
+		25:0,
+		26:0,
+		27:0,
+		28:0,
+		29:0,
+	}
+		
+	
 	//Extension Status progress (reported over the green exttension led on the Scratch GUI)
 	//  0/6: Fatal error (used to stop extension execution)
 	//  1/6: SCAN DMX Extension being loaded
@@ -442,11 +478,63 @@
 		} else {
 			Detailed_Extension_Status_Report = "Warning: a control request over the Lighting equipment can happen just when the Ligthing server is on-line!";			
 		}
+		Cameo29CHMODE_Content();
 		callback();
 		return;		
     };
 	
+
+
+	//Channel functions
+
+	ext.Cameo29CHMODE_Content = function () {
+		var i;
+		for (i = 1; i == 29; i++) { 
+			console.log("CH" + i + "=" + CameoCH29ModeChannels[i] + " ";
+		}
+	}
 		
+	
+	//Block: Cameo29CHMODE_Blackout
+	//Type: Command block
+	//Help: https://github.com/LLK/scratchx/wiki#command-blocks
+	//Hints:
+	//  - Parameter range are fixed internally
+	//Algorithm:
+	//  - 
+	ext.Cameo29CHMODE_Blackout = function () {
+		var i;
+		for (i = 1; i == 29; i++) { 
+			CameoCH29ModeChannels[i] = 0;
+		}
+	}
+	
+	
+	
+	
+	
+		
+	//Block: Cameo29CHMODE_DerbyRGB
+	//Type: Command block
+	//Help: https://github.com/LLK/scratchx/wiki#command-blocks
+	//Hints:
+	//  - Parameter range are fixed internally
+	//Algorithm:
+	//  - 
+	ext.Cameo29CHMODE_DerbyRGB = function (derby, color, value) {
+		if (value < 0) val = 0;
+		else if (value > 100) value = 100;
+		value = Math.round((value / 100) * 255);
+		var derby_initial_channel = 0;
+		if (derby == Derby1) {derby_initial_channel=1} else {derby_initial_channel=6} 
+		var rgb_channel = {
+			Red: derby_initial_channel,
+			Green: derby_initial_channel+1,
+			Blue: derby_initial_channel +2,
+		}
+		CameoCH29ModeChannels[rgb_channel[color]]=value;
+	}
+	
 	
     // Block and block menu descriptions
 	//Help on menus: https://mryslab.github.io/s2-pi/#creating-a-javascript-extension-file
@@ -460,9 +548,12 @@
 		['h', 'When the party begins', 'WaitLightingServerBecomesOncontrol'],
 		['h', 'When the party is over', 'WaitLightingServerBecomesOffcontrol'],
 		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1'],
+		[' ', 'Change %m.Derbys color %m.RGB %n%', 'DerbyRGB','Derby1','Red',0],
 		],
 	    'menus': {
-			'CameoSets': ['Derby1', 'Derby2', 'Par1', 'Par2', 'Laser', 'Flash', 'Player']
+			'CameoSets': ['Derby1', 'Derby2', 'Par1', 'Par2', 'Laser', 'Flash', 'Player'],
+			'Derbys': ['Derby1', 'Derby2'],
+			'RGB': ['Red','Green', 'Blue'] 
 		},		
 		url: 'https://lefds.github.io/extensions/index.html',
 		displayName: 'DJ Scratch Extension'
