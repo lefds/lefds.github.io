@@ -174,7 +174,7 @@
 	//MQTT Topic prefix used by the scratcher to control the Lighting server
 	//The full topic is: "/SACN/CameoFXBar/29CHMODE/<ClientId>/<cameoSet>/
 	//The message is a set of channel:value pairs: 1:255 29:127 ...
-	var LightingControlTopic = "/SACN/CameoFXBar/29CHMODE/" + MQTTClientID;	
+	var LightingControlTopic = "/SACN/CameoFXBar/29CHMODE/" + MQTTClientID + "/Control";	
 	
 
 	// Cleanup function when the extension is unloaded
@@ -225,7 +225,7 @@
 			  SACN_CameoFXBar_29CHMODE_Ready_Published = true;
 		  } else if (message.destinationName == LightingAcceptControlTopic) {
 			  Current_Extension_Status = LIGHTING_SERVER_ONCONTROL_STATUS;
-			  SACN_CameoFXBar_29CHMODE_OnControl_Published = true;
+			  SACN_CameoFXBar_29CHMODE_OnControl_Published = true; 
 		  }	;
 	};
 
@@ -475,14 +475,13 @@
 			message.destinationName = LightingReadyTopic + "/" + cameo_controlset;
 			MQTT_Client.send(message);
 
-			LightingControlTopic = LightingControlTopic + "/" + cameo_controlset;
-			console.log("Topic to publish control messages is <" + LightingControlTopic + ">");
+			console.log("Messages to control the Lighting system will be published at the <" + LightingControlTopic + "> topic.");
 			Current_Extension_Status = LIGHTING_SERVER_CONTROL_REQUESTED_STATUS;
 			Detailed_Extension_Status_Report = "Requested control over <" + cameo_controlset + ">.";
 		} else {
 			Detailed_Extension_Status_Report = "Warning: a control request over the Lighting equipment can happen just when the Ligthing server is on-line!";			
 		}
-		Cameo29CHMODE_Content();
+		ext.Cameo29CHMODE_PrintChannelControlValues();
 		callback();
 		return;		
     };
@@ -491,8 +490,9 @@
 
 	//Channel functions
 
-	ext.Cameo29CHMODE_Content = function () {
+	ext.Cameo29CHMODE_PrintChannelControlValues = function () {
 		var i;
+		console.log("Current Cameo29CHMODE Channel Values are:\n");
 		for (i = 1; i == 29; i++) { 
 			console.log("CH" + i + "=" + CameoCH29ModeChannels[i] + " ");
 		}
