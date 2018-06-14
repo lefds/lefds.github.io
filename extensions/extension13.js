@@ -41,6 +41,9 @@
 
 	
 	//29CHMODE Channel:Value
+
+	const CameoCH29ModeChannels_FIRST_CHANNEL 1;
+	const CameoCH29ModeChannels_LAST_CHANNEL 29;
 	
 	var CameoCH29ModeChannels = {
 		1:0,
@@ -493,11 +496,11 @@
 	ext.Cameo29CHMODE_PrintChannelControlValues = function () {
 		var i;
 		console.log("Current Cameo29CHMODE Channel Values are:\n");
-		for (i = 1; i <= 30; i++) { 
+		for (i = CameoCH29ModeChannels_FIRST_CHANNEL; i <= CameoCH29ModeChannels_LAST_CHANNEL; i++) {
 			console.log("CH" + i + "=" + CameoCH29ModeChannels[i] + " ");
 		}
 	}
-		
+	
 	
 	//Block: Cameo29CHMODE_Blackout
 	//Type: Command block
