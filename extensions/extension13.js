@@ -44,8 +44,15 @@
 
 	const CameoCH29ModeChannels_FIRST_CHANNEL = 1;
 	const CameoCH29ModeChannels_LAST_CHANNEL = 29;
+
+	var myMap = new Map();	
+	var CameoCH29ModeChannels = new Map();
 	
-	var CameoCH29ModeChannels = {
+	for (i = CameoCH29ModeChannels_FIRST_CHANNEL; i <= CameoCH29ModeChannels_LAST_CHANNEL; i ++) {
+		CameoCH29ModeChannels.set(i,0);
+		console.log("CameoCH29ModeChannels [" + i + "]=" + CameoCH29ModeChannels.get(i));
+	}
+/*	
 		1:0,
 		2:0,
 		3:0,
@@ -76,7 +83,7 @@
 		28:0,
 		29:0,
 	}
-		
+*/		
 	
 	//Extension Status progress (reported over the green exttension led on the Scratch GUI)
 	//  0/6: Fatal error (used to stop extension execution)
