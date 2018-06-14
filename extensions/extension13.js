@@ -462,10 +462,17 @@
 
 	//Channel functions
 	ext.Cameo29CHMODE_PrintChannelControlValues = function () {	
+		for (const entry of CameoCH29ModeChannels.entries()) {
+			console.log(entry);
+		}
+	}
+
+/*	
 		console.log("Current Cameo29CHMODE Channel Values are:\n");
 		Object.keys(CameoCH29ModeChannels).forEach(function(key) {
 			console.log(key +":" + CameoCH29ModeChannels[key]);
 		});
+*/
 	}	
 	
 	//Block: Cameo29CHMODE_Blackout
