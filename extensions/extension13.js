@@ -490,7 +490,7 @@
 	ext.Cameo29CHMODE_Content = function () {
 		var i;
 		for (i = 1; i == 29; i++) { 
-			console.log("CH" + i + "=" + CameoCH29ModeChannels[i] + " ";
+			console.log("CH" + i + "=" + CameoCH29ModeChannels[i] + " ");
 		}
 	}
 		
