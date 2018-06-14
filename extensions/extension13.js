@@ -42,8 +42,8 @@
 	
 	//29CHMODE Channel:Value
 
-	const CameoCH29ModeChannels_FIRST_CHANNEL 1;
-	const CameoCH29ModeChannels_LAST_CHANNEL 29;
+	const CameoCH29ModeChannels_FIRST_CHANNEL = 1;
+	const CameoCH29ModeChannels_LAST_CHANNEL = 29;
 	
 	var CameoCH29ModeChannels = {
 		1:0,
