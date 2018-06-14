@@ -42,13 +42,10 @@
 	
 	//29CHMODE Channel:Value Map initialization
 	const CameoCH29ModeChannels_FIRST_CHANNEL = 1;
-	const CameoCH29ModeChannels_LAST_CHANNEL = 29;	
+	const CameoCH29ModeChannels_LAST_CHANNEL = 29;
 	var CameoCH29ModeChannels = new Map([[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],
 										[11,0],[12,0],[13,0],[14,0],[15,0],[16,0],[17,0],[18,0],[19,0],[20,0],
 										[21,0],[22,0],[23,0],[24,0],[25,0],[26,0],[27,0],[28,0],[29,0]]);
-	
-	console.log("Size=" + CameoCH29ModeChannels.size);
-	console.log("1=" + CameoCH29ModeChannels.get(1));
 	
 	//Extension Status progress (reported over the green exttension led on the Scratch GUI)
 	//  0/6: Fatal error (used to stop extension execution)
@@ -464,13 +461,12 @@
 
 
 	//Channel functions
-	ext.Cameo29CHMODE_PrintChannelControlValues = function () {		
+	ext.Cameo29CHMODE_PrintChannelControlValues = function () {	
 		console.log("Current Cameo29CHMODE Channel Values are:\n");
-		for(key = CameoCH29ModeChannels_FIRST_CHANNEL; key <= CameoCH29ModeChannels.size; key++) {
-			console.out("CameoCH29ModeChannel("+ key + ")=" + CameoCH29ModeChannels.get(key));
-		}
-	}
-	
+		Object.keys(CameoCH29ModeChannels).forEach(function(key) {
+			console.log(key +":" + CameoCH29ModeChannels[key]);
+		});
+	}	
 	
 	//Block: Cameo29CHMODE_Blackout
 	//Type: Command block
