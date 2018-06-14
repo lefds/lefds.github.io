@@ -43,7 +43,9 @@
 	//29CHMODE Channel:Value Map initialization
 	const CameoCH29ModeChannels_FIRST_CHANNEL = 1;
 	const CameoCH29ModeChannels_LAST_CHANNEL = 29;	
-	var CameoCH29ModeChannels = new Map();	
+	var CameoCH29ModeChannels = new Map();
+	CameoCH29ModeChannels.set(1) = 0;
+	CameoCH29ModeChannels.set(2) = 1;
 	for (key = CameoCH29ModeChannels_FIRST_CHANNEL; key <= CameoCH29ModeChannels_LAST_CHANNEL; key ++) {
 		CameoCH29ModeChannels.set(key) = 0;
 		console.log("CameoCH29ModeChannels [" + key + "]=" + CameoCH29ModeChannels.get(key));
