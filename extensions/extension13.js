@@ -462,6 +462,7 @@
 
 	//Channel functions
 	ext.Cameo29CHMODE_PrintChannelControlValues = function () {	
+		console.log("Channel Map:");
 		for (const entry of CameoCH29ModeChannels.entries()) {
 			console.log(entry);
 		}
@@ -498,6 +499,8 @@
 	//Algorithm:
 	//  - 
 	ext.Cameo29CHMODE_DerbyRGB = function (derby, color, value) {
+		
+
 		if (value < 0) val = 0; else if (value > 100) value = 100;
 		value = Math.round((value / 100) * 255);
 		var derby_initial_channel = 0;
@@ -507,8 +510,10 @@
 			"Green": derby_initial_channel+1,
 			"Blue": derby_initial_channel +2,
 		};
-		CameoCH29ModeChannels.set(rgb_channel[color])=value;
+		CameoCH29ModeChannels.set(rgb_channel[color], value);
 		console.log("CameoCH29ModeChannels.(" + rgb_channel[color] +")=" +CameoCH29ModeChannels.get(rgb_channel[color]));
+		console.log("AQUI");
+
 	}
 	
 	
