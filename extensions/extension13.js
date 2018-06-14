@@ -174,7 +174,7 @@
 	//MQTT Topic prefix used by the scratcher to control the Lighting server
 	//The full topic is: "/SACN/CameoFXBar/29CHMODE/<ClientId>/<cameoSet>/
 	//The message is a set of channel:value pairs: 1:255 29:127 ...
-	var LightingControlTopic = "/SACN/CameoFXBar/29CHMODE/" + MQTTClientID + "/";	
+	var LightingControlTopic = "/SACN/CameoFXBar/29CHMODE/" + MQTTClientID;	
 	
 
 	// Cleanup function when the extension is unloaded
@@ -216,8 +216,7 @@
 	
 	var mqtt_onMessageArrived = function onMessageArrived(message) {
 		  console.log("mqtt_onMessageArrived: MQTT Message Arrived - Destination name: " + message.destinationName);
-		  console.log("mqtt_onMessageArrived: MQTT Message Arrived - Payload: " + message.payloadString);
-		  console.log("Revisto...");
+		  console.log("mqtt_onMessageArrived: MQTT Message Arrived - Payload: " + message.payloadString);		  
 		  //Inspect the messages arrived: we must check the related topic and messge payload
 		  //by now we are assuming it is the "ready" topic the single one being published by the broker
 		  if (message.destinationName == LightingReadyTopic) {
@@ -461,10 +460,15 @@
     ext.RequestLightingControl = function(cameo_controlset, callback) {
 		if (Current_Extension_Status == LIGHTING_SERVER_ONLINE_STATUS) {
 			
-			//First subscribe interest on the needed topic to know the party will begin			
+			//First subscribe interest on the needed topic to know the party will begin
 			MQTT_Client.subscribe(LightingAcceptControlTopic); 
 			console.log("Subcribing interested on <" + LightingAcceptControlTopic + "> topic to know the party will begin.");
 			Detailed_Extension_Status_Report = "Subscribe interest on being informed about party begin <" + LightingAcceptControlTopic +">";
+
+			//Then subscribe interest on the needed topic to know the party is over
+			MQTT_Client.subscribe(LightingStopAcceptControlTopic); 
+			console.log("Subcribing interested on <" + LightingStopAcceptControlTopic + "> topic to know the party is over.");
+			Detailed_Extension_Status_Report = "Subscribe interest on being informed when the party is over <" + LightingStopAcceptControlTopic +">";
 			
 			//Then publish interest on controlling the selected cameo set
 			message = new Paho.MQTT.Message(MQTTClientID);
