@@ -551,7 +551,7 @@
 		['h', 'When the party is over', 'WaitLightingServerBecomesOffcontrol'],		
 		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1'],
 		[' ', 'Blackout', 'Cameo29CHMODE_Blackout'],
-		[' ', 'Change %m.Derbys color %m.RGB %n%', 'DerbyRGB','Derby1','Red',0],
+		[' ', 'Change %m.Derbys color %m.RGB %n%', 'Cameo29CHMODE_DerbyRGB','Derby1','Red',0],
 		],
 	    'menus': {
 			'CameoSets': ['Derby1', 'Derby2', 'Par1', 'Par2', 'Laser', 'Flash', 'Player'],
