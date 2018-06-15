@@ -46,6 +46,8 @@
 	var CameoCH29ModeChannels = new Map([[1,0],[2,0],[3,0],[4,0],[5,0],[6,0],[7,0],[8,0],[9,0],[10,0],
 										[11,0],[12,0],[13,0],[14,0],[15,0],[16,0],[17,0],[18,0],[19,0],[20,0],
 										[21,0],[22,0],[23,0],[24,0],[25,0],[26,0],[27,0],[28,0],[29,0]]);
+										
+	var CameoCH29ModeChannelsString = "";									
 	
 	//Extension Status progress (reported over the green exttension led on the Scratch GUI)
 	//  0/6: Fatal error (used to stop extension execution)
@@ -458,7 +460,14 @@
 		return;		
     };
 	
-
+	ext.Update_CameoCH29ModeChannelsString = function {
+		CameoCH29ModeChannelsString = "";
+		function build_channel_string(value, key, map) {				
+		  CameoCH29ModeChannelsString = channels + key + ":" + value + " ";
+		}
+		CameoCH29ModeChannels.forEach(build_channel_string);
+	}
+	
 	
 	//Block: Cameo29CHMODE_Command
 	//Type: Command block that wait
@@ -469,16 +478,12 @@
 	//Algorithm:
 	//  - Send the channel:value map for the Cameo FX BAr operating on the 29CHMODE_Command
     ext.Cameo29CHMODE_Command = function(callback) {
-		if (Current_Extension_Status == LIGHTING_SERVER_ONCONTROL_STATUS) {			
-			//Then publish interest on controlling the selected cameo set
-			var channels = "";
-			function build_channel_string(value, key, map) {
-			  channels = channels + key + ":" + value + " ";
-			}
-			CameoCH29ModeChannels.forEach(build_channel_string);
-			console.log("Channel String:" + channels);
+		if (Current_Extension_Status == LIGHTING_SERVER_ONCONTROL_STATUS) {
+			//Then publish the current Cameo CH29Mode channels
+			Update_CameoCH29ModeChannelsString
+			console.log("Channel String:" + CameoCH29ModeChannelsString);
 
-			message = new Paho.MQTT.Message(chennels);
+			message = new Paho.MQTT.Message(CameoCH29ModeChannelsString);
 			message.destinationName = LightingControlTopic;
 			MQTT_Client.send(message);			
 			Detailed_Extension_Status_Report = "Lighting control commands sent to the party.";
