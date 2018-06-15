@@ -378,7 +378,7 @@
 	// - remains being called. If the functions returns false the following blocks are not called. 	
 	//Algorithm:
 	// - Hat block that flags a ready Lighting Server
-	ext.WaitLightingServerBecomesReady = function() {	   
+	ext.WaitLightingServerBecomesReady = function() {
        if (SACN_CameoFXBar_29CHMODE_Ready_Published === true) {
            SACN_CameoFXBar_29CHMODE_Ready_Published = false;		  
 		   //console.log("WaitLightingServerBecomesReady: Lighting server announces it is ready");
@@ -451,12 +451,12 @@
 			console.log("Subcribing interested on <" + LightingStopAcceptControlTopic + "> topic to know the party is over.");
 			Detailed_Extension_Status_Report = "Subscribe interest on being informed when the party is over <" + LightingStopAcceptControlTopic +">";
 			
-			//Then publish interest on controlling the selected cameo set
+			//Then publish interest on controlling the selected cameo control set
 			message = new Paho.MQTT.Message(MQTTClientID);
 			message.destinationName = LightingReadyTopic + "/" + cameo_controlset;
 			MQTT_Client.send(message);
 
-			console.log("Messages to control the Lighting system will be published at the <" + LightingControlTopic + "> topic.");
+			console.log("Requested interest on controlling the <" + cameo_controlset + "> by publishing on topic <" + message.destinationName + ">.");
 			Current_Extension_Status = LIGHTING_SERVER_CONTROL_REQUESTED_STATUS;
 			Detailed_Extension_Status_Report = "Requested control over <" + cameo_controlset + ">.";
 		} else {
@@ -476,7 +476,9 @@
 	//Algorithm:
 	//  - Send the channel:value map for the Cameo FX BAr operating on the 29CHMODE_Command
     ext.Cameo29CHMODE_Command = function(callback) {
+		console.log("Cameo29CHMODE_Command: Begin");
 		if (Current_Extension_Status == LIGHTING_SERVER_ONCONTROL_STATUS) {
+			console.log("Cameo29CHMODE_Command: The party in running ...");
 			//Then publish the current Cameo CH29Mode channels
 			Update_CameoCH29ModeChannelsString();
 			console.log("Lighting control commands to be sent to the party:");
@@ -486,7 +488,8 @@
 			MQTT_Client.send(message);
 			Detailed_Extension_Status_Report = "Lighting control commands sent to the party.";
 		} else {
-			Detailed_Extension_Status_Report = "Warning: Lighting equipment can be commanded justa after the party begins!";
+			console.log("Cameo29CHMODE_Command: The party in still not running ...");
+			Detailed_Extension_Status_Report = "Warning: Lighting equipment can be commanded just after the party begins!";
 		}
 		callback();
 		return;
