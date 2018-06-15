@@ -119,7 +119,7 @@
 		console.log("Update_CameoCH29ModeChannelsString");
 		CameoCH29ModeChannelsString = "";
 		function build_channel_string(value, key, map) {				
-		  CameoCH29ModeChannelsString = channels + key + ":" + value + " ";
+		  CameoCH29ModeChannelsString = CameoCH29ModeChannelsString + key + ":" + value + " ";
 		}
 		CameoCH29ModeChannels.forEach(build_channel_string);
 	}
