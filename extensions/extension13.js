@@ -47,7 +47,7 @@
 										[11,0],[12,0],[13,0],[14,0],[15,0],[16,0],[17,0],[18,0],[19,0],[20,0],
 										[21,0],[22,0],[23,0],[24,0],[25,0],[26,0],[27,0],[28,0],[29,0]]);
 										
-	var CameoCH29ModeChannelsString = "";									
+	var CameoCH29ModeChannelsString = "";
 	
 	ext.Update_CameoCH29ModeChannelsString = function () {
 		CameoCH29ModeChannelsString = "";
@@ -485,12 +485,11 @@
 			message.destinationName = LightingControlTopic;
 			MQTT_Client.send(message);
 			Detailed_Extension_Status_Report = "Lighting control commands sent to the party.";
-
 		} else {
 			Detailed_Extension_Status_Report = "Warning: Lighting equipment can be commanded justa after the party begins!";
 		}
 		callback();
-		return;		
+		return;
 	}
 			
 		
@@ -504,9 +503,10 @@
 	//  - 
 	ext.Cameo29CHMODE_Blackout = function () {
 		for(key = CameoCH29ModeChannels_FIRST_CHANNEL; key <= CameoCH29ModeChannels.size; key++) {
-			CameoCH29ModeChannel.set(KEY) = 0;
+			CameoCH29ModeChannel.set(key) = 0;
 		}
 		Update_CameoCH29ModeChannelsString();
+		console.log("Cameo29CHMODE_Blackout: " + CameoCH29ModeChannelsString);
 	}
 		
 		
@@ -530,6 +530,7 @@
 		};
 		CameoCH29ModeChannels.set(rgb_channel[color], value);
 		Update_CameoCH29ModeChannelsString();
+		console.log("Cameo29CHMODE_DerbyRGB: " + CameoCH29ModeChannelsString);
 	}
 	
 	
