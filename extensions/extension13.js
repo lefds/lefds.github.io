@@ -460,7 +460,7 @@
 		return;		
     };
 	
-	ext.Update_CameoCH29ModeChannelsString = function {
+	ext.Update_CameoCH29ModeChannelsString = function () {
 		CameoCH29ModeChannelsString = "";
 		function build_channel_string(value, key, map) {				
 		  CameoCH29ModeChannelsString = channels + key + ":" + value + " ";
