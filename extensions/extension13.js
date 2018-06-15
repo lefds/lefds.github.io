@@ -81,13 +81,13 @@
 		
 	//Verbose status descrition
 	var ExtensionStatusReport = {
-		0:"Fatal error (used to stop extension execution)!",
-		1:"SCAN DMX Extension being loaded.",
-		2:"MQTT: API Sucessfully loaded.",
-		3:"MQTT: connection established & alive.",
-		4:"Lighting Server: on-line: waiting scratchers request control...",
-		5:"Lighting Server: on-line, accepted our control request & waiting more scratchers.",
-		6:"Lighting Server: on-line, accepting our DJ requests."
+		0:"Erro fatal (a extensão vai parar)!",
+		1:"A nossa extensão para seres DJ foi bem carregada.",
+		2:"A extensão para falar com o porteiro da discoteca foi bem carregada.",
+		3:"O porteiro deixou-te entrar.",
+		4:"Estamos a aguardar pela equipa de DJs ...",
+		5:"Bem vindo à equipa de DJs. Vamos esperar pelos teus colegas ...",
+		6:"A festa vai começar! Vai dando ordens às luzes para animar a discoteca."
 	};
 
 
