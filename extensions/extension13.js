@@ -49,13 +49,6 @@
 										
 	var CameoCH29ModeChannelsString = "";
 	
-	ext.Update_CameoCH29ModeChannelsString = function () {
-		CameoCH29ModeChannelsString = "";
-		function build_channel_string(value, key, map) {				
-		  CameoCH29ModeChannelsString = channels + key + ":" + value + " ";
-		}
-		CameoCH29ModeChannels.forEach(build_channel_string);
-	}
 	
 	//Extension Status progress (reported over the green exttension led on the Scratch GUI)
 	//  0/6: Fatal error (used to stop extension execution)
@@ -122,6 +115,14 @@
 	};
 
 
+	Update_CameoCH29ModeChannelsString = function () {
+		console.log("Update_CameoCH29ModeChannelsString");
+		CameoCH29ModeChannelsString = "";
+		function build_channel_string(value, key, map) {				
+		  CameoCH29ModeChannelsString = channels + key + ":" + value + " ";
+		}
+		CameoCH29ModeChannels.forEach(build_channel_string);
+	}
 
 	// ======================== MQTT Broker stuff =======================================
 
@@ -480,7 +481,7 @@
 		if (Current_Extension_Status == LIGHTING_SERVER_ONCONTROL_STATUS) {
 			console.log("Cameo29CHMODE_Command: The party in running ...");
 			//Then publish the current Cameo CH29Mode channels
-			Update_CameoCH29ModeChannelsString;
+			Update_CameoCH29ModeChannelsString();
 			console.log("Lighting control commands to be sent to the party:");
 			console.log(CameoCH29ModeChannelsString);
 			message = new Paho.MQTT.Message(CameoCH29ModeChannelsString);
