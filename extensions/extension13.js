@@ -473,7 +473,7 @@
 			//Then publish interest on controlling the selected cameo set
 			var channels = "";
 			function build_channel_string(value, key, map) {
-			  channels = channels + ${key} + ":" + ${value} + " ";
+			  channels = channels + key + ":" + value + " ";
 			}
 			CameoCH29ModeChannels.forEach(build_channel_string);
 			console.log("Channel String:" + channels);
