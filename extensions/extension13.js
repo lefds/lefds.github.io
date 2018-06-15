@@ -49,6 +49,14 @@
 										
 	var CameoCH29ModeChannelsString = "";									
 	
+	ext.Update_CameoCH29ModeChannelsString = function () {
+		CameoCH29ModeChannelsString = "";
+		function build_channel_string(value, key, map) {				
+		  CameoCH29ModeChannelsString = channels + key + ":" + value + " ";
+		}
+		CameoCH29ModeChannels.forEach(build_channel_string);
+	}
+	
 	//Extension Status progress (reported over the green exttension led on the Scratch GUI)
 	//  0/6: Fatal error (used to stop extension execution)
 	//  1/6: SCAN DMX Extension being loaded
@@ -346,8 +354,7 @@
 		}		
 		return (changes);
     };
-	
-	
+		
 	//Block: ReportDJExtensionStatus
 	//Type: reporter block
 	//Help: https://github.com/LLK/scratchx/wiki#reporter-blocks
@@ -455,20 +462,11 @@
 		} else {
 			Detailed_Extension_Status_Report = "Warning: a control request over the Lighting equipment can happen just when the Ligthing server is on-line!";			
 		}
-		ext.Cameo29CHMODE_PrintChannelControlValues();
 		callback();
 		return;		
     };
 	
-	ext.Update_CameoCH29ModeChannelsString = function () {
-		CameoCH29ModeChannelsString = "";
-		function build_channel_string(value, key, map) {				
-		  CameoCH29ModeChannelsString = channels + key + ":" + value + " ";
-		}
-		CameoCH29ModeChannels.forEach(build_channel_string);
-	}
-	
-	
+		
 	//Block: Cameo29CHMODE_Command
 	//Type: Command block that wait
 	//Help: https://github.com/LLK/scratchx/wiki#command-blocks-that-wait
@@ -480,37 +478,21 @@
     ext.Cameo29CHMODE_Command = function(callback) {
 		if (Current_Extension_Status == LIGHTING_SERVER_ONCONTROL_STATUS) {
 			//Then publish the current Cameo CH29Mode channels
-			Update_CameoCH29ModeChannelsString
-			console.log("Channel String:" + CameoCH29ModeChannelsString);
-
+			ext.Update_CameoCH29ModeChannelsString();
+			console.log("Lighting control commands to be sent to the party:");
+			console.log(CameoCH29ModeChannelsString);
 			message = new Paho.MQTT.Message(CameoCH29ModeChannelsString);
 			message.destinationName = LightingControlTopic;
-			MQTT_Client.send(message);			
+			MQTT_Client.send(message);
 			Detailed_Extension_Status_Report = "Lighting control commands sent to the party.";
 
 		} else {
-			Detailed_Extension_Status_Report = "Warning: Lighting equipment can be commanded after the party begins!";
+			Detailed_Extension_Status_Report = "Warning: Lighting equipment can be commanded justa after the party begins!";
 		}
-		ext.Cameo29CHMODE_PrintChannelControlValues();
 		callback();
 		return;		
 	}
 			
-
-	//Channel functions
-	ext.Cameo29CHMODE_PrintChannelControlValues = function () {	
-		console.log("Channel Map:");
-		for (const entry of CameoCH29ModeChannels.entries()) {
-			console.log(entry);
-		}
-	}
-
-/*	
-		console.log("Current Cameo29CHMODE Channel Values are:\n");
-		Object.keys(CameoCH29ModeChannels).forEach(function(key) {
-			console.log(key +":" + CameoCH29ModeChannels[key]);
-		});
-*/
 		
 	
 	//Block: Cameo29CHMODE_Blackout
@@ -536,8 +518,6 @@
 	//Algorithm:
 	//  - 
 	ext.Cameo29CHMODE_DerbyRGB = function (derby, color, value) {
-		
-
 		if (value < 0) val = 0; else if (value > 100) value = 100;
 		value = Math.round((value / 100) * 255);
 		var derby_initial_channel = 0;
@@ -548,8 +528,6 @@
 			"Blue": derby_initial_channel +2,
 		};
 		CameoCH29ModeChannels.set(rgb_channel[color], value);
-		console.log("CameoCH29ModeChannels.(" + rgb_channel[color] +")=" +CameoCH29ModeChannels.get(rgb_channel[color]));
-		console.log("AQUI");
 	}
 	
 	
@@ -580,7 +558,3 @@
     // Register the extension
     ScratchExtensions.register('sACN DMX Extension', descriptor, ext);
 })({});
-
-
-
-
