@@ -478,7 +478,7 @@
     ext.Cameo29CHMODE_Command = function(callback) {
 		if (Current_Extension_Status == LIGHTING_SERVER_ONCONTROL_STATUS) {
 			//Then publish the current Cameo CH29Mode channels
-			ext.Update_CameoCH29ModeChannelsString();
+			Update_CameoCH29ModeChannelsString();
 			console.log("Lighting control commands to be sent to the party:");
 			console.log(CameoCH29ModeChannelsString);
 			message = new Paho.MQTT.Message(CameoCH29ModeChannelsString);
@@ -506,6 +506,7 @@
 		for(key = CameoCH29ModeChannels_FIRST_CHANNEL; key <= CameoCH29ModeChannels.size; key++) {
 			CameoCH29ModeChannel.set(KEY) = 0;
 		}
+		Update_CameoCH29ModeChannelsString();
 	}
 		
 		
@@ -528,6 +529,7 @@
 			"Blue": derby_initial_channel +2,
 		};
 		CameoCH29ModeChannels.set(rgb_channel[color], value);
+		Update_CameoCH29ModeChannelsString();
 	}
 	
 	
