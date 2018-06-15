@@ -480,7 +480,7 @@
 		if (Current_Extension_Status == LIGHTING_SERVER_ONCONTROL_STATUS) {
 			console.log("Cameo29CHMODE_Command: The party in running ...");
 			//Then publish the current Cameo CH29Mode channels
-			Update_CameoCH29ModeChannelsString();
+			Update_CameoCH29ModeChannelsString;
 			console.log("Lighting control commands to be sent to the party:");
 			console.log(CameoCH29ModeChannelsString);
 			message = new Paho.MQTT.Message(CameoCH29ModeChannelsString);
