@@ -459,6 +459,38 @@
     };
 	
 
+	
+	//Block: Cameo29CHMODE_Command
+	//Type: Command block that wait
+	//Help: https://github.com/LLK/scratchx/wiki#command-blocks-that-wait
+	//Help: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach
+	//Hints:
+	//  - This block returns just when the callback function is called
+	//Algorithm:
+	//  - Send the channel:value map for the Cameo FX BAr operating on the 29CHMODE_Command
+    ext.Cameo29CHMODE_Command = function(callback) {
+		if (Current_Extension_Status == LIGHTING_SERVER_ONCONTROL_STATUS) {			
+			//Then publish interest on controlling the selected cameo set
+			var channels = "";
+			function build_channel_string(value, key, map) {
+			  channels = channels + ${key} + ":" + ${value} + " ";
+			}
+			CameoCH29ModeChannels.forEach(build_channel_string);
+			console.log("Channel String:" + channels);
+
+			message = new Paho.MQTT.Message(chennels);
+			message.destinationName = LightingControlTopic;
+			MQTT_Client.send(message);			
+			Detailed_Extension_Status_Report = "Lighting control commands sent to the party.";
+
+		} else {
+			Detailed_Extension_Status_Report = "Warning: Lighting equipment can be commanded after the party begins!";
+		}
+		ext.Cameo29CHMODE_PrintChannelControlValues();
+		callback();
+		return;		
+	}
+			
 
 	//Channel functions
 	ext.Cameo29CHMODE_PrintChannelControlValues = function () {	
@@ -528,6 +560,7 @@
 		['h', 'When the party begins', 'WaitLightingServerBecomesOncontrol'],
 		['h', 'When the party is over', 'WaitLightingServerBecomesOffcontrol'],		
 		['w', 'Request control over %m.CameoSets', 'RequestLightingControl','Derby1'],
+		['w', 'Command Cameo FX Bar', 'Cameo29CHMODE_Command'],
 		[' ', 'Blackout', 'Cameo29CHMODE_Blackout'],
 		[' ', 'Change %m.Derbys color %m.RGB %n%', 'Cameo29CHMODE_DerbyRGB','Derby1','Red',0],
 		],
